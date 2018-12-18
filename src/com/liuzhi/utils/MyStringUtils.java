@@ -121,6 +121,16 @@ public class MyStringUtils
         return new Integer(number);
     }
     /**
+     * 将String字符转为Long类型
+     * @param number 需要转换的数字
+     * @return 返回转化之后的数字
+     */
+    public static Long strCaseLong(String number)
+    {
+        return new Long(number);
+    }
+
+    /**
      * 将String字符转为Integer类型
      * @param number1 需要转换的数字
      * @param number2 需要相加的值
