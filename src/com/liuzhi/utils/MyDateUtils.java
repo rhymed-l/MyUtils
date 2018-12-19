@@ -8,6 +8,7 @@ public class MyDateUtils
 {
     public static final String TIME_FORMAT_YMDHMS   = "yyyy-MM-dd hh:mm:ss";
     public static final String TIME_FORMAT_YMD      = "yyyy-MM-dd";
+    public static final String TIME_FORMAT_TIMESTMP = "yyyyMMddhhmmss";
 
     /**
      * 获取昨日时间
@@ -185,6 +186,11 @@ public class MyDateUtils
         {
             date = new Date();
         }
-        return new Long(date.getTime()).toString();
+        SimpleDateFormat df = new SimpleDateFormat(TIME_FORMAT_TIMESTMP);//设置日期格式
+        return df.format(date);
+    }
+
+    public static void main(String[] args) {
+        System.err.println(getTimestamp());
     }
 }
