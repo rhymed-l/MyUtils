@@ -164,4 +164,27 @@ public class MyDateUtils
         SimpleDateFormat df = new SimpleDateFormat(str);//设置日期格式
         return df.format(date);
     }
+
+    /**
+     * 获取当前时间的时间戳
+     * @return 返回当前时间时间戳
+     */
+    public static String getTimestamp()
+    {
+        return getTimestamp(null);
+    }
+
+    /**
+     * 获取指定时间的时间戳
+     * @param date 需要转换的时间戳
+     * @return 返回指定时间的时间戳
+     */
+    public static String getTimestamp(Date date)
+    {
+        if(date ==null)
+        {
+            date = new Date();
+        }
+        return new Long(date.getTime()).toString();
+    }
 }
