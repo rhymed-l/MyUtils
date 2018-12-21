@@ -189,8 +189,55 @@ public class MyDateUtils
         SimpleDateFormat df = new SimpleDateFormat(TIME_FORMAT_TIMESTMP);//设置日期格式
         return df.format(date);
     }
+    /**
+     * 计算两个日期之间相差多少天(取绝对值)
+     * @param date1 日期1
+     * @param date2 日期2
+     * @return 两个时间相差的天数
+     */
+    public static int differentDaysByMillisecond(Date date1,Date date2)
+    {
+        int days = (int) ((date2.getTime() - date1.getTime()) / (1000*3600*24));
+        return Math.abs(days);
+    }
+    /**
+     * 计算两个日期之间相差多少天,不足一天按一天算(取绝对值)
+     * @param date1 日期1
+     * @param date2 日期2
+     * @return 两个时间相差的天数
+     */
+    public static int differentDays(Date date1,Date date2)
+    {
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
 
-    public static void main(String[] args) {
-        System.err.println(getTimestamp());
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+        int day1= cal1.get(Calendar.DAY_OF_YEAR);
+        int day2 = cal2.get(Calendar.DAY_OF_YEAR);
+
+        int year1 = cal1.get(Calendar.YEAR);
+        int year2 = cal2.get(Calendar.YEAR);
+        if(year1 != year2)
+        {//不同年
+            int timeDistance = 0 ;
+            for(int i = year1 ; i < year2 ; i ++)
+            {
+                if(i%4==0 && i%100!=0 || i%400==0)    //闰年
+                {
+                    timeDistance += 366;
+                }
+                else    //不是闰年
+                {
+                    timeDistance += 365;
+                }
+            }
+
+            return Math.abs(timeDistance + (day2-day1));
+        }
+        else
+        {//同一年
+            return Math.abs(day2-day1);
+        }
     }
 }

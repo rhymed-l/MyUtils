@@ -1,5 +1,8 @@
 package com.liuzhi.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -202,4 +205,113 @@ public class MyStringUtils
             return false;
         }
     }
+
+    /**
+     * 获取短连接
+     * @param longUrl 需要缩短的长链接
+     * @return 返回缩短后的链接
+     */
+    public static String longUrlToShorUrl(String longUrl)
+    {
+        // 可以自定义生成 MD5 加密字符传前的混合 KEY
+        String key = "LiuZhi" ;
+        // 要使用生成 URL 的字符
+        String[] chars = new String[] { "a" , "b" , "c" , "d" , "e" , "f" , "g" , "h" ,
+                "i" , "j" , "k" , "l" , "m" , "n" , "o" , "p" , "q" , "r" , "s" , "t" ,
+                "u" , "v" , "w" , "x" , "y" , "z" , "0" , "1" , "2" , "3" , "4" , "5" ,
+                "6" , "7" , "8" , "9" , "A" , "B" , "C" , "D" , "E" , "F" , "G" , "H" ,
+                "I" , "J" , "K" , "L" , "M" , "N" , "O" , "P" , "Q" , "R" , "S" , "T" ,
+                "U" , "V" , "W" , "X" , "Y" , "Z"
+        };
+        // 对传入网址进行 MD5 加密
+        String sMD5EncryptResult = (MD5Code32(key + longUrl));
+        String hex = sMD5EncryptResult;
+        String[] resUrl = new String[4];
+        //得到 4组短链接字符串
+        for ( int i = 0; i < 4; i++) {
+            // 把加密字符按照 8 位一组 16 进制与 0x3FFFFFFF 进行位与运算
+            String sTempSubString = hex.substring(i * 8, i * 8 + 8);
+            // 这里需要使用 long 型来转换，因为 Inteper .parseInt() 只能处理 31 位 , 首位为符号位 , 如果不用 long ，则会越界
+            long lHexLong = 0x3FFFFFFF & Long.parseLong (sTempSubString, 16);
+            String outChars = "" ;
+            //循环获得每组6位的字符串
+            for ( int j = 0; j < 6; j++) {
+                // 把得到的值与 0x0000003D 进行位与运算，取得字符数组 chars 索引
+                //(具体需要看chars数组的长度   以防下标溢出，注意起点为0)
+                long index = 0x0000003D & lHexLong;
+                // 把取得的字符相加
+                outChars += chars[( int ) index];
+                // 每次循环按位右移 5 位
+                lHexLong = lHexLong >> 5;
+            }
+            // 把字符串存入对应索引的输出数组
+            resUrl[i] = outChars;
+        }
+        return resUrl[1];
+    }
+
+    private static String byteArrayToHexString(byte b[]) {
+        StringBuffer resultSb = new StringBuffer();
+        for (int i = 0; i < b.length; i++)
+            resultSb.append(byteToHexString(b[i]));
+
+        return resultSb.toString();
+    }
+
+    private static String byteToHexString(byte b) {
+        int n = b;
+        if (n < 0)
+            n += 256;
+        int d1 = n / 16;
+        int d2 = n % 16;
+        return hexDigits[d1] + hexDigits[d2];
+    }
+
+    public static String MD5Encode(String origin, String charsetname) {
+        String resultString = null;
+        try {
+            resultString = new String(origin);
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            if (charsetname == null || "".equals(charsetname))
+                resultString = byteArrayToHexString(md.digest(resultString
+                        .getBytes()));
+            else
+                resultString = byteArrayToHexString(md.digest(resultString
+                        .getBytes(charsetname)));
+        } catch (Exception exception) {
+        }
+        return resultString;
+    }
+
+    private static final String hexDigits[] = { "0", "1", "2", "3", "4", "5",
+            "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+
+    public static String MD5Code32(String str)  {
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+
+        md5.update((str).getBytes("UTF-8"));
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        byte b[] = md5.digest();
+
+        int i;
+        StringBuffer buf = new StringBuffer("");
+
+        for(int offset=0; offset<b.length; offset++){
+            i = b[offset];
+            if(i<0){
+                i+=256;
+            }
+            if(i<16){
+                buf.append("0");
+            }
+            buf.append(Integer.toHexString(i));
+        }
+        return buf.toString();
+    }
+
 }
