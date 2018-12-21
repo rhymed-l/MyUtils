@@ -314,4 +314,43 @@ public class MyStringUtils
         return buf.toString();
     }
 
+
+    /**
+     * 给手机号中间打上*号,保留前面3位后面4位
+     * @param phone 需要脱敏的手机号
+     * @return 返回脱敏后的手机号码
+     */
+    public static String phoneMosaic(String phone)
+    {
+        return phoneMosaic(phone,null,null);
+    }
+    /**
+     * 给手机号中间打上*号,指定保留前后位数
+     * @param phone 需要脱敏的手机号
+     * @return 返回脱敏后的手机号码
+     */
+    public static String phoneMosaic(String phone,Integer front,Integer back)
+    {
+        if(front == null || front<0)
+        {
+            front = 3;
+        }
+        if(back == null || back<0)
+        {
+            back = 4;
+        }
+        if(isInteger(phone))
+        {
+            int len = phone.length();
+            String left = phone.substring(0,front);
+            StringBuffer sb = new StringBuffer(left);
+            for(int i=0;i<len-(front+back);i++)
+            {
+                sb.append("*");
+            }
+            sb.append(phone.substring(len-back));
+            return sb.toString();
+        }
+        return phone;
+    }
 }
