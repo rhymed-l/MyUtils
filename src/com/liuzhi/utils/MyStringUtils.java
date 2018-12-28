@@ -331,6 +331,10 @@ public class MyStringUtils
      */
     public static String phoneMosaic(String phone,Integer front,Integer back)
     {
+        if(isEmpty(phone))
+        {
+            return null;
+        }
         if(front == null || front<0)
         {
             front = 3;
@@ -361,6 +365,10 @@ public class MyStringUtils
      */
     public static String nameMosaic(String name)
     {
+        if(isEmpty(name))
+        {
+            return null;
+        }
         int len = name.length();
         StringBuffer sb = new StringBuffer();
         sb.append(name.substring(0,1));//先拼第一位
