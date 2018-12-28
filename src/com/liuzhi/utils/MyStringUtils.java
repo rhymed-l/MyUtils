@@ -353,4 +353,28 @@ public class MyStringUtils
         }
         return phone;
     }
+
+    /**
+     * 给姓名中间打上*号,超过三位数则只显示第一位和最后一位
+     * @param name 需要脱敏的姓名
+     * @return 返回脱敏后的姓名
+     */
+    public static String nameMosaic(String name)
+    {
+        int len = name.length();
+        StringBuffer sb = new StringBuffer();
+        sb.append(name.substring(0,1));//先拼第一位
+        if(len>2)
+        {
+            for(int i=1;i<len-1;i++)
+            {
+                sb.append("*");
+            }
+            sb.append(name.substring(len-1));//拼最后一位
+        }else
+            {
+                sb.append("*");
+            }
+        return sb.toString();
+    }
 }
