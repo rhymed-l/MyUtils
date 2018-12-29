@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MyStringUtils
@@ -384,5 +385,43 @@ public class MyStringUtils
                 sb.append("*");
             }
         return sb.toString();
+    }
+
+    /**
+     * 判断字符串是否是汉字
+     * @param str 需要被判断的字符串
+     * @return 返回真或假
+     */
+    public static boolean isChinese(String str)
+    {
+        if (str == null)
+        {
+            return false;
+        }
+        char[] cTemp = str.toCharArray();
+        for (int i = 0; i < str.length(); i++) {
+            if (!isChinese(cTemp[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 判定输入的是否是汉字
+     * @param c 被校验的字符
+     * @return true代表是汉字
+     */
+    public static boolean isChinese(char c) {
+        Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
+        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+                || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+                || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+                || ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
+                || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
+                || ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) {
+            return true;
+        }
+        return false;
     }
 }
