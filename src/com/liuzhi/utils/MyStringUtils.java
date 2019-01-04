@@ -68,6 +68,20 @@ public class MyStringUtils
         }
         return old.substring(0,old.indexOf(index));
     }
+    /**
+     * 取文本左边(倒找)
+     * @param old 原文本
+     * @param index 需要定位的字符串
+     * @return 文本左边的文本,如找不到指定的截取的文本则返回原文本
+     */
+    public static String getTextLefts(String old,String index)
+    {
+        if(old.lastIndexOf(index)==-1)
+        {
+            return old;
+        }
+        return old.substring(0,old.lastIndexOf(index));
+    }
 
     /**
      * 取出文本中间
@@ -90,8 +104,8 @@ public class MyStringUtils
      */
     public static String getTextMiddles(String old,String left,String right)
     {
-        String temp = getTextRights(old,left);
-        return getTextLeft(temp,right);
+        String temp = getTextRight(old,left);
+        return getTextLefts(temp,right);
     }
     /**
      * 判断文本是否是空(对象为空,或者内容为空)
