@@ -72,9 +72,9 @@ public class MyDateUtils
         Calendar cal=Calendar.getInstance();
         cal.setTime(new Date());
         cal.add(Calendar.DATE,day==null?0:day);
-        cal.set(Calendar.HOUR_OF_DAY, hour==null?0:hour);//设置时
-        cal.set(Calendar.MINUTE, minute==null?0:minute);//设置分
-        cal.set(Calendar.SECOND, second==null?0:second);//设置秒
+        cal.set(Calendar.HOUR_OF_DAY,hour==null?cal.get(Calendar.HOUR_OF_DAY):hour);//设置时
+        cal.set(Calendar.MINUTE, minute==null?cal.get(Calendar.MINUTE):minute);//设置分
+        cal.set(Calendar.SECOND, second==null?cal.get(Calendar.SECOND):second);//设置秒
         cal.set(Calendar.MILLISECOND,0);//设置毫秒
         return cal.getTime();
     }
@@ -84,7 +84,7 @@ public class MyDateUtils
      */
     public static Date getAssignTime()
     {
-        return getAssignTime(0);
+        return getAssignTime(null);
     }
     /**
      * 获取指定的时间(参数都可空)
@@ -93,7 +93,7 @@ public class MyDateUtils
      */
     public static Date getAssignTime(Integer day)
     {
-        return getAssignTime(day,0);
+        return getAssignTime(day,null);
     }
     /**
      * 获取指定的时间(参数都可空)
@@ -103,7 +103,7 @@ public class MyDateUtils
      */
     public static Date getAssignTime(Integer day,Integer hour)
     {
-        return getAssignTime(day,hour,0);
+        return getAssignTime(day,hour,null);
     }
     /**
      * 获取指定的时间(参数都可空)
@@ -114,7 +114,7 @@ public class MyDateUtils
      */
     public static Date getAssignTime(Integer day,Integer hour,Integer minute)
     {
-        return getAssignTime(day,hour,minute,0);
+        return getAssignTime(day,hour,minute,null);
     }
 
 
