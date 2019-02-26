@@ -54,7 +54,7 @@ public class MyDateUtils
      */
     public static Date getTodaysZeroTime()
     {
-        return getAssignTime();
+        return getAssignZeroTime(new Date());
     }
 
 
