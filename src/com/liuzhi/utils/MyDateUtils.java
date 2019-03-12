@@ -60,6 +60,106 @@ public class MyDateUtils
 
 
     /**
+     * 增加指定的时间(参数都可空)
+     * @param day 距离今天相差多少
+     * @param hour 时
+     * @param minute 分
+     * @param second 秒
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTime(Integer year,Integer month,Integer day,Integer hour,Integer minute,Integer second)
+    {
+        Calendar cal=Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.YEAR,year==null?0:year);
+        cal.add(Calendar.MONTH,month==null?0:month);
+        cal.add(Calendar.DATE,day==null?0:day);
+        cal.add(Calendar.HOUR_OF_DAY,hour==null?0:hour);//设置时
+        cal.add(Calendar.MINUTE, minute==null?0:minute);//设置分
+        cal.add(Calendar.SECOND, second==null?0:second);//设置秒
+        cal.set(Calendar.MILLISECOND,0);//设置毫秒
+        return cal.getTime();
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @param day 距离今天相差多少
+     * @param hour 时
+     * @param minute 分
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTime(Integer year,Integer month,Integer day,Integer hour,Integer minute)
+    {
+        return addAssignTime(year,month,day,hour,minute,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @param day 距离今天相差多少
+     * @param hour 时
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTime(Integer year,Integer month,Integer day,Integer hour)
+    {
+        return addAssignTime(year,month,day,hour,null,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @param day 距离今天相差多少
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTime(Integer year,Integer month,Integer day)
+    {
+        return addAssignTime(year,month,day,null,null,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTime(Integer year,Integer month)
+    {
+        return addAssignTime(year,month,null,null,null,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTimeYear(Integer year)
+    {
+        return addAssignTime(year,null,null,null,null,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTimeMonth(Integer month)
+    {
+        return addAssignTime(null,month,null,null,null,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTimeDay(Integer day)
+    {
+        return addAssignTime(null,null,day,null,null,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTimeHour(Integer hour)
+    {
+        return addAssignTime(null,null,null,hour,null,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTimeMinute(Integer minute)
+    {
+        return addAssignTime(null,null,null,null,minute,null);
+    }
+
+    /**
      * 获取指定的时间(参数都可空)
      * @param day 距离今天相差多少
      * @param hour 时
@@ -161,7 +261,6 @@ public class MyDateUtils
         {
             str = TIME_FORMAT_YMD;
         }
-        date = getTodaysZeroTime();
         SimpleDateFormat df = new SimpleDateFormat(str);//设置日期格式
         return df.format(date);
     }
@@ -239,5 +338,9 @@ public class MyDateUtils
         {//同一年
             return Math.abs(day2-day1);
         }
+    }
+
+    public static void main(String[] args) {
+        System.err.println(getAssignTimeToStr(addAssignTimeMonth(1),true));
     }
 }
