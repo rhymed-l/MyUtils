@@ -158,6 +158,14 @@ public class MyDateUtils
     {
         return addAssignTime(null,null,null,null,minute,null);
     }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTimeSecond(Integer second)
+    {
+        return addAssignTime(null,null,null,null,null,second);
+    }
 
     /**
      * 获取指定的时间(参数都可空)
@@ -338,6 +346,17 @@ public class MyDateUtils
         {//同一年
             return Math.abs(day2-day1);
         }
+    }
+
+    /*
+     * 将时间戳转换为时间
+     */
+    public static String stampToDate(Long s){
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(s);
+        res = simpleDateFormat.format(date);
+        return res;
     }
 
     public static void main(String[] args) {
