@@ -348,7 +348,7 @@ public class MyDateUtils
         }
     }
 
-    /*
+    /**
      * 将时间戳转换为时间
      */
     public static String stampToDate(Long s){
@@ -359,7 +359,17 @@ public class MyDateUtils
         return res;
     }
 
-    public static void main(String[] args) {
-        System.err.println(getAssignTimeToStr(addAssignTimeMonth(1),true));
+    /**
+     * 计算两个时间相加后的时间
+     * @param d1 时间1
+     * @param d2 时间2
+     * @return
+     */
+    public static Date dateAddDate(Date d1,Date d2)
+    {
+        long dl1 = d1.getTime();
+        long dl2 = d2.getTime();
+        long now = new Date().getTime();
+        return new Date(dl1+dl2-now);
     }
 }
