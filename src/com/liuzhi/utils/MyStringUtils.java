@@ -1,10 +1,9 @@
 package com.liuzhi.utils;
 
+import com.sun.istack.internal.NotNull;
+
 import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class MyStringUtils
@@ -434,5 +433,27 @@ public class MyStringUtils
             return true;
         }
         return false;
+    }
+
+
+    /**
+     * 将String类型的Url参数转为Map类型的参数
+     * @param url 需要转换的链接地址
+     * @return 将参数用Map形式返回
+     */
+    public static Map<String,String> getUrlParam(@NotNull String url)
+    {
+        Map<String,String> map = new HashMap<>();
+        String[] strings = url.split("&");
+        for (String s : strings)
+        {
+            String[] params = s.split("=");
+
+            for ( int i = 0;i<params.length;i++)
+            {
+                map.put(params[i],params[++i]);
+            }
+        }
+        return map;
     }
 }
