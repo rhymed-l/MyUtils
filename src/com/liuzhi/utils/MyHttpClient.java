@@ -222,7 +222,7 @@ public class MyHttpClient {
             out.flush();
             // 定义BufferedReader输入流来读取URL的响应
             in = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                    new InputStreamReader(conn.getInputStream(),"UTF-8" ));
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
@@ -287,7 +287,7 @@ public class MyHttpClient {
                         formData += entry.getKey() + "=" + entry.getValue() + "&";
                     }
                     formData = formData.substring(0, formData.length() - 1);
-                    out.write(formData.getBytes("UTF-8"));
+                    out.write(formData.getBytes());
                 }
             } else {
                 String boundary = "-----------------------------" + String.valueOf(new Date().getTime());
@@ -300,7 +300,7 @@ public class MyHttpClient {
                         sbFormData.append("Content-Disposition: form-data; name=\"" + entry.getKey() + "\"\r\n\r\n");
                         sbFormData.append(entry.getValue() + "\r\n");
                     }
-                    out.write(sbFormData.toString().getBytes("UTF-8"));
+                    out.write(sbFormData.toString().getBytes());
                 }
                 for (Map.Entry<String, File> entry : files.entrySet()) {
                     String fileName = entry.getKey();
@@ -311,9 +311,9 @@ public class MyHttpClient {
                     if (!file.exists()) {
                         continue;
                     }
-                    out.write(("--" + boundary + "\r\n").getBytes("UTF-8"));
-                    out.write(("Content-Disposition: form-data; name=\"" + fileName + "\"; filename=\"" + file.getName() + "\"\r\n").getBytes("UTF-8"));
-                    out.write(("Content-Type: application/x-msdownload\r\n\r\n").getBytes("UTF-8"));
+                    out.write(("--" + boundary + "\r\n").getBytes());
+                    out.write(("Content-Disposition: form-data; name=\"" + fileName + "\"; filename=\"" + file.getName() + "\"\r\n").getBytes());
+                    out.write(("Content-Type: application/x-msdownload\r\n\r\n").getBytes());
                     DataInputStream in = new DataInputStream(new FileInputStream(file));
                     int bytes = 0;
                     byte[] bufferOut = new byte[1024];
@@ -321,14 +321,14 @@ public class MyHttpClient {
                         out.write(bufferOut, 0, bytes);
                     }
                     in.close();
-                    out.write(("\r\n").getBytes("UTF-8"));
+                    out.write(("\r\n").getBytes());
                 }
-                out.write(("--" + boundary + "--").getBytes("UTF-8"));
+                out.write(("--" + boundary + "--").getBytes());
             }
             out.flush();
             out.close();
             out = null;
-            reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF-8"));
             String line;
             while ((line = reader.readLine()) != null) {
                 result += line;
@@ -350,5 +350,4 @@ public class MyHttpClient {
         }
         return result;
     }
-
 }
