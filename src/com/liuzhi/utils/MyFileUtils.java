@@ -112,4 +112,19 @@ public class MyFileUtils
             throw new RuntimeException("被读取的文件不存在");
         }
     }
+
+    /**
+     * 文件名修改
+     * @param file 需要修改的文件
+     * @param newName 修改文件名
+     * @return
+     */
+    public static File fileRename(File file,String newName)
+    {
+        checkFileExists(file);
+        String postfix ="." + getFilePostfix(file);
+        File newFile = new File(file.getParent()+File.separator+MyStringUtils.getTextLefts(newName,".")+postfix);
+        file.renameTo(newFile);
+        return newFile;
+    }
 }
