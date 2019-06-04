@@ -266,7 +266,6 @@ public class MyHttpClient {
             URL realUrl = new URL(requestUrl);
             HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
             connection.setRequestProperty("accept", "*/*");
-            connection.setRequestProperty("Accept-Language", "zh-CN,zh;q=0.9");
             connection.setRequestProperty("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0");
             for (Map.Entry<String, String> entry : requestHeader.entrySet()) {
                 connection.setRequestProperty(entry.getKey(), entry.getValue());
@@ -301,7 +300,7 @@ public class MyHttpClient {
                         sbFormData.append("Content-Disposition: form-data; name=\"" + entry.getKey() + "\"\r\n\r\n");
                         sbFormData.append(entry.getValue() + "\r\n");
                     }
-                    out.write(sbFormData.toString().getBytes("ISO-8859-1"));
+                    out.write(sbFormData.toString().getBytes());
                 }
                 for (Map.Entry<String, File> entry : files.entrySet()) {
                     String fileName = entry.getKey();
