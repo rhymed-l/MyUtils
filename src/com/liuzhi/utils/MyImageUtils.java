@@ -92,7 +92,13 @@ public class MyImageUtils {
      */
     public static File imgFormatConvert(String imgPath,String formatName)
     {
-        File file = new File(imgPath);
+        return imgFormatConvert(new File(imgPath),formatName);
+    }
+    /**
+     * 图片格式转换
+     */
+    public static File imgFormatConvert(File file,String formatName)
+    {
         MyFileUtils.checkFileExists(file);
         BufferedImage bi = null;
         try {
