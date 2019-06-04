@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.UUID;
 
 public class MyImageUtils {
     /**
@@ -209,5 +210,45 @@ public class MyImageUtils {
      */
     public static boolean changeSize(String path, int newWidth, int newHeight) {
         return changeSize(new File(path), newWidth, newHeight);
+    }
+    /**
+     * 改变图片的尺寸
+     * @param path      文件路径
+     * @param newWidth  需要设置的宽度
+     * @param newHeight 需要设置的高度
+     * @return boolean
+     */
+    public static File changeSizeToNewFile(String path, int newWidth, int newHeight) {
+        return changeSizeToNewFile(new File(path), newWidth, newHeight);
+    }
+    /**
+     * 改变图片的尺寸
+     *
+     * @param newWidth, newHeight, path
+     * @return boolean
+     */
+    public static File changeSizeToNewFile(File file, int newWidth, int newHeight) {
+        MyFileUtils.checkFileExists(file);
+        File newFile = new File(MyStringUtils.getRandom(6)+"."+MyFileUtils.getFilePostfix(file));
+        try {
+            //读取图片
+            BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
+            //字节流转图片对象
+            Image bi = ImageIO.read(in);
+            //构建图片流
+            BufferedImage tag = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+            //绘制改变尺寸后的图
+            tag.getGraphics().drawImage(bi, 0, 0, newWidth, newHeight, null);
+            //输出流
+            BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(newFile));
+            ImageIO.write(tag, "PNG", out);
+            in.close();
+            out.close();
+            return newFile;
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
