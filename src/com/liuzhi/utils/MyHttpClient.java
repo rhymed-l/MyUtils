@@ -350,16 +350,4 @@ public class MyHttpClient {
         }
         return result;
     }
-
-    public static void main(String[] args) {
-        Map<String,String> head = new HashMap<>();
-        head.put("Authorization", "Basic bHlranJvb3Q6bHlrakAyMDE5");
-        Map<String,File> files = new HashMap<>();
-        Map<String,String> param = new HashMap<>();
-        //参数数据
-        param.put("appName","测试");
-        param.put("packageName","测试");
-        files.put("icon",new File("C:\\Users\\a\\Desktop\\ic_launcher.png"));
-        MyHttpClient.sendPostByForm("http://101.132.106.147:8188/job/majiabao/buildWithParameters/",head,param,files);
-    }
 }
