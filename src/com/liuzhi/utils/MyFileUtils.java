@@ -123,7 +123,9 @@ public class MyFileUtils
     {
         checkFileExists(file);
         String postfix ="." + getFilePostfix(file);
-        File newFile = new File(file.getParent()+File.separator+MyStringUtils.getTextLefts(newName,".")+postfix);
+        String oldPath = file.getParent();
+        oldPath =MyStringUtils.isEmpty(oldPath)==true?"":oldPath+File.separator;
+        File newFile = new File(oldPath+MyStringUtils.getTextLefts(newName,".")+postfix);
         file.renameTo(newFile);
         return newFile;
     }
