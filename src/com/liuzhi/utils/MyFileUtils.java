@@ -122,7 +122,7 @@ public class MyFileUtils
     public static File fileRename(File file,String newName)
     {
         checkFileExists(file);
-        String postfix ="." + getFilePostfix(file);
+        String postfix ="." + getRealFilePostfix(file);
         String oldPath = file.getParent();
         oldPath =MyStringUtils.isEmpty(oldPath)==true?"":oldPath+File.separator;
         File newFile = new File(oldPath+MyStringUtils.getTextLefts(newName,".")+postfix);
