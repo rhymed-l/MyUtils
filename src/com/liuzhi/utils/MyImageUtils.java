@@ -1,5 +1,8 @@
 package com.liuzhi.utils;
 
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -90,15 +93,14 @@ public class MyImageUtils {
     /**
      * 图片格式转换
      */
-    public static File imgFormatConvert(String imgPath,String formatName)
-    {
-        return imgFormatConvert(new File(imgPath),formatName);
+    public static File imgFormatConvert(String imgPath, String formatName) {
+        return imgFormatConvert(new File(imgPath), formatName);
     }
+
     /**
      * 图片格式转换
      */
-    public static File imgFormatConvert(File file,String formatName)
-    {
+    public static File imgFormatConvert(File file, String formatName) {
         MyFileUtils.checkFileExists(file);
         BufferedImage bi = null;
         try {
@@ -108,7 +110,7 @@ public class MyImageUtils {
         }
 
         try {
-            ImageIO.write(bi,formatName,file);
+            ImageIO.write(bi, formatName, file);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -156,16 +158,56 @@ public class MyImageUtils {
 
     /**
      * 检查是否为图片
-     * @return 如果是则返回真,如果不是则返回假
+     *
+     * @return 如果是则返回真, 如果不是则返回假
      */
-    public static Boolean imageCheck(File file)
-    {
+    public static Boolean imageCheck(File file) {
         MyFileUtils.checkFileExists(file);
         try {
             Image image = ImageIO.read(file);
             return image != null;
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             return false;
         }
+    }
+
+    /**
+     * 改变图片的尺寸
+     *
+     * @param newWidth, newHeight, path
+     * @return boolean
+     */
+    public static boolean changeSize(File file, int newWidth, int newHeight) {
+        MyFileUtils.checkFileExists(file);
+        try {
+            //读取图片
+            BufferedInputStream in = new BufferedInputStream(new FileInputStream(file));
+            //字节流转图片对象
+            Image bi = ImageIO.read(in);
+            //构建图片流
+            BufferedImage tag = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+            //绘制改变尺寸后的图
+            tag.getGraphics().drawImage(bi, 0, 0, newWidth, newHeight, null);
+            //输出流
+            BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+            ImageIO.write(tag, "PNG", out);
+            in.close();
+            out.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    /**
+     * 改变图片的尺寸
+     *
+     * @param path      文件路径
+     * @param newWidth  需要设置的宽度
+     * @param newHeight 需要设置的高度
+     * @return boolean
+     */
+    public static boolean changeSize(String path, int newWidth, int newHeight) {
+        return changeSize(new File(path), newWidth, newHeight);
     }
 }
