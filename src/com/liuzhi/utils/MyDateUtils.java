@@ -10,6 +10,9 @@ public class MyDateUtils
     public static final String TIME_FORMAT_YMD      = "yyyy-MM-dd";
     public static final String TIME_FORMAT_TIMESTMP = "yyyyMMddhhmmss";
 
+    private MyDateUtils() {
+    }
+
     /**
      * 获取昨日时间
      * @return 昨天的时间
