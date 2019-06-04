@@ -456,4 +456,30 @@ public class MyStringUtils
         }
         return map;
     }
+
+    /**
+     * 生成随机UUID
+     * @return 返回唯一的UUID
+     */
+    public static String getRandom(int length)
+    {
+        return getRandom(null,null);
+    }
+    /**
+     * 生成随机UUID
+     * @return 返回唯一的UUID
+     */
+    public static String getRandom(Integer length,Boolean isUpperCase)
+    {
+        String uuid = UUID.randomUUID().toString();
+        if(length != null && length >0)
+        {
+            uuid = uuid.substring(0,length);
+        }
+        if(isUpperCase !=null && isUpperCase == false)
+        {
+            uuid = uuid.toLowerCase();
+        }
+        return uuid;
+    }
 }
