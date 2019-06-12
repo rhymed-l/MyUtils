@@ -250,9 +250,10 @@ public class MyHttpClient {
     /**
      * 向指定 URL 发送POST方法的请求(模拟from表单提交)
      *
-     * @param requestUrl 发送请求的 URL
-     * @param params     请求参数map。
-     * @param files      文件参数map。
+     * @param requestUrl        发送请求的 URL
+     * @param requestHeader     请求头参数map。
+     * @param params            请求参数map。
+     * @param files             文件参数map。
      * @return 所代表远程资源的响应结果
      */
     public static String sendPostByForm(String requestUrl, Map<String, String> requestHeader, Map<String, String> params, Map<String, File> files) {
