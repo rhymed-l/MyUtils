@@ -1,14 +1,20 @@
 package com.liuzhi.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class MyDateUtils
 {
-    public static final String TIME_FORMAT_YMDHMS   = "yyyy-MM-dd hh:mm:ss";
-    public static final String TIME_FORMAT_YMD      = "yyyy-MM-dd";
-    public static final String TIME_FORMAT_TIMESTMP = "yyyyMMddhhmmss";
+    public static final String TIME_FORMAT_YMD_G_HMS    = "yyyy-MM-dd hh:mm:ss";
+    public static final String TIME_FORMAT_YMD_G        = "yyyy-MM-dd";
+    public static final String TIME_FORMAT_YMD_H        = "yyyy/MM/dd";
+    public static final String TIME_FORMAT_YMD_H_HMS    = "yyyy/MM/dd hh:mm:ss";
+    public static final String TIME_FORMAT_TIMESTMP     = "yyyyMMddhhmmss";
+    public static final String TIME_FORMAT_TIME         = "yyyyMMdd";
+    public static final String TIME_FORMAT_CHINA        = "yyyy年MM月dd日";
+    public static final String TIME_FORMAT_CHINASTMP    = "yyyy年MM月dd日 hh:mm:ss";
 
     private MyDateUtils() {
     }
@@ -267,10 +273,10 @@ public class MyDateUtils
         }
         if(all)
         {
-            str = TIME_FORMAT_YMDHMS;
+            str = TIME_FORMAT_YMD_G_HMS;
         }else
         {
-            str = TIME_FORMAT_YMD;
+            str = TIME_FORMAT_YMD_G;
         }
         SimpleDateFormat df = new SimpleDateFormat(str);//设置日期格式
         return df.format(date);
@@ -374,5 +380,50 @@ public class MyDateUtils
         long dl2 = d2.getTime();
         long now = new Date().getTime();
         return new Date(dl1+dl2-now);
+    }
+    /**
+     * String 转 时间格式
+     * @param str 时间必须为 XXXX-XX-XX XX:XX:XX
+     * @return 转换后的时间
+     */
+    public static Date strToDate(String str)
+    {
+        String format =null;
+        if(str.contains("-") && str.contains(":"))
+        {
+            format = TIME_FORMAT_YMD_G_HMS;
+        }else if(str.contains("/") && str.length()==10)
+        {
+            format = TIME_FORMAT_YMD_G;
+        }else if(str.contains("/") && str.contains(":"))
+        {
+            format = TIME_FORMAT_YMD_H_HMS;
+        }else if(str.contains("/") && str.length()==10)
+        {
+            format = TIME_FORMAT_YMD_H;
+        }else if(str.contains("年") && str.contains("月")&& str.contains("日") && str.contains(":"))
+        {
+            format = TIME_FORMAT_CHINASTMP;
+        }else if(str.contains("年") && str.contains("月")&& str.contains("日") && str.length()==10)
+        {
+            format = TIME_FORMAT_CHINA;
+        }else if(str.length()==14)
+        {
+            format = TIME_FORMAT_TIMESTMP;
+        }else if(str.length()==8)
+        {
+            format = TIME_FORMAT_TIME;
+        }
+        if(format==null)
+        {
+           throw new RuntimeException("被转化的日期不正确");
+        }
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat(format);
+        try {
+            return simpleDateFormat.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new RuntimeException("被转化的日期不正确");
+        }
     }
 }
