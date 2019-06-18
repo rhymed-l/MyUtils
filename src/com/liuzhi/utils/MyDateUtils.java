@@ -7,15 +7,6 @@ import java.util.Date;
 
 public class MyDateUtils
 {
-    public static final String TIME_FORMAT_YMD_G_HMS    = "yyyy-MM-dd hh:mm:ss";
-    public static final String TIME_FORMAT_YMD_G        = "yyyy-MM-dd";
-    public static final String TIME_FORMAT_YMD_H        = "yyyy/MM/dd";
-    public static final String TIME_FORMAT_YMD_H_HMS    = "yyyy/MM/dd hh:mm:ss";
-    public static final String TIME_FORMAT_TIMESTMP     = "yyyyMMddhhmmss";
-    public static final String TIME_FORMAT_TIME         = "yyyyMMdd";
-    public static final String TIME_FORMAT_CHINA        = "yyyy年MM月dd日";
-    public static final String TIME_FORMAT_CHINASTMP    = "yyyy年MM月dd日 hh:mm:ss";
-
     private MyDateUtils() {
     }
 
@@ -273,10 +264,10 @@ public class MyDateUtils
         }
         if(all)
         {
-            str = TIME_FORMAT_YMD_G_HMS;
+            str = DateFormatter.TIME_FORMAT_YMD_G_HMS.getFormatter();
         }else
         {
-            str = TIME_FORMAT_YMD_G;
+            str = DateFormatter.TIME_FORMAT_YMD_G.getFormatter();
         }
         SimpleDateFormat df = new SimpleDateFormat(str);//设置日期格式
         return df.format(date);
@@ -302,7 +293,7 @@ public class MyDateUtils
         {
             date = new Date();
         }
-        SimpleDateFormat df = new SimpleDateFormat(TIME_FORMAT_TIMESTMP);//设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat(DateFormatter.TIME_FORMAT_TIMESTMP.getFormatter());//设置日期格式
         return df.format(date);
     }
     /**
@@ -391,28 +382,28 @@ public class MyDateUtils
         String format =null;
         if(str.contains("-") && str.contains(":"))
         {
-            format = TIME_FORMAT_YMD_G_HMS;
+            format = DateFormatter.TIME_FORMAT_YMD_G_HMS.getFormatter();
         }else if(str.contains("/") && str.length()==10)
         {
-            format = TIME_FORMAT_YMD_G;
+            format = DateFormatter.TIME_FORMAT_YMD_G.getFormatter();
         }else if(str.contains("/") && str.contains(":"))
         {
-            format = TIME_FORMAT_YMD_H_HMS;
+            format = DateFormatter.TIME_FORMAT_YMD_H_HMS.getFormatter();
         }else if(str.contains("/") && str.length()==10)
         {
-            format = TIME_FORMAT_YMD_H;
+            format = DateFormatter.TIME_FORMAT_YMD_H.getFormatter();
         }else if(str.contains("年") && str.contains("月")&& str.contains("日") && str.contains(":"))
         {
-            format = TIME_FORMAT_CHINASTMP;
+            format = DateFormatter.TIME_FORMAT_CHINASTMP.getFormatter();
         }else if(str.contains("年") && str.contains("月")&& str.contains("日") && str.length()==10)
         {
-            format = TIME_FORMAT_CHINA;
+            format = DateFormatter.TIME_FORMAT_CHINA.getFormatter();
         }else if(str.length()==14)
         {
-            format = TIME_FORMAT_TIMESTMP;
+            format = DateFormatter.TIME_FORMAT_TIMESTMP.getFormatter();
         }else if(str.length()==8)
         {
-            format = TIME_FORMAT_TIME;
+            format = DateFormatter.TIME_FORMAT_TIME.getFormatter();
         }
         if(format==null)
         {
@@ -425,5 +416,59 @@ public class MyDateUtils
             e.printStackTrace();
             throw new RuntimeException("被转化的日期不正确");
         }
+    }
+
+    /**
+     * 时间 转 String格式
+     * @param dateFormatter 时间格式
+     * @return 转换后的时间
+     */
+    public static String dateToStr(Date date,DateFormatter dateFormatter)
+    {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat(dateFormatter.getFormatter());
+        return simpleDateFormat.format(date);
+    }
+    /**
+     * 时间 转 String格式
+     * @return 转换后的时间 yyyy-MM-dd hh:mm:ss
+     */
+    public static String dateToStr(Date date)
+    {
+        return dateToStr(date,DateFormatter.TIME_FORMAT_YMD_G_HMS);
+    }
+
+}
+
+/**
+ * 时间格式化枚举
+ *     TIME_FORMAT_YMD_G_HMS  ("yyyy-MM-dd hh:mm:ss"    )  ,
+ *     TIME_FORMAT_YMD_G      ("yyyy-MM-dd"             )  ,
+ *     TIME_FORMAT_YMD_H      ("yyyy/MM/dd"             )  ,
+ *     TIME_FORMAT_YMD_H_HMS  ("yyyy/MM/dd hh:mm:ss"    )  ,
+ *     TIME_FORMAT_TIMESTMP   ("yyyyMMddhhmmss"         )  ,
+ *     TIME_FORMAT_TIME       ("yyyyMMdd"               )  ,
+ *     TIME_FORMAT_CHINA      ("yyyy年MM月dd日"            ),
+ *     TIME_FORMAT_CHINASTMP  ("yyyy年MM月dd日 hh:mm:ss"   );
+ */
+enum DateFormatter
+{
+    TIME_FORMAT_YMD_G_HMS  ("yyyy-MM-dd hh:mm:ss"    )  ,
+    TIME_FORMAT_YMD_G      ("yyyy-MM-dd"             )  ,
+    TIME_FORMAT_YMD_H      ("yyyy/MM/dd"             )  ,
+    TIME_FORMAT_YMD_H_HMS  ("yyyy/MM/dd hh:mm:ss"    )  ,
+    TIME_FORMAT_TIMESTMP   ("yyyyMMddhhmmss"         )  ,
+    TIME_FORMAT_TIME       ("yyyyMMdd"               )  ,
+    TIME_FORMAT_CHINA      ("yyyy年MM月dd日"            ),
+    TIME_FORMAT_CHINASTMP  ("yyyy年MM月dd日 hh:mm:ss"   );
+
+    private final String formatter;
+
+    DateFormatter(String formatter)
+    {
+        this.formatter = formatter;
+    }
+    public String getFormatter()
+    {
+        return formatter;
     }
 }
