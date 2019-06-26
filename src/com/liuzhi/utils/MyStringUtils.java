@@ -555,4 +555,15 @@ public class MyStringUtils
         }
         return matches;
     }
+
+    /**
+     * 从字符串中提取数字
+     * @param str 需要被提取的字符串
+     * @return 返回提取后的数字
+     */
+    public static Integer strExtractNumber(String str)
+    {
+        String regex = "\\D";
+        return Integer.valueOf(str.replaceAll(regex,""));
+    }
 }
