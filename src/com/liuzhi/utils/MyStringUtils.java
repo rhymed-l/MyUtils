@@ -566,4 +566,19 @@ public class MyStringUtils
         String regex = "\\D";
         return Integer.valueOf(str.replaceAll(regex,""));
     }
+    /**
+     * 将字符串的数字填补为指定长度,若不够则向前填补0,若够,则截取为指定长度
+     * @param str 需要被补充的的字符串
+     * @return 返回补充后的字符串
+     */
+    public static String strZeroize(String str,int places)
+    {
+            StringBuffer sb = new StringBuffer();
+            for(int i=-1;i<places-str.length();i++)
+            {
+                sb.append("0");
+            }
+            sb.append(str);
+            return sb.toString().substring(sb.length()-places);
+    }
 }
