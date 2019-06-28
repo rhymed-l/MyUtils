@@ -42,6 +42,20 @@ public class MyDateUtils
         return cal.getTime();
     }
     /**
+     * 获取指定的时间加上多少天的时间
+     * @return 指定的时间
+     */
+    public static Date addAssignTime(Date date,Integer day)
+    {
+        Calendar cal=Calendar.getInstance();
+        if(date==null){
+            date = new Date();
+        }
+        cal.setTime(date);
+        cal.add(Calendar.DATE,day==null?0:day);
+        return cal.getTime();
+    }
+    /**
      * 获取指定的0点0分的时间
      * @return 指定的时间
      */
@@ -54,7 +68,7 @@ public class MyDateUtils
      * 获取今日0点0分的时间
      * @return 昨天的时间
      */
-    public static Date getTodaysZeroTime()
+    public static Date getTodayZeroTime()
     {
         return getAssignZeroTime(new Date());
     }
@@ -244,7 +258,7 @@ public class MyDateUtils
      */
     public static String getTodayZeroTimeToStr(Boolean all)
     {
-        return getAssignTimeToStr(getTodaysZeroTime(),all);
+        return getAssignTimeToStr(getTodayZeroTime(),all);
     }
 
     /**
@@ -438,5 +452,4 @@ public class MyDateUtils
     {
         return dateToStr(date,DateFormatter.TIME_FORMAT_YMD_G_HMS);
     }
-
 }
