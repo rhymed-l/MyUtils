@@ -171,6 +171,21 @@ public class MyStringUtils
     }
 
     /**
+     * 判断是否为数字
+     * @param str 传入的字符串
+     * @return 是整数返回true,否则返回false
+     */
+    public static boolean isDouble(String str)
+    {
+        if(isEmpty(str))
+        {
+            return false;
+        }
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*\\.?[\\d]+$");
+        return pattern.matcher(str).matches();
+    }
+
+    /**
      * 删除所有不可见字符
      * @param str 传入的字符串
      * @return 返回删除全部不可见字符
