@@ -169,6 +169,25 @@ public class MyStringUtils
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
         return pattern.matcher(str).matches();
     }
+    /**
+     * 截取字符串
+     * @param length 需要截取多长
+     * @return 返回所截取长度的字符串
+     */
+    public static String subString(String str,int length)
+    {
+        return subString(str,0,length);
+    }
+    /**
+     * 截取字符串
+     * @param beginIndex 从那个位置开始
+     * @param endIndex 从那个位置结束
+     * @return 返回所截取长度的字符串
+     */
+    public static String subString(String str,int beginIndex,int endIndex)
+    {
+        return str.substring(beginIndex,endIndex>str.length()?str.length():endIndex);
+    }
 
     /**
      * 判断是否为数字
