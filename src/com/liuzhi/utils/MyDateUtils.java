@@ -452,4 +452,16 @@ public class MyDateUtils
     {
         return dateToStr(date,DateFormatter.TIME_FORMAT_YMD_G_HMS);
     }
+
+    /**
+     * 判断日期1的时间是否大于日期2的时间
+     * @param date1 日期1
+     * @param date2 日期2
+     * @return 如果大于返回真,否则假
+     */
+    public static Boolean dateCompareGreater(Date date1,Date date2)
+    {
+        return date1.getTime()>date2.getTime();
+    }
+
 }
