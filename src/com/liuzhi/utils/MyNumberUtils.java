@@ -41,5 +41,15 @@ public class MyNumberUtils
     {
         return number==null?-1:--number;
     }
-
+    /**
+     * 获取这个值自减后的值
+     * @param number 需要判断的数字
+     * @return 返回这个值自减后的值
+     */
+    public static Integer getIntegerAddNumer(Integer integer,Integer number)
+    {
+        integer = (integer == null ? 0 : integer);
+        number = (number == null ? 0 : number);
+        return integer+number;
+    }
 }
