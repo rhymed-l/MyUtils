@@ -25,7 +25,7 @@ public class MyHeavyToolsUtils
         try {
             String dirPath = Thread.currentThread().getContextClassLoader().getResource("")+"\\h5Statistics";
             dirPath         = dirPath.replaceAll("file:","");
-            pathUV          = dirPath + "\\uv:"         ;
+            pathUV          = dirPath + "\\uv_"         ;
 
             File dir        = new File(dirPath)         ;
             Date date       = new Date()                ;//日期
@@ -100,5 +100,9 @@ public class MyHeavyToolsUtils
                 file1.delete();
                 sbUV = null;
             }
+    }
+
+    public static void main(String[] args) {
+        System.err.println(heavy("123","1234"));
     }
 }
