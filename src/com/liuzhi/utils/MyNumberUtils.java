@@ -22,4 +22,24 @@ public class MyNumberUtils
     {
         return bigDecimal==null?new BigDecimal("0.00"):bigDecimal;
     }
+
+    /**
+     * 获取这个值自增后的值
+     * @param number 需要判断的数字
+     * @return 返回这个值自增后的值
+     */
+    public static Integer getIntegerIncrement(Integer number)
+    {
+        return number==null?1:++number;
+    }
+    /**
+     * 获取这个值自减后的值
+     * @param number 需要判断的数字
+     * @return 返回这个值自减后的值
+     */
+    public static Integer getIntegerDecrement(Integer number)
+    {
+        return number==null?-1:--number;
+    }
+
 }
