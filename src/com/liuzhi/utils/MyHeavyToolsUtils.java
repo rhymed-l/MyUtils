@@ -101,8 +101,4 @@ public class MyHeavyToolsUtils
                 sbUV = null;
             }
     }
-
-    public static void main(String[] args) {
-        System.err.println(heavy("123","1234"));
-    }
 }
