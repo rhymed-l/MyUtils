@@ -42,6 +42,34 @@ public class MyNumberUtils
         return number==null?-1:--number;
     }
     /**
+     * 获取这个值自增后的值
+     * @param number 需要判断的数字
+     * @return 返回这个值自增后的值
+     */
+    public static Integer getIntegerIncrement(String number)
+    {
+        if(MyStringUtils.isInteger(number))
+        {
+            Integer integer = Integer.valueOf(number);
+            return ++integer;
+        }
+        return number == null ? 1 : null;
+    }
+    /**
+     * 获取这个值自减后的值
+     * @param number 需要判断的数字
+     * @return 返回这个值自减后的值
+     */
+    public static Integer getIntegerDecrement(String number)
+    {
+        if(MyStringUtils.isInteger(number))
+        {
+            Integer integer = Integer.valueOf(number);
+            return --integer;
+        }
+        return number == null ? -1 : null;
+    }
+    /**
      * 获取这个值自减后的值
      * @param number 需要判断的数字
      * @return 返回这个值自减后的值
