@@ -464,4 +464,32 @@ public class MyDateUtils
         return date1.getTime()>date2.getTime();
     }
 
+    /**
+     * 获取当前年份
+     * @return 返回当前年份
+     */
+    public static String getCurrentYeay()
+    {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy");
+        return simpleDateFormat.format(new Date());
+    }
+
+    /**
+     * 获取当前月份
+     * @return 返回当前月份
+     */
+    public static String getCurrentMonth()
+    {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM");
+        return simpleDateFormat.format(new Date());
+    }
+    /**
+     * 获取当前天数
+     * @return 返回当前天数
+     */
+    public static String getCurrentDay()
+    {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd");
+        return simpleDateFormat.format(new Date());
+    }
 }
