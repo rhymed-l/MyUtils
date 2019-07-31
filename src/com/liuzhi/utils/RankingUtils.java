@@ -52,6 +52,14 @@ public class RankingUtils
         }
         return sb.toString();
     }
+
+    /**
+     *
+     */
+    public static void clearRanKing()
+    {
+        list = new ArrayList<>();
+    }
 }
 class RanKingDO
 {
