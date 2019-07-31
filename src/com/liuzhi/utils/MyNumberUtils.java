@@ -80,4 +80,5 @@ public class MyNumberUtils
         number = (number == null ? 0 : number);
         return integer+number;
     }
+
 }
