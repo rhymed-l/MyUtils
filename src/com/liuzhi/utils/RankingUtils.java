@@ -15,7 +15,14 @@ public class RankingUtils
     /**
      * 放排名
      */
-    public static boolean putRanKing(String key) {
+    public static boolean putRanKing(String key)
+    {
+        return putRanKing(key,null);
+    }
+    /**
+     * 放排名
+     */
+    public static boolean putRanKing(String key,Integer val) {
         boolean contains = false;
         for (RanKingDO ranKingDO : list) {
 
@@ -27,7 +34,13 @@ public class RankingUtils
         if (!contains) {
             RanKingDO ranKingDO = new RanKingDO();
             ranKingDO.setKey(key);
-            ranKingDO.setVal(1);
+            if(val==null)
+            {
+                ranKingDO.setVal(1);
+            }else
+                {
+                    ranKingDO.setVal(val);
+                }
             list.add(ranKingDO);
         }
         return true;
