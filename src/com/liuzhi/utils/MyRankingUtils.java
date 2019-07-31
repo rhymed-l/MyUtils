@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 /**
  * 简单的排名工具类
  */
-public class RankingUtils
+public class MyRankingUtils
 {
 
     private static List<RanKingDO> list = new ArrayList<>();
