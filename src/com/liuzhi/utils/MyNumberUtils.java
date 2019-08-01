@@ -1,6 +1,7 @@
 package com.liuzhi.utils;
 
 import java.math.BigDecimal;
+import java.util.Random;
 
 public class MyNumberUtils
 {
@@ -81,4 +82,15 @@ public class MyNumberUtils
         return integer+number;
     }
 
+    /**
+     * 获取随机数
+     * @param minVal 最小值取值
+     * @param maxVal 最大值取值
+     * @return 返回最小值介于最大值之间的数并包括最小值最大值
+     */
+    public static Integer getRandomNumber(Integer minVal,Integer maxVal)
+    {
+        Random random = new Random();
+        return random.nextInt(maxVal+1-minVal)+minVal;
+    }
 }
