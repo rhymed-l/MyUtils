@@ -6,6 +6,8 @@ import java.util.Properties;
 
 public class MyComputerInfoUtils
 {
+    private MyComputerInfoUtils(){}
+
     private static Properties props = System.getProperties();
     private static InetAddress addr;
 

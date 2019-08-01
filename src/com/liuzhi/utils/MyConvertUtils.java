@@ -8,6 +8,8 @@ import java.util.*;
  */
 public class MyConvertUtils
 {
+    private MyConvertUtils(){}
+
     public static  <T>T mapToObject(Map map,Class<T> tClass)
     {
         T t;
