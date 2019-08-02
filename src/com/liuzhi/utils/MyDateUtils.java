@@ -65,8 +65,60 @@ public class MyDateUtils
     }
 
     /**
+     * 获取指定的0点0分的时间
+     * @return 指定的时间
+     */
+    public static Date getAssignZeroTime(Integer integer)
+    {
+        Date date = getAssignTime(integer);
+        return getAssignZeroTime(date,null);
+    }
+
+    /**
+     * 获取指定的天数的结束时间
+     * @return 指定的时间
+     */
+    public static Date getAssignEndTime(Integer integer)
+    {
+        Date date = getAssignTime(integer);
+        return getAssignEndTime(date,null);
+    }
+    /**
+     * 获取指定的天数的结束时间
+     * @return 指定的时间
+     */
+    public static Date getAssignEndTime(Date date)
+    {
+        return getAssignEndTime(date,null);
+    }
+
+    /**
+     * 获取今天的结束时间
+     * @return 指定的时间
+     */
+    public static Date getTodayEndTime()
+    {
+        return getAssignEndTime(null,null);
+    }
+
+    private static Date getAssignEndTime(Date date,Integer day)
+    {
+        Calendar cal=Calendar.getInstance();
+        if(date==null){
+            date = new Date();
+        }
+        cal.setTime(date);
+        cal.add(Calendar.DATE,day==null?0:day);
+        cal.set(Calendar.HOUR_OF_DAY, 23);//设置时
+        cal.set(Calendar.MINUTE,59);//设置分
+        cal.set(Calendar.SECOND,59);//设置秒
+        cal.set(Calendar.MILLISECOND,999);//设置毫秒
+        return cal.getTime();
+    }
+
+    /**
      * 获取今日0点0分的时间
-     * @return 昨天的时间
+     * @return 指定的时间
      */
     public static Date getTodayZeroTime()
     {
