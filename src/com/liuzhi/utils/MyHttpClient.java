@@ -5,10 +5,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MyHttpClient {
 
@@ -123,6 +120,19 @@ public class MyHttpClient {
             }
         }
         return result;
+    }
+    /**
+     * 向指定 URL 发送POST方法的请求
+     *
+     * @param url   发送请求的 URL
+     * @param map 请求参数
+     * @return 所代表远程资源的响应结果
+     */
+    public static String sendPost(String url, Map<String,String> map)
+    {
+        StringBuffer sb = new StringBuffer();
+        map.forEach((key,val)->sb.append("&").append(key+"=").append(val));
+        return sendPost(url,sb.toString().substring(1));
     }
 
     /**
