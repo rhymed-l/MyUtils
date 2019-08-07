@@ -3,6 +3,7 @@ package com.liuzhi.utils;
 
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
@@ -360,5 +361,63 @@ public class MyHttpClient {
             }
         }
         return result;
+    }
+
+    /**
+     * 下载图片到本地
+     * @param urlList URL地址
+     * @param path 保存的路径
+     */
+    private static void downloadPicture(String urlList,String path) {
+        URL url = null;
+        try {
+            url = new URL(urlList);
+            DataInputStream dataInputStream = new DataInputStream(url.openStream());
+
+            FileOutputStream fileOutputStream = new FileOutputStream(new File(path));
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+            byte[] buffer = new byte[1024];
+            int length;
+
+            while ((length = dataInputStream.read(buffer)) > 0) {
+                output.write(buffer, 0, length);
+            }
+            fileOutputStream.write(output.toByteArray());
+            dataInputStream.close();
+            fileOutputStream.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 读图片数据
+     * @param urlList URL地址
+     */
+    private static byte[] readPicture(String urlList) {
+        URL url = null;
+        try {
+            url = new URL(urlList);
+            DataInputStream dataInputStream = new DataInputStream(url.openStream());
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+
+            byte[] buffer = new byte[1024];
+            int length;
+
+            while ((length = dataInputStream.read(buffer)) > 0) {
+                output.write(buffer, 0, length);
+            }
+            dataInputStream.close();
+            byte[] bytes = output.toByteArray();
+            output.close();
+            return bytes;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
