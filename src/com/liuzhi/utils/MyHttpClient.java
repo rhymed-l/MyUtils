@@ -368,7 +368,7 @@ public class MyHttpClient {
      * @param urlList URL地址
      * @param path 保存的路径
      */
-    private static void downloadPicture(String urlList,String path) {
+    public static void downloadPicture(String urlList,String path) {
         URL url = null;
         try {
             url = new URL(urlList);
@@ -396,7 +396,7 @@ public class MyHttpClient {
      * 读图片数据
      * @param urlList URL地址
      */
-    private static byte[] readPicture(String urlList) {
+    public static byte[] readPicture(String urlList) {
         URL url = null;
         try {
             url = new URL(urlList);
