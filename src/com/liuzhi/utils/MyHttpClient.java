@@ -2,10 +2,7 @@ package com.liuzhi.utils;
 
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 import java.util.*;
 
 public class MyHttpClient {
@@ -279,9 +276,6 @@ public class MyHttpClient {
             HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
             connection.setRequestProperty("accept", "*/*");
             connection.setRequestProperty("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0");
-            for (Map.Entry<String, String> entry : requestHeader.entrySet()) {
-                connection.setRequestProperty(entry.getKey(), entry.getValue());
-            }
             connection.setDoOutput(true);
             connection.setDoInput(true);
             connection.setRequestMethod("POST");
