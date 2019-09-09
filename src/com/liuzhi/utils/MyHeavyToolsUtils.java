@@ -17,8 +17,8 @@ public class MyHeavyToolsUtils
 {
     private final static Logger logger = Logger.getGlobal();
 
-    private static StringBuffer sbUV                ;//聚道IP UV(H5页面打开的UV)
-    private static String       pathUV              ;//打开的路径
+    private static StringBuffer sbUV    = new StringBuffer()            ;//聚道IP UV(H5页面打开的UV)
+    private static String       pathUV  = new String()                  ;//打开的路径
     //加载数据
     static
     {
