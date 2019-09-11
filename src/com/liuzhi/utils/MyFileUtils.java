@@ -2,24 +2,21 @@ package com.liuzhi.utils;
 
 import com.liuzhi.utils.type.FileTypeEnum;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 
-public class MyFileUtils
-{
-    private MyFileUtils(){}
+public class MyFileUtils {
+    private MyFileUtils() {
+    }
 
 
     /**
      * 根据文件路径获取文件真实类型后缀
+     *
      * @param filePath 文件路径
      * @return 文件头信息
      */
-    public static String getRealFilePostfix(String filePath)
-    {
-        if(filePath==null)
-        {
+    public static String getRealFilePostfix(String filePath) {
+        if (filePath == null) {
             return "";
         }
         File file = new File(filePath);
@@ -28,11 +25,11 @@ public class MyFileUtils
 
     /**
      * 根据文件获取文件真实类型后缀
+     *
      * @param file 文件
      * @return 文件头信息
      */
-    public static String getRealFilePostfix(File file)
-    {
+    public static String getRealFilePostfix(File file) {
         MyFileUtils.checkFileExists(file);
         FileInputStream is = null;
         String value = "";
@@ -52,39 +49,37 @@ public class MyFileUtils
         }
         return FileTypeEnum.getPostfixByHex(value);
     }
+
     /**
      * 根据文件路径获取文件类型后缀
+     *
      * @param filePath 文件路径
      * @return 文件头信息
      */
-    public static String getFilePostfix(String filePath)
-    {
-        if(filePath==null)
-        {
+    public static String getFilePostfix(String filePath) {
+        if (filePath == null) {
             return "";
         }
-        return MyStringUtils.getTextRights(filePath,".");
+        return MyStringUtils.getTextRights(filePath, ".");
     }
 
     /**
      * 根据文件获取文件类型后缀
+     *
      * @param file 文件
      * @return 文件头信息
      */
-    public static String getFilePostfix(File file)
-    {
-        if(file==null)
-        {
+    public static String getFilePostfix(File file) {
+        if (file == null) {
             return "";
         }
-        return MyStringUtils.getTextRights(file.getName(),".");
+        return MyStringUtils.getTextRights(file.getName(), ".");
     }
 
     /**
      * 将要读取文件头信息的文件的byte数组转换成string类型表示
      *
-     * @param src
-     *            要读取文件头信息的文件的byte数组
+     * @param src 要读取文件头信息的文件的byte数组
      * @return 文件头十六进制信息
      */
     private static String bytesToHexString(byte[] src) {
@@ -105,28 +100,45 @@ public class MyFileUtils
         return builder.toString();
     }
 
-    public static void checkFileExists(File file)
-    {
-        if(!file.exists())
-        {
+    public static void checkFileExists(File file) {
+        if (!file.exists()) {
             throw new RuntimeException("被读取的文件不存在");
         }
     }
 
     /**
      * 文件名修改
-     * @param file 需要修改的文件
+     * @param file    需要修改的文件
      * @param newName 修改文件名
      * @return
      */
-    public static File fileRename(File file,String newName)
-    {
+    public static File fileRename(File file, String newName) {
         checkFileExists(file);
-        String postfix ="." + getRealFilePostfix(file);
+        String postfix = "." + getRealFilePostfix(file);
         String oldPath = file.getParent();
-        oldPath =MyStringUtils.isEmpty(oldPath)==true?"":oldPath+File.separator;
-        File newFile = new File(oldPath+MyStringUtils.getTextLefts(newName,".")+postfix);
+        oldPath = MyStringUtils.isEmpty(oldPath) == true ? "" : oldPath + File.separator;
+        File newFile = new File(oldPath + MyStringUtils.getTextLefts(newName, ".") + postfix);
         file.renameTo(newFile);
         return newFile;
+    }
+
+    /**
+     * 文件转字节数组
+     * @param file 需要转换的文件
+     * @return 返回字节数组
+     */
+    public static byte[] getBytesByFile(File file) throws Exception {
+        FileInputStream fis = new FileInputStream(file);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
+        byte[] b = new byte[1000];
+        int n;
+        while ((n = fis.read(b)) != -1)
+        {
+            bos.write(b, 0, n);
+        }
+        fis.close();
+        byte[] data = bos.toByteArray();
+        bos.close();
+        return data;
     }
 }
