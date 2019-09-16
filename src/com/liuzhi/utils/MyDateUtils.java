@@ -375,6 +375,19 @@ public class MyDateUtils
         int days = (int) ((date2.getTime() - date1.getTime()) / (1000*3600*24));
         return Math.abs(days);
     }
+
+    /**
+     * 计算两个日期之间相差多少秒(取绝对值)
+     * @param date1 日期1
+     * @param date2 日期2
+     * @return 两个时间相差的天数
+     */
+    public static int differentSecondByMillisecond(Date date1,Date date2)
+    {
+        int second = (int) ((date2.getTime() - date1.getTime()) / (1000));
+        return Math.abs(second);
+    }
+
     /**
      * 计算两个日期之间相差多少天,不足一天按一天算(取绝对值)
      * @param date1 日期1
