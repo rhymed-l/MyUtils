@@ -23,8 +23,6 @@ public class MyImgVerificationCodeUtils
     private static int codeCount = 4;
     // 验证码干扰线数
     private static int lineCount = 50;
-    // 验证码
-    private static String code = null;
 
     private static Map<String,CodeDO> map = new HashMap<>();
 
@@ -77,6 +75,9 @@ public class MyImgVerificationCodeUtils
         return b;
     }
 
+    public static void main(String[] args) {
+        System.err.println(createImgCodeToBase64().getData());
+    }
     /**
      * @param id 验证码ID
      * @param code 验证码
@@ -118,7 +119,7 @@ public class MyImgVerificationCodeUtils
             g.drawString(strRand, (i + 1) * codeX, getRandomNumber(height / 2) + 25);
             randomCode.append(strRand);
         }
-        code = randomCode.toString();
+        String code = randomCode.toString();
         imgCodeDO.setCode(code);
         imgCodeDO.setId(UUID.randomUUID().toString().replaceAll("-",""));
         try {
@@ -126,12 +127,15 @@ public class MyImgVerificationCodeUtils
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(buffImg, "JPEG", baos);//图片格式
             byte[] bytes = baos.toByteArray();
-            imgCodeDO.setData("data:image/png;base64,"+ new BASE64Encoder().encodeBuffer(bytes).trim());
+            String data = "data:image/png;base64,"+ new BASE64Encoder().encodeBuffer(bytes).trim();
+            data.replaceAll("\\s","");
+            imgCodeDO.setData(data);
         } catch (Exception e) {
             e.printStackTrace();
         }
         //保存到Map中
         CodeDO codeDO = new CodeDO(imgCodeDO.getId(),imgCodeDO.getCode());
+
         map.put(imgCodeDO.getId(),codeDO);
         return imgCodeDO;
     }
