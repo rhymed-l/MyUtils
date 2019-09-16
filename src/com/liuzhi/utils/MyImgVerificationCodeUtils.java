@@ -25,8 +25,6 @@ public class MyImgVerificationCodeUtils
     private static int lineCount = 50;
     // 验证码
     private static String code = null;
-    // 验证码图片Buffer
-    private static BufferedImage buffImg = null;
 
     private static Map<String,CodeDO> map = new HashMap<>();
 
@@ -42,7 +40,6 @@ public class MyImgVerificationCodeUtils
     public static void setExpirationTime(int expirationTime) {
         MyImgVerificationCodeUtils.expirationTime = expirationTime;
     }
-
     static
     {
         Timer timer = new Timer();
@@ -71,7 +68,13 @@ public class MyImgVerificationCodeUtils
             map.remove(imgCodeDO.getId());
             return null;
         }
-        return codeDO.getCode().trim().equalsIgnoreCase(imgCodeDO.getCode().trim());
+        Boolean b = codeDO.getCode().trim().equalsIgnoreCase(imgCodeDO.getCode().trim());
+        //校验成功删除KEY
+        if(b)
+        {
+            map.remove(imgCodeDO.getId());
+        }
+        return b;
     }
 
     /**
@@ -93,7 +96,7 @@ public class MyImgVerificationCodeUtils
         codeX = width / (codeCount + 3);// 每个字符的宽度
 
         // 图像buffer
-        buffImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage buffImg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = buffImg.createGraphics();
 
         // 将图像填充为白色
@@ -217,3 +220,5 @@ class CodeDO{
         this.createTime = createTime;
     }
 }
+
+
