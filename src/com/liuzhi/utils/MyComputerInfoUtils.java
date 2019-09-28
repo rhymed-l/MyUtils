@@ -31,7 +31,7 @@ public class MyComputerInfoUtils
     /**
      * 获取操作系统版本
      */
-    public static String getgetSystemVersion()
+    public static String getSystemVersion()
     {
         return props.getProperty("os.version");
     }
