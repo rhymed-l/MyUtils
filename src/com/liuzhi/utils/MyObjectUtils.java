@@ -1,11 +1,10 @@
 package com.liuzhi.utils;
 
+import com.liuzhi.utils.pojo.ImgCodeDO;
 import com.sun.istack.internal.NotNull;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -102,5 +101,71 @@ public class MyObjectUtils
             }
         }
         return to;
+    }
+    /**
+     * copyNotNull 将源对象里面不为Nu'll的对象拷贝到目标对象里面
+     * @param sourceObj 源对象
+     * @param targetObj 目标对象
+     * @return T 返回新的对象
+     */
+    public static <T> void copyNotEmpty(T sourceObj, T targetObj) {
+        Class target = targetObj.getClass();
+        Class source = sourceObj.getClass();
+        if(target != source)
+        {
+            throw new RuntimeException("对象不一致不允许拷贝");
+        }
+        Field[] sourceFields = source.getDeclaredFields();
+        Field[] targetFields = target.getDeclaredFields();
+
+        for(Field sourceField : sourceFields)
+        {
+            sourceField.setAccessible(true);
+            try {
+                Object obj = sourceField.get(sourceObj);
+                if(MyObjectUtils.objIsEmpty(obj))
+                {//目标属性为空跳过本次循环
+                    continue;
+                }
+                for(Field targetField : targetFields)
+                {
+                    if(sourceField.getName().equalsIgnoreCase(targetField.getName()) && sourceField.getType() == targetField.getType())
+                    {
+                        targetField.setAccessible(true);
+                        targetField.set(targetObj,obj);
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 判断对象是否为空
+     * @param obj 需要判断的对象
+     * @return 如果是空则返回真,否则取反
+     */
+    public static boolean objIsEmpty(Object obj)
+    {
+        if(obj == null)
+        {
+            return true;
+        }else if(obj instanceof String)
+        {
+            String str = (String) obj;
+            if(str.trim().equals(""))
+            {
+                return true;
+            }
+        }else if(obj instanceof Collection)
+        {
+            return ((Collection) obj).isEmpty();
+        }else if(obj instanceof Map)
+        {
+            return ((Map) obj).isEmpty();
+        }
+        return false;
+
     }
 }

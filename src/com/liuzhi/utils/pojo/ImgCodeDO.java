@@ -39,4 +39,13 @@ public class ImgCodeDO
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "ImgCodeDO{" +
+                "id='" + id + '\'' +
+                ", code='" + code + '\'' +
+                ", data='" + data + '\'' +
+                '}';
+    }
 }
