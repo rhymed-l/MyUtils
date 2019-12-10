@@ -1,6 +1,5 @@
 package com.liuzhi.utils;
 
-import com.liuzhi.utils.pojo.ImgCodeDO;
 import com.sun.istack.internal.NotNull;
 
 import java.lang.reflect.Field;
@@ -9,6 +8,7 @@ import java.util.*;
 
 /**
  * 对象处理工具类
+ * @author LiuZhi
  */
 public class MyObjectUtils
 {
