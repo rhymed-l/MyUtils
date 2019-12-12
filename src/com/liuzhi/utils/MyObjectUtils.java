@@ -102,11 +102,11 @@ public class MyObjectUtils
         }
         return to;
     }
+
     /**
      * copyNotNull 将源对象里面不为Nu'll的对象拷贝到目标对象里面
      * @param sourceObj 源对象
      * @param targetObj 目标对象
-     * @return T 返回新的对象
      */
     public static <T> void copyNotEmpty(T sourceObj, T targetObj) {
         Class target = targetObj.getClass();
@@ -124,15 +124,18 @@ public class MyObjectUtils
             try {
                 Object obj = sourceField.get(sourceObj);
                 if(MyObjectUtils.objIsEmpty(obj))
-                {//目标属性为空跳过本次循环
+                {//数据源属性为空跳过本次循环
                     continue;
                 }
                 for(Field targetField : targetFields)
                 {
                     if(sourceField.getName().equalsIgnoreCase(targetField.getName()) && sourceField.getType() == targetField.getType())
-                    {
+                    {//如果目标对象没有数据则替换数据
                         targetField.setAccessible(true);
-                        targetField.set(targetObj,obj);
+                        if(MyObjectUtils.objIsEmpty(targetField.get(targetObj)))
+                        {
+                            targetField.set(targetObj,obj);
+                        }
                     }
                 }
             } catch (IllegalAccessException e) {
@@ -140,7 +143,6 @@ public class MyObjectUtils
             }
         }
     }
-
     /**
      * 判断对象是否为空
      * @param obj 需要判断的对象
