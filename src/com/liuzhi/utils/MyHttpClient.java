@@ -18,8 +18,22 @@ public class MyHttpClient {
      * @return URL 所代表远程资源的响应结果
      */
     public static String sendGet(String url, String param) {
+        return sendGet(url,param,"UTF-8");
+    }
+    /**
+     * 向指定URL发送GET方法的请求
+     *
+     * @param url   发送请求的URL
+     * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
+     * @return URL 所代表远程资源的响应结果
+     */
+    public static String sendGet(String url, String param,String charset) {
         String result = "";
         BufferedReader in = null;
+        if(charset == null || charset.isEmpty())
+        {
+            charset = "UTF-8";
+        }
         try {
             String urlNameString = url + param;
             URL realUrl = new URL(urlNameString);
@@ -30,6 +44,7 @@ public class MyHttpClient {
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setRequestProperty("user-agent",
                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+            connection.setRequestProperty("ContentType", "application/json;charset="+charset);
             // 建立实际的连接
             connection.connect();
             // 获取所有响应头字段
