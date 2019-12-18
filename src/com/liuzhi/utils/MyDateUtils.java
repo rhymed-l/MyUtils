@@ -7,6 +7,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * @author LiuZhi
+ * 时间日期工具类
+ */
 public class MyDateUtils
 {
     private MyDateUtils() {

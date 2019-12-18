@@ -1,6 +1,8 @@
 package com.liuzhi.utils.type;
 
 /**
+ * @author LiuZhi
+ *
  * 时间格式化枚举
  *     TIME_FORMAT_YMD_G_HMS  ("yyyy-MM-dd HH:mm:ss"    )  ,
  *     TIME_FORMAT_YMD_G      ("yyyy-MM-dd"             )  ,
