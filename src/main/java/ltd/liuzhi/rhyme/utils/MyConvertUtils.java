@@ -1,4 +1,4 @@
-package com.liuzhi.utils;
+package ltd.liuzhi.rhyme.utils;
 
 import java.lang.reflect.Field;
 import java.util.*;

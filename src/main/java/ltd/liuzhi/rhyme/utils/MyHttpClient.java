@@ -1,4 +1,4 @@
-package com.liuzhi.utils;
+package ltd.liuzhi.rhyme.utils;
 
 
 import java.io.*;

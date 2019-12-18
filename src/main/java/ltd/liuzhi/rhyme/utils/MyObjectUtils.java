@@ -1,6 +1,4 @@
-package com.liuzhi.utils;
-
-import com.sun.istack.internal.NotNull;
+package ltd.liuzhi.rhyme.utils;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -37,7 +35,7 @@ public class MyObjectUtils
         }
     }
 
-    public static <T> T instantiate(@NotNull Class<T> clazz) {
+    public static <T> T instantiate(Class<T> clazz) {
         MyUtils.notNull(clazz, "Class must not be null");
         if (clazz.isInterface()) {
             throw new RuntimeException("不能对接口实例化");

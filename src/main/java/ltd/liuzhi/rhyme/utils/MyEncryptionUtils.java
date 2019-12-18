@@ -1,4 +1,4 @@
-package com.liuzhi.utils;
+package ltd.liuzhi.rhyme.utils;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;

@@ -1,6 +1,6 @@
-package com.liuzhi.utils;
+package ltd.liuzhi.rhyme.utils;
 
-import com.liuzhi.utils.type.FileTypeEnum;
+import main.java.ltd.liuzhi.rhyme.utils.type.FileTypeEnum;
 
 import java.io.*;
 

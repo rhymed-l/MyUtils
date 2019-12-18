@@ -1,4 +1,4 @@
-package com.liuzhi.utils.type;
+package ltd.liuzhi.rhyme.utils.type;
 
 /**
  * @author LiuZhi

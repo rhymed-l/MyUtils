@@ -1,4 +1,4 @@
-package com.liuzhi.utils;
+package ltd.liuzhi.rhyme.utils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

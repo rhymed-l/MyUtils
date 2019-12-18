@@ -1,7 +1,6 @@
-package com.liuzhi.utils;
+package ltd.liuzhi.rhyme.utils;
 
-import com.liuzhi.utils.type.DateFormatter;
-import com.sun.istack.internal.NotNull;
+import main.java.ltd.liuzhi.rhyme.utils.type.DateFormatter;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -56,7 +55,7 @@ public class MyHeavyToolsUtils
     /**
      * 设置用户打开UV,如果存在返回真,否则添加后返回假
      */
-    public static boolean heavy(@NotNull String key1,@NotNull String key2)
+    public static boolean heavy(String key1,String key2)
     {
         //删除昨日数据
         removeFile();

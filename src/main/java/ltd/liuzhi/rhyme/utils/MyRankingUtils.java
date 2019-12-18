@@ -1,4 +1,4 @@
-package com.liuzhi.utils;
+package ltd.liuzhi.rhyme.utils;
 
 import java.util.ArrayList;
 import java.util.List;

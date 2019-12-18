@@ -1,7 +1,6 @@
-package com.liuzhi.utils;
+package ltd.liuzhi.rhyme.utils;
 
-import com.liuzhi.utils.pojo.ImgCodeDO;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import main.java.ltd.liuzhi.rhyme.utils.pojo.ImgCodeDO;
 import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;

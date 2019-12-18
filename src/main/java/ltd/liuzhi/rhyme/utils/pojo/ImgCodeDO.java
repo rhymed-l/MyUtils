@@ -1,4 +1,4 @@
-package com.liuzhi.utils.pojo;
+package ltd.liuzhi.rhyme.utils.pojo;
 
 public class ImgCodeDO
 {

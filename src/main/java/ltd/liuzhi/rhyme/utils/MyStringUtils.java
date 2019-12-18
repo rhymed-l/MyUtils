@@ -1,6 +1,6 @@
-package com.liuzhi.utils;
+package ltd.liuzhi.rhyme.utils;
 
-import com.sun.istack.internal.NotNull;
+
 
 import java.security.MessageDigest;
 import java.util.*;
@@ -475,7 +475,7 @@ public class MyStringUtils
      * @param url 需要转换的链接地址
      * @return 将参数用Map形式返回
      */
-    public static Map<String,String> getUrlParam(@NotNull String url)
+    public static Map<String,String> getUrlParam(String url)
     {
         Map<String,String> map = new HashMap<>();
         String[] strings = url.split("&");
