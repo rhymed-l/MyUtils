@@ -1,6 +1,6 @@
 package ltd.liuzhi.rhyme.utils;
 
-import main.java.ltd.liuzhi.rhyme.utils.type.DateFormatter;
+import ltd.liuzhi.rhyme.utils.type.DateFormatter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
