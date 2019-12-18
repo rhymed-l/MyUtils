@@ -2,6 +2,7 @@ package ltd.liuzhi.rhyme.utils;
 
 
 
+import java.io.*;
 import java.security.MessageDigest;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -614,5 +615,79 @@ public class MyStringUtils
             }
             sb.append(str);
             return sb.toString().substring(sb.length()-places);
+    }
+
+    /**
+     * 获取文本有多少行
+     * @param str 需要判断的文本
+     * @return 返回文本行数
+     */
+    public static int getTextLineNum(String str)
+    {
+        StringReader stringReader = new StringReader(str);
+        LineNumberReader lineNumberReader = new LineNumberReader(stringReader);
+        try {
+            lineNumberReader.skip(Long.MAX_VALUE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        int lines = lineNumberReader.getLineNumber() + 1;
+        stringReader.close();
+        try {
+            lineNumberReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lines;
+    }
+
+    /**
+     * 获取某行文本
+     * @param str 被选择的的文本
+     * @param line 某一行文本
+     * @return 返回指定行的文本
+     */
+    public static String getTextByLine(String str,int line)
+    {
+        StringReader stringReader = new StringReader(str);
+        LineNumberReader lineNumberReader = new LineNumberReader(stringReader);
+        String lineText = null;
+        try {
+            for(int i=0;i<line;i++)
+            {
+                lineText = lineNumberReader.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stringReader.close();
+        try {
+            lineNumberReader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lineText;
+    }
+
+    /**
+     * 文本缩进去除多余空格
+     * @param str 需要缩进的文本
+     * @return 返回缩进后的文本
+     */
+    public static String textRetract(String str)
+    {
+        //先删除首尾空格
+        if(MyStringUtils.isEmpty(str))
+        {
+            return null;
+        }
+        str = str.trim();
+        //先将制表符替换为空格,在循环替换两个空格为一个空格
+        str = str.replaceAll("\t","  ");
+        while(str.indexOf("  ")>0)
+        {
+            str =  str.replaceAll("  "," ");
+        }
+        return str;
     }
 }

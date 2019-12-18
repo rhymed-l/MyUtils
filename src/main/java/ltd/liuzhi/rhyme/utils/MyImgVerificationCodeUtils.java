@@ -74,9 +74,6 @@ public class MyImgVerificationCodeUtils
         return b;
     }
 
-    public static void main(String[] args) {
-        System.err.println(createImgCodeToBase64().getData());
-    }
     /**
      * @param id 验证码ID
      * @param code 验证码

@@ -51,12 +51,6 @@
     </plugins>
 </build>
 
-    <repositories>
-        <repository>
-            <id>sonatype-nexus</id>
-            <url>https://oss.sonatype.org/content/groups/staging</url>
-        </repository>
-    </repositories>
     <distributionManagement>
         <repository>
             <id>sonatype-nexus-staging</id>
