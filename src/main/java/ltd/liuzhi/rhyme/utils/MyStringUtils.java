@@ -1,8 +1,9 @@
-package ltd.liuzhi.rhyme.utils;
+package cn.com.connext.scrm.utils;
 
 
-
-import java.io.*;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.io.StringReader;
 import java.security.MessageDigest;
 import java.util.*;
 import java.util.regex.Pattern;
@@ -337,7 +338,7 @@ public class MyStringUtils
         try {
             md5 = MessageDigest.getInstance("MD5");
 
-        md5.update((str).getBytes("UTF-8"));
+            md5.update((str).getBytes("UTF-8"));
         } catch (Exception e)
         {
             e.printStackTrace();
@@ -426,9 +427,9 @@ public class MyStringUtils
             }
             sb.append(name.substring(len-1));//拼最后一位
         }else
-            {
-                sb.append("*");
-            }
+        {
+            sb.append("*");
+        }
         return sb.toString();
     }
 
@@ -608,13 +609,13 @@ public class MyStringUtils
      */
     public static String strZeroize(String str,int places)
     {
-            StringBuffer sb = new StringBuffer();
-            for(int i=-1;i<places-str.length();i++)
-            {
-                sb.append("0");
-            }
-            sb.append(str);
-            return sb.toString().substring(sb.length()-places);
+        StringBuffer sb = new StringBuffer();
+        for(int i=-1;i<places-str.length();i++)
+        {
+            sb.append("0");
+        }
+        sb.append(str);
+        return sb.toString().substring(sb.length()-places);
     }
 
     /**
@@ -624,6 +625,10 @@ public class MyStringUtils
      */
     public static int getTextLineNum(String str)
     {
+        if(MyStringUtils.isEmpty(str))
+        {
+            return 0;
+        }
         StringReader stringReader = new StringReader(str);
         LineNumberReader lineNumberReader = new LineNumberReader(stringReader);
         try {
@@ -649,6 +654,10 @@ public class MyStringUtils
      */
     public static String getTextByLine(String str,int line)
     {
+        if(MyStringUtils.isEmpty(str))
+        {
+            return null;
+        }
         StringReader stringReader = new StringReader(str);
         LineNumberReader lineNumberReader = new LineNumberReader(stringReader);
         String lineText = null;
@@ -676,11 +685,11 @@ public class MyStringUtils
      */
     public static String textRetract(String str)
     {
-        //先删除首尾空格
         if(MyStringUtils.isEmpty(str))
         {
             return null;
         }
+        //先删除首尾空格
         str = str.trim();
         //先将制表符替换为空格,在循环替换两个空格为一个空格
         str = str.replaceAll("\t","  ");
