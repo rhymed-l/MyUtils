@@ -1,6 +1,6 @@
 package ltd.liuzhi.rhyme.utils;
 
-import ltd.liuzhi.rhyme.utils.type.DateFormatter;
+import ltd.liuzhi.rhyme.utils.enums.DateFormatter;
 
 import java.io.BufferedReader;
 import java.io.File;

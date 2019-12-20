@@ -1,5 +1,4 @@
-package cn.com.connext.scrm.utils;
-
+package ltd.liuzhi.rhyme.utils;
 
 import java.io.IOException;
 import java.io.LineNumberReader;

@@ -1,6 +1,5 @@
 package ltd.liuzhi.rhyme.utils;
 
-import ltd.liuzhi.rhyme.utils.type.DateFormatter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -560,5 +559,41 @@ public class MyDateUtils
     {
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd");
         return simpleDateFormat.format(new Date());
+    }
+
+    /**
+     * @author LiuZhi
+     *
+     * 时间格式化枚举
+     *     TIME_FORMAT_YMD_G_HMS  ("yyyy-MM-dd HH:mm:ss"    )  ,
+     *     TIME_FORMAT_YMD_G      ("yyyy-MM-dd"             )  ,
+     *     TIME_FORMAT_YMD_H      ("yyyy/MM/dd"             )  ,
+     *     TIME_FORMAT_YMD_H_HMS  ("yyyy/MM/dd HH:mm:ss"    )  ,
+     *     TIME_FORMAT_TIMESTMP   ("yyyyMMddHHmmss"         )  ,
+     *     TIME_FORMAT_TIME       ("yyyyMMdd"               )  ,
+     *     TIME_FORMAT_CHINA      ("yyyy年MM月dd日"            ),
+     *     TIME_FORMAT_CHINASTMP  ("yyyy年MM月dd日 HH:mm:ss"   );
+     */
+    public  enum DateFormatter
+    {
+        TIME_FORMAT_YMD_G_HMS  ("yyyy-MM-dd HH:mm:ss"    )  ,
+        TIME_FORMAT_YMD_G      ("yyyy-MM-dd"             )  ,
+        TIME_FORMAT_YMD_H      ("yyyy/MM/dd"             )  ,
+        TIME_FORMAT_YMD_H_HMS  ("yyyy/MM/dd HH:mm:ss"    )  ,
+        TIME_FORMAT_TIMESTMP   ("yyyyMMddHHmmss"         )  ,
+        TIME_FORMAT_TIME       ("yyyyMMdd"               )  ,
+        TIME_FORMAT_CHINA      ("yyyy年MM月dd日"            ),
+        TIME_FORMAT_CHINASTMP  ("yyyy年MM月dd日 HH:mm:ss"   );
+
+        private final String formatter;
+
+        DateFormatter(String formatter)
+        {
+            this.formatter = formatter;
+        }
+        public String getFormatter()
+        {
+            return formatter;
+        }
     }
 }

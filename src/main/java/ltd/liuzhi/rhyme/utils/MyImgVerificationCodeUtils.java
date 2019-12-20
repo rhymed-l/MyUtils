@@ -1,6 +1,6 @@
 package ltd.liuzhi.rhyme.utils;
 
-import ltd.liuzhi.rhyme.utils.pojo.ImgCodeDO;
+import ltd.liuzhi.rhyme.utils.pojo.domain.ImgCodeDO;
 import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;

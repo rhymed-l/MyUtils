@@ -1,4 +1,4 @@
-package ltd.liuzhi.rhyme.utils.type;
+package ltd.liuzhi.rhyme.utils.enums;
 
 public enum FileTypeEnum
 {
