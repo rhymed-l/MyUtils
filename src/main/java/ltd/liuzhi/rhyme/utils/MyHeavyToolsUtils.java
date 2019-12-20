@@ -1,7 +1,5 @@
 package ltd.liuzhi.rhyme.utils;
 
-import ltd.liuzhi.rhyme.utils.enums.DateFormatter;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -33,14 +31,14 @@ public class MyHeavyToolsUtils
                 logger.info("记录UV文件夹不存在,创建文件夹");
                 dir.mkdirs();//如果文件夹不存在则创建文件
             }
-            File file1 = new File(pathUV    +   MyDateUtils.dateToStr(date, DateFormatter.TIME_FORMAT_TIME));
+            File file1 = new File(pathUV    +   MyDateUtils.dateToStr(date, MyDateUtils.DateFormatter.TIME_FORMAT_TIME));
             if(!file1.exists())
             {
                 logger.info("用户UV数据文件不存在,创建文件");
                 file1.createNewFile();//如果文件不存在则创建文件
             }
             //读取用户打开UV
-            BufferedReader br1   = new BufferedReader(new FileReader(pathUV    +   MyDateUtils.dateToStr(date, DateFormatter.TIME_FORMAT_TIME)));
+            BufferedReader br1   = new BufferedReader(new FileReader(pathUV    +   MyDateUtils.dateToStr(date, MyDateUtils.DateFormatter.TIME_FORMAT_TIME)));
             int b1 ;
             while ((b1 = br1.read())!=-1)
             {
@@ -78,7 +76,7 @@ public class MyHeavyToolsUtils
         }
         byte bt[] = sbUV.toString().getBytes();
         try {
-            FileOutputStream in = new FileOutputStream(pathUV   +   MyDateUtils.dateToStr(new Date(), DateFormatter.TIME_FORMAT_TIME));
+            FileOutputStream in = new FileOutputStream(pathUV   +   MyDateUtils.dateToStr(new Date(), MyDateUtils.DateFormatter.TIME_FORMAT_TIME));
             in.write(bt, 0, bt.length);
             in.close();
         } catch (Exception e) {
@@ -92,7 +90,7 @@ public class MyHeavyToolsUtils
      */
     public static void removeFile()
     {
-            File file1 = new File(pathUV    +   MyDateUtils.dateToStr(MyDateUtils.getAssignTime(-1), DateFormatter.TIME_FORMAT_TIME));
+            File file1 = new File(pathUV    +   MyDateUtils.dateToStr(MyDateUtils.getAssignTime(-1), MyDateUtils.DateFormatter.TIME_FORMAT_TIME));
             if(file1.exists())
             {
                 logger.info("删除昨日的UV数据文件");
