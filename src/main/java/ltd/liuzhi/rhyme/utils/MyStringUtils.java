@@ -453,6 +453,26 @@ public class MyStringUtils
     }
 
     /**
+     * 判断字符串是否包含汉字
+     * @param str 需要被判断的字符串
+     * @return 返回真或假
+     */
+    public static boolean includeChinese(String str)
+    {
+        if (str == null)
+        {
+            return false;
+        }
+        char[] cTemp = str.toCharArray();
+        for (int i = 0; i < str.length(); i++) {
+            if (isChinese(cTemp[i])) {
+                return true;
+            }
+        }
+        return true;
+    }
+
+    /**
      * 判定输入的是否是汉字
      * @param c 被校验的字符
      * @return true代表是汉字
