@@ -78,6 +78,10 @@ public class MyObjectUtils
      */
     public static <T> T copy(Object obj, Class<T> clazz) {
         T to = newInstance(clazz);
+        if(obj == null)
+        {
+            return to;
+        }
         Class source = obj.getClass();
         Field[] sourceFields = source.getDeclaredFields();
         Field[] targetFields = clazz.getDeclaredFields();
@@ -107,6 +111,10 @@ public class MyObjectUtils
      * @param targetObj 目标对象
      */
     public static <T> void copyNotEmpty(T sourceObj, T targetObj) {
+        if(sourceObj == null)
+        {
+            return;
+        }
         Class target = targetObj.getClass();
         Class source = sourceObj.getClass();
         if(target != source)
