@@ -7,7 +7,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
-public class MyImageUtils {
+public class MyImageUtils
+{
+    private MyImageUtils(){}
+
     /**
      * 将图片BASE64字符串转为二进制数组
      *

@@ -7,8 +7,7 @@ import java.util.*;
 
 public class MyHttpClient {
 
-    private MyHttpClient() {
-    }
+    private MyHttpClient() {}
 
     /**
      * 向指定URL发送GET方法的请求
