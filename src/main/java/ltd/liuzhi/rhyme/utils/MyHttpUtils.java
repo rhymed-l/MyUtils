@@ -5,9 +5,10 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class MyHttpClient {
+public class MyHttpUtils {
 
-    private MyHttpClient() {}
+    private MyHttpUtils() {
+    }
 
     /**
      * 向指定URL发送GET方法的请求
@@ -17,8 +18,9 @@ public class MyHttpClient {
      * @return URL 所代表远程资源的响应结果
      */
     public static String sendGet(String url, String param) {
-        return sendGet(url,param,"UTF-8");
+        return sendGet(url, param, "UTF-8");
     }
+
     /**
      * 向指定URL发送GET方法的请求
      *
@@ -26,11 +28,10 @@ public class MyHttpClient {
      * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
      * @return URL 所代表远程资源的响应结果
      */
-    public static String sendGet(String url, String param,String charset) {
+    public static String sendGet(String url, String param, String charset) {
         String result = "";
         BufferedReader in = null;
-        if(charset == null || charset.isEmpty())
-        {
+        if (charset == null || charset.isEmpty()) {
             charset = "UTF-8";
         }
         try {
@@ -43,7 +44,7 @@ public class MyHttpClient {
             connection.setRequestProperty("connection", "Keep-Alive");
             connection.setRequestProperty("user-agent",
                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-            connection.setRequestProperty("ContentType", "application/json;charset="+charset);
+            connection.setRequestProperty("ContentType", "application/json;charset=" + charset);
             // 建立实际的连接
             connection.connect();
             // 获取所有响应头字段
@@ -133,18 +134,18 @@ public class MyHttpClient {
         }
         return result;
     }
+
     /**
      * 向指定 URL 发送POST方法的请求
      *
-     * @param url   发送请求的 URL
+     * @param url 发送请求的 URL
      * @param map 请求参数
      * @return 所代表远程资源的响应结果
      */
-    public static String sendPost(String url, Map<String,String> map)
-    {
+    public static String sendPost(String url, Map<String, String> map) {
         StringBuffer sb = new StringBuffer();
-        map.forEach((key,val)->sb.append("&").append(key+"=").append(val));
-        return sendPost(url,sb.toString().substring(1));
+        map.forEach((key, val) -> sb.append("&").append(key + "=").append(val));
+        return sendPost(url, sb.toString().substring(1));
     }
 
     /**
@@ -244,7 +245,7 @@ public class MyHttpClient {
             out.flush();
             // 定义BufferedReader输入流来读取URL的响应
             in = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream(),"UTF-8" ));
+                    new InputStreamReader(conn.getInputStream(), "UTF-8"));
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
@@ -272,10 +273,10 @@ public class MyHttpClient {
     /**
      * 向指定 URL 发送POST方法的请求(模拟from表单提交)
      *
-     * @param requestUrl        发送请求的 URL
-     * @param requestHeader     请求头参数map。
-     * @param params            请求参数map。
-     * @param files             文件参数map。
+     * @param requestUrl    发送请求的 URL
+     * @param requestHeader 请求头参数map。
+     * @param params        请求参数map。
+     * @param files         文件参数map。
      * @return 所代表远程资源的响应结果
      */
     public static String sendPostByForm(String requestUrl, Map<String, String> requestHeader, Map<String, String> params, Map<String, File> files) {
@@ -348,7 +349,7 @@ public class MyHttpClient {
             out.flush();
             out.close();
             out = null;
-            reader = new BufferedReader(new InputStreamReader(connection.getInputStream(),"UTF-8"));
+            reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
             String line;
             while ((line = reader.readLine()) != null) {
                 result += line;
@@ -373,10 +374,11 @@ public class MyHttpClient {
 
     /**
      * 下载图片到本地
+     *
      * @param urlList URL地址
-     * @param path 保存的路径
+     * @param path    保存的路径
      */
-    public static void downloadPicture(String urlList,String path) {
+    public static void downloadPicture(String urlList, String path) {
         URL url = null;
         try {
             url = new URL(urlList);
@@ -400,8 +402,10 @@ public class MyHttpClient {
             e.printStackTrace();
         }
     }
+
     /**
      * 读图片数据
+     *
      * @param urlList URL地址
      */
     public static byte[] readPicture(String urlList) {
@@ -427,5 +431,28 @@ public class MyHttpClient {
             e.printStackTrace();
         }
         return null;
+    }
+
+
+    /**
+     * 获取url 的 HOST地址
+     *
+     * @param url 需要获取的连接
+     * @return 返回url的host
+     */
+    public static String getUrlHost(String url) {
+        if (url == null) {
+            throw new RuntimeException("需要获取的URL地址不能为NULL");
+        }
+        url = url.toLowerCase();
+        String host;
+        if (url.contains("https://")) {
+            host = "https://" +  MyStringUtils.getTextMiddle(url, "https://", "/");
+        } else if (url.contains("http://")) {
+            host = "http://" + MyStringUtils.getTextMiddle(url, "http://", "/");
+        } else {
+            host = MyStringUtils.getTextLeft(url, "/");
+        }
+        return host;
     }
 }
