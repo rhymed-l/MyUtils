@@ -141,4 +141,20 @@ public class MyFileUtils {
         bos.close();
         return data;
     }
+
+    /**
+     * 创建文件夹,如果文件夹存在则不创建
+     * @param path 文件路径
+     * @return 创建成功则返回真
+     */
+    public static boolean createFileFolder(String path)
+    {
+        File fileFolder = new File(path);
+        //如果文件夹存在则直接返回
+        if(fileFolder.isDirectory())
+        {
+            return true;
+        }
+            return fileFolder.mkdirs();
+    }
 }
