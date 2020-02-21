@@ -335,10 +335,10 @@ public class MyDateUtils
         }
         if(all)
         {
-            str = DateFormatter.TIME_FORMAT_YMD_G_HMS.getFormatter();
+            str = MyDateFormatterEnum.TIME_FORMAT_YMD_G_HMS.getFormatter();
         }else
         {
-            str = DateFormatter.TIME_FORMAT_YMD_G.getFormatter();
+            str = MyDateFormatterEnum.TIME_FORMAT_YMD_G.getFormatter();
         }
         SimpleDateFormat df = new SimpleDateFormat(str);//设置日期格式
         return df.format(date);
@@ -364,7 +364,7 @@ public class MyDateUtils
         {
             date = new Date();
         }
-        SimpleDateFormat df = new SimpleDateFormat(DateFormatter.TIME_FORMAT_TIMESTMP.getFormatter());//设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat(MyDateFormatterEnum.TIME_FORMAT_TIMESTMP.getFormatter());//设置日期格式
         return df.format(date);
     }
     /**
@@ -466,28 +466,28 @@ public class MyDateUtils
         String format =null;
         if(str.contains("-") && str.contains(":"))
         {
-            format = DateFormatter.TIME_FORMAT_YMD_G_HMS.getFormatter();
+            format = MyDateFormatterEnum.TIME_FORMAT_YMD_G_HMS.getFormatter();
         }else if(str.contains("/") && str.length()==10)
         {
-            format = DateFormatter.TIME_FORMAT_YMD_G.getFormatter();
+            format = MyDateFormatterEnum.TIME_FORMAT_YMD_G.getFormatter();
         }else if(str.contains("/") && str.contains(":"))
         {
-            format = DateFormatter.TIME_FORMAT_YMD_H_HMS.getFormatter();
+            format = MyDateFormatterEnum.TIME_FORMAT_YMD_H_HMS.getFormatter();
         }else if(str.contains("/") && str.length()==10)
         {
-            format = DateFormatter.TIME_FORMAT_YMD_H.getFormatter();
+            format = MyDateFormatterEnum.TIME_FORMAT_YMD_H.getFormatter();
         }else if(str.contains("年") && str.contains("月")&& str.contains("日") && str.contains(":"))
         {
-            format = DateFormatter.TIME_FORMAT_CHINASTMP.getFormatter();
+            format = MyDateFormatterEnum.TIME_FORMAT_CHINASTMP.getFormatter();
         }else if(str.contains("年") && str.contains("月")&& str.contains("日") && str.length()==10)
         {
-            format = DateFormatter.TIME_FORMAT_CHINA.getFormatter();
+            format = MyDateFormatterEnum.TIME_FORMAT_CHINA.getFormatter();
         }else if(str.length()==14)
         {
-            format = DateFormatter.TIME_FORMAT_TIMESTMP.getFormatter();
+            format = MyDateFormatterEnum.TIME_FORMAT_TIMESTMP.getFormatter();
         }else if(str.length()==8)
         {
-            format = DateFormatter.TIME_FORMAT_TIME.getFormatter();
+            format = MyDateFormatterEnum.TIME_FORMAT_YMD.getFormatter();
         }
         if(format==null)
         {
@@ -507,7 +507,7 @@ public class MyDateUtils
      * @param dateFormatter 时间格式
      * @return 转换后的时间
      */
-    public static String dateToStr(Date date, DateFormatter dateFormatter)
+    public static String dateToStr(Date date, MyDateFormatterEnum dateFormatter)
     {
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat(dateFormatter.getFormatter());
         return simpleDateFormat.format(date);
@@ -518,7 +518,7 @@ public class MyDateUtils
      */
     public static String dateToStr(Date date)
     {
-        return dateToStr(date,DateFormatter.TIME_FORMAT_YMD_G_HMS);
+        return dateToStr(date,MyDateFormatterEnum.TIME_FORMAT_YMD_G_HMS);
     }
 
     /**
@@ -562,6 +562,25 @@ public class MyDateUtils
     }
 
     /**
+     * 比较时间1是否大于时间2
+     * @param date1 时间1
+     * @param date2 时间2
+     * @return 如果大于则返回真,否则假
+     */
+    public static boolean timeCompare(Date date1,Date date2) {
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss"); //创建时间转换对象：时 分 秒
+        try {
+             date1 = df.parse(MyDateUtils.dateToStr(date1,MyDateFormatterEnum.TIME_FORMAT_TIME)); //转换为 date 类型 Debug：Thu Jan 01 11:11:11 CST 1970
+             date2 = df.parse(MyDateUtils.dateToStr(date2,MyDateFormatterEnum.TIME_FORMAT_TIME)); // 		 Debug：Thu Jan 01 12:12:12 CST 1970
+             return date1.getTime() > date2.getTime();
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        throw new RuntimeException("时间转换失败!");
+    }
+
+    /**
      * @author LiuZhi
      *
      * 时间格式化枚举
@@ -574,20 +593,21 @@ public class MyDateUtils
      *     TIME_FORMAT_CHINA      ("yyyy年MM月dd日"            ),
      *     TIME_FORMAT_CHINASTMP  ("yyyy年MM月dd日 HH:mm:ss"   );
      */
-    public  enum DateFormatter
+    public enum MyDateFormatterEnum
     {
-        TIME_FORMAT_YMD_G_HMS  ("yyyy-MM-dd HH:mm:ss"    )  ,
-        TIME_FORMAT_YMD_G      ("yyyy-MM-dd"             )  ,
-        TIME_FORMAT_YMD_H      ("yyyy/MM/dd"             )  ,
-        TIME_FORMAT_YMD_H_HMS  ("yyyy/MM/dd HH:mm:ss"    )  ,
-        TIME_FORMAT_TIMESTMP   ("yyyyMMddHHmmss"         )  ,
-        TIME_FORMAT_TIME       ("yyyyMMdd"               )  ,
-        TIME_FORMAT_CHINA      ("yyyy年MM月dd日"            ),
-        TIME_FORMAT_CHINASTMP  ("yyyy年MM月dd日 HH:mm:ss"   );
+        TIME_FORMAT_YMD        ("yyyyMMdd"                  ),
+        TIME_FORMAT_YMD_G_HMS  ("yyyy-MM-dd HH:mm:ss"       ),
+        TIME_FORMAT_YMD_G      ("yyyy-MM-dd"                ),
+        TIME_FORMAT_YMD_H      ("yyyy/MM/dd"                ),
+        TIME_FORMAT_YMD_H_HMS  ("yyyy/MM/dd HH:mm:ss"       ),
+        TIME_FORMAT_TIMESTMP   ("yyyyMMddHHmmss"            ),
+        TIME_FORMAT_CHINA      ("yyyy年MM月dd日"             ),
+        TIME_FORMAT_CHINASTMP  ("yyyy年MM月dd日 HH:mm:ss"    ),
+        TIME_FORMAT_TIME        ("HH:mm:ss"                 );
 
         private final String formatter;
 
-        DateFormatter(String formatter)
+        MyDateFormatterEnum(String formatter)
         {
             this.formatter = formatter;
         }
