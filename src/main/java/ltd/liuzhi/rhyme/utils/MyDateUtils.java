@@ -596,14 +596,17 @@ public class MyDateUtils
     public enum MyDateFormatterEnum
     {
         TIME_FORMAT_YMD        ("yyyyMMdd"                  ),
+        TIME_FORMAT_MD         ("MMdd"                      ),
         TIME_FORMAT_YMD_G_HMS  ("yyyy-MM-dd HH:mm:ss"       ),
         TIME_FORMAT_YMD_G      ("yyyy-MM-dd"                ),
+        TIME_FORMAT_MD_G       ("MM-dd"                     ),
         TIME_FORMAT_YMD_H      ("yyyy/MM/dd"                ),
+        TIME_FORMAT_MD_H       ("MM/dd"                     ),
         TIME_FORMAT_YMD_H_HMS  ("yyyy/MM/dd HH:mm:ss"       ),
         TIME_FORMAT_TIMESTMP   ("yyyyMMddHHmmss"            ),
         TIME_FORMAT_CHINA      ("yyyy年MM月dd日"             ),
         TIME_FORMAT_CHINASTMP  ("yyyy年MM月dd日 HH:mm:ss"    ),
-        TIME_FORMAT_TIME        ("HH:mm:ss"                 );
+        TIME_FORMAT_TIME       ("HH:mm:ss"                  );
 
         private final String formatter;
 
@@ -611,9 +614,14 @@ public class MyDateUtils
         {
             this.formatter = formatter;
         }
+
         public String getFormatter()
         {
             return formatter;
         }
+//        public static MyDateFormatterEnum getTimeByString(String formatter)
+//        {
+//            return MyDateFormatterEnum.TIME_FORMAT_CHINA.formatter = formatter;
+//        }
     }
 }
