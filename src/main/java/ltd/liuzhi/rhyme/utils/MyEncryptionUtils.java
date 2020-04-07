@@ -1,7 +1,11 @@
 package ltd.liuzhi.rhyme.utils;
 
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.*;
 import java.util.Base64;
@@ -16,6 +20,8 @@ public class MyEncryptionUtils {
     private static final int AES_KEY_SIZE = 16;//256/192/128~32/24/16
     private static final String ENCRYPT = "AES";
     private static final String CIPHER = "AES/CBC/PKCS5Padding";
+    private static final String DES_ALGORITHM = "DES";
+    public static final String DES_CIPHER_ALGORITHM = "DES";
 
     /**
      * AES加密
@@ -166,11 +172,6 @@ public class MyEncryptionUtils {
         }
         return key;
     }
-
-
-    private static final String DES_ALGORITHM = "DES";
-    public static final String DES_CIPHER_ALGORITHM = "DES";
-
     /**
      * DES 加密方法
      *
@@ -229,7 +230,9 @@ public class MyEncryptionUtils {
      */
     public static byte[] parseHexStr2Byte(String hexStr) {
         if (hexStr.length() < 1)
+        {
             return null;
+        }
         byte[] result = new byte[hexStr.length() / 2];
         for (int i = 0; i < hexStr.length() / 2; i++) {
             int high = Integer.parseInt(hexStr.substring(i * 2, i * 2 + 1), 16);
@@ -237,5 +240,33 @@ public class MyEncryptionUtils {
             result[i] = (byte) (high * 16 + low);
         }
         return result;
+    }
+
+    /**
+     * BASE64加密
+     * @param data 需要加密的数据
+     * @return 加密后的数据
+     */
+    public static String base64Encoder(String data)
+    {
+        BASE64Encoder encoder = new BASE64Encoder();
+        return encoder.encode(data.getBytes());
+    }
+
+    /**
+     * BASE64解密
+     * @param data 需要解密的数据
+     * @return 解密后的数据
+     */
+    public static String base64Decoder(String data)
+    {
+        BASE64Decoder decoder = new BASE64Decoder();
+        try {
+            byte[] bytes = decoder.decodeBuffer(data);
+            return new String(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
