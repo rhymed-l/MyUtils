@@ -5,6 +5,10 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+/**
+ * 网络请求工具类
+ * @author LiuZhi
+ */
 public class MyHttpUtils {
 
     private MyHttpUtils() {
