@@ -19,6 +19,7 @@ public class MyHttpUtils {
     public static String sendGet(String url) {
         return sendGet(url, null, "UTF-8");
     }
+
     /**
      * 向指定URL发送GET方法的请求
      *
@@ -28,6 +29,17 @@ public class MyHttpUtils {
      */
     public static String sendGet(String url, String param) {
         return sendGet(url, param, "UTF-8");
+    }
+
+    /**
+     * 向指定URL发送GET方法的请求
+     *
+     * @param url   发送请求的URL
+     * @param param 请求参数
+     * @return URL 所代表远程资源的响应结果
+     */
+    public static String sendGet(String url, Map<String,String> param) {
+        return sendGet(url, paramMapToString(param), "UTF-8");
     }
 
     /**
@@ -148,13 +160,11 @@ public class MyHttpUtils {
      * 向指定 URL 发送POST方法的请求
      *
      * @param url 发送请求的 URL
-     * @param map 请求参数
+     * @param param 请求参数
      * @return 所代表远程资源的响应结果
      */
-    public static String sendPost(String url, Map<String, String> map) {
-        StringBuffer sb = new StringBuffer();
-        map.forEach((key, val) -> sb.append("&").append(key + "=").append(val));
-        return sendPost(url, sb.toString().substring(1));
+    public static String sendPost(String url, Map<String, String> param) {
+        return sendPost(url, paramMapToString(param));
     }
 
     /**
@@ -218,8 +228,32 @@ public class MyHttpUtils {
         map.put("data", result);
         return map;
     }
+    public static String sendPostL(String url, Map<String,String> param)
+    {
+        return sendPostL(url,paramMapToString(param));
+    }
 
-
+    /**
+     * Map参数转为String参数
+     *
+     * @param param 需要转换的参数
+     * @return 转换之后的参数
+     */
+    public static String paramMapToString(Map<String,String> param)
+    {
+        String paramStr = "";
+        if(param == null)
+        {
+            return paramStr;
+        }
+        StringBuffer sb = new StringBuffer();
+        param.forEach((key,val) -> sb.append("&").append(key).append("=").append(val));
+        if(sb.toString().length()>0)
+        {
+            paramStr = sb.toString().substring(1);
+        }
+        return paramStr;
+    }
     /**
      * 向指定 URL 发送POST方法的请求
      *
@@ -277,6 +311,18 @@ public class MyHttpUtils {
             }
         }
         return result;
+    }
+
+    /**
+     * 向指定 URL 发送POST方法的请求(模拟from表单提交)
+     *
+     * @param requestUrl    发送请求的 URL
+     * @param params        请求参数map。
+     * @return 所代表远程资源的响应结果
+     */
+    public static String sendPostByForm(String requestUrl, Map<String, String> params)
+    {
+        return sendPostByForm(requestUrl,null,params,null);
     }
 
     /**
