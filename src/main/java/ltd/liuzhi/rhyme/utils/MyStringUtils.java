@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 public class MyStringUtils
 {
+
     /**
      * 私有化构造器
      */
@@ -108,6 +109,16 @@ public class MyStringUtils
         return getTextLefts(temp,right);
     }
     /**
+     * 判断文本是否是非空(对象为空,或者内容为空)
+     * @param text 需要判断的文本
+     * @return 非空则返回真
+     */
+    public static Boolean isNotEmpty(String text)
+    {
+        return !isEmpty(text);
+    }
+
+    /**
      * 判断文本是否是空(对象为空,或者内容为空)
      * @param text 需要判断的文本
      * @return 空则返回真
@@ -116,11 +127,16 @@ public class MyStringUtils
     {
         return text==null?true:text.trim().equals("")?true:false;
     }
+
     /**
+     *
+     * 这个方法已废弃,未来版本可能会删除掉,请在@MyCollectionUtils.CollectionIsEmpty()判断集合是否为null
+     *
      * 判断List组数是否是空(对象为空,或者内容为空)
      * @param list 需要判断的LIST数组
      * @return 空则返回真
      */
+    @Deprecated
     public static Boolean isEmpty(List list)
     {
         return list==null?true:list.size()>0?false:true;
@@ -712,7 +728,7 @@ public class MyStringUtils
         str = str.trim();
         //先将制表符替换为空格,在循环替换两个空格为一个空格
         str = str.replaceAll("\t","  ");
-        while(str.indexOf("  ")>0)
+        while(str.indexOf("  ") > 0)
         {
             str =  str.replaceAll("  "," ");
         }
