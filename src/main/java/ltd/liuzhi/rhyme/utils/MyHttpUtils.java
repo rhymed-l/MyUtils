@@ -102,6 +102,17 @@ public class MyHttpUtils {
         return result;
     }
 
+
+    /**
+     * 向指定 URL 发送POST方法的请求
+     *
+     * @param url   发送请求的 URL
+     * @return 所代表远程资源的响应结果
+     */
+    public static String sendPost(String url) {
+        return sendPost(url,"");
+    }
+
     /**
      * 向指定 URL 发送POST方法的请求
      *
@@ -179,7 +190,7 @@ public class MyHttpUtils {
      * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
      * @return 所代表远程资源的响应结果
      */
-    public static Map sendPostMap(String url, String param) {
+    public static Map sendPostByMap(String url, String param) {
         Map map = new HashMap();
         map.put("code", 1);
         PrintWriter out = null;
@@ -328,6 +339,17 @@ public class MyHttpUtils {
     {
         return sendPostByForm(requestUrl,null,params,null);
     }
+    /**
+     * 向指定 URL 发送POST方法的请求(模拟from表单提交)
+     *
+     * @param requestUrl    发送请求的 URL
+     * @param params        请求参数map。
+     * @return 所代表远程资源的响应结果
+     */
+    public static String sendPostByForm(String requestUrl, Map<String, String> requestHeader,  Map<String, String> params)
+    {
+        return sendPostByForm(requestUrl,requestHeader,params,null);
+    }
 
     /**
      * 向指定 URL 发送POST方法的请求(模拟from表单提交)
@@ -370,7 +392,7 @@ public class MyHttpUtils {
                     out.write(formData.getBytes());
                 }
             } else {
-                String boundary = "-----------------------------" + new Date().getTime();
+                String boundary = "-----------------------------" + System.currentTimeMillis();
                 connection.setRequestProperty("content-type", "multipart/form-data; boundary=" + boundary);
                 out = new DataOutputStream(connection.getOutputStream());
                 if (params != null && params.size() > 0) {

@@ -1,6 +1,7 @@
 package ltd.liuzhi.rhyme.utils;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.*;
 
 
@@ -176,4 +177,82 @@ public class MyObjectUtils
         return false;
 
     }
+
+//    /**
+//     * 判断对象是否相等(同类才有意义)
+//     * @param obj1 对象1
+//     * @param obj2 对象2
+//     * @return 如果对象相等则true,否则false
+//     */
+//    public static boolean objIsEquals(Object obj1,Object obj2)
+//    {
+//        if(obj1 == obj2)
+//        {
+//            return true;
+//        }
+//        if(obj1 != null && obj2 != null && obj1.equals(obj2))
+//        {
+//            return true;
+//        }
+//        if(obj1.getClass() != obj2.getClass())
+//        {
+//            return false;
+//        }
+//        if(obj1 instanceof Iterable){
+//            Iterable iterable1 = (Iterable) obj1;
+//            Iterable iterable2 = (Iterable) obj2;
+//            boolean isTrue = false;
+//        }
+//        //如果是基本类
+//        if(obj1.getClass().getClassLoader() == null)
+//        {
+//            return false;
+//        }
+//        Field[] fields = obj1.getClass().getFields();
+//        for(Field field : fields)
+//        {
+//            try {
+//                Object object1 = field.get(obj1);
+//                Object object2 = field.get(obj2);
+//                if(obj1 != obj2)
+//                {
+//
+//                }
+//            } catch (IllegalAccessException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//
+//        return true;
+//    }
+
+    /**
+     * 判断object是否为基本类型
+     * @param object
+     * @return
+     */
+    public static boolean isBaseType(Object object) {
+        Class className = object.getClass();
+        if (className.equals(java.lang.Integer.class) ||
+                className.equals(java.lang.Byte.class) ||
+                className.equals(java.lang.Long.class) ||
+                className.equals(java.lang.Double.class) ||
+                className.equals(java.lang.Float.class) ||
+                className.equals(java.lang.Character.class) ||
+                className.equals(java.lang.Short.class) ||
+                className.equals(java.lang.Boolean.class)) {
+            return true;
+        }
+        return false;
+    }
+
+//    public static void main(String[] args) {
+////        BigDecimal bigDecimal1 = new BigDecimal(1);
+////        BigDecimal bigDecimal2 = new BigDecimal(2);
+////        System.err.println(objIsEquals(bigDecimal1,bigDecimal2));
+//        String[] str1 = new String[]{"1","2"};
+//        String[] str2 = new String[]{"1","2"};
+//        System.err.println(objIsEquals(str1,str2));
+//    }
 }
