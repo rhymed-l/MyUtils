@@ -453,7 +453,7 @@ public class MyDateUtils
     {
         long dl1 = d1.getTime();
         long dl2 = d2.getTime();
-        long now = new Date().getTime();
+        long now = System.currentTimeMillis();
         return new Date(dl1+dl2-now);
     }
     /**
