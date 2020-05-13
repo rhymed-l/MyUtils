@@ -463,11 +463,18 @@ public class MyDateUtils
      */
     public static Date strToDate(String str)
     {
+        if(str==null)
+        {
+            throw new RuntimeException("需要转换的字符串不能为null");
+        }
         String format =null;
-        if(str.contains("-") && str.contains(":"))
+        if(str.contains("-") && !str.contains(":") && str.length() == 10)
+        {
+            format = MyDateFormatterEnum.TIME_FORMAT_YMD_G.getFormatter();
+        }else if(str.contains("-") && str.contains(":"))
         {
             format = MyDateFormatterEnum.TIME_FORMAT_YMD_G_HMS.getFormatter();
-        }else if(str.contains("/") && str.length()==10)
+        }else if(str.contains("/") && !str.contains(":") && str.length()==10)
         {
             format = MyDateFormatterEnum.TIME_FORMAT_YMD_G.getFormatter();
         }else if(str.contains("/") && str.contains(":"))
@@ -479,7 +486,7 @@ public class MyDateUtils
         }else if(str.contains("年") && str.contains("月")&& str.contains("日") && str.contains(":"))
         {
             format = MyDateFormatterEnum.TIME_FORMAT_CHINASTMP.getFormatter();
-        }else if(str.contains("年") && str.contains("月")&& str.contains("日") && str.length()==10)
+        }else if(str.contains("年") && str.contains("月")&& str.contains("日") && str.length() == 10)
         {
             format = MyDateFormatterEnum.TIME_FORMAT_CHINA.getFormatter();
         }else if(str.length()==14)
@@ -538,8 +545,7 @@ public class MyDateUtils
      */
     public static String getCurrentYeay()
     {
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy");
-        return simpleDateFormat.format(new Date());
+        return getAssignYeay(new Date());
     }
 
     /**
@@ -548,8 +554,7 @@ public class MyDateUtils
      */
     public static String getCurrentMonth()
     {
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM");
-        return simpleDateFormat.format(new Date());
+       return getAssignMonth(new Date());
     }
     /**
      * 获取当前天数
@@ -557,8 +562,37 @@ public class MyDateUtils
      */
     public static String getCurrentDay()
     {
+        return getAssignDay(new Date());
+    }
+
+    /**
+     * 获取指定日期的天数
+     * @return 返回指定日期的天数
+     */
+    public static String getAssignDay(Date date)
+    {
         SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd");
-        return simpleDateFormat.format(new Date());
+        return simpleDateFormat.format(date);
+    }
+
+    /**
+     * 获取指定日期的月份
+     * @return 返回指定日期的月份
+     */
+    public static String getAssignMonth(Date date)
+    {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM");
+        return simpleDateFormat.format(date);
+    }
+
+    /**
+     * 获取指定日期的年份
+     * @return 返回指定日期的年份
+     */
+    public static String getAssignYeay(Date date)
+    {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy");
+        return simpleDateFormat.format(date);
     }
 
     /**
