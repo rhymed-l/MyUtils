@@ -12,7 +12,7 @@
 
     <groupId>ltd.liuzhi.rhyme</groupId>
     <artifactId>my_utils</artifactId>
-    <version>1.06-RELEASE</version>
+    <version>1.07-RELEASE</version>
     <packaging>jar</packaging>
 
     <licenses>
