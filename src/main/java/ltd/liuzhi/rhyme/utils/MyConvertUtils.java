@@ -42,9 +42,12 @@ public class MyConvertUtils
                 if(field.getName().equalsIgnoreCase(entry.getKey()))
                 {
                     try {
-                        //不完善的,这里只能转普通的String类,如果是其他类型,必然报错!
+                        //不完善的
                         field.setAccessible(true);
-                        field.set(t,entry.getValue());
+                        if(field.getClass().equals(entry.getValue().getClass()))
+                        {
+                            field.set(t,entry.getValue());
+                        }
                     } catch (IllegalAccessException e) {
                         e.printStackTrace();
                     }

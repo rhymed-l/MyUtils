@@ -162,11 +162,7 @@ public class MyObjectUtils
             return true;
         }else if(obj instanceof String)
         {
-            String str = (String) obj;
-            if(str.trim().equals(""))
-            {
-                return true;
-            }
+            return MyStringUtils.isEmpty((String) obj);
         }else if(obj instanceof Collection)
         {
             return ((Collection) obj).isEmpty();

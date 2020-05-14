@@ -307,7 +307,7 @@ public class MyDateUtils
     }
 
     /**
-     * 返回今天的String格式的时间
+     * 返回今天零点的String格式的时间
      * @param all 是否显示时分秒
      * @return 返回String格式的时间
      */
@@ -456,9 +456,26 @@ public class MyDateUtils
         long now = System.currentTimeMillis();
         return new Date(dl1+dl2-now);
     }
+
     /**
      * String 转 时间格式
-     * @param str 时间必须为 XXXX-XX-XX XX:XX:XX
+     * @param str 被转换的时间
+     * @myDateFormatterEnum 需要用什么格式去转换
+     * @return 转换后的时间
+     */
+    public static Date strToDate(String str,MyDateFormatterEnum myDateFormatterEnum)
+    {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(myDateFormatterEnum.getFormatter());
+        try {
+            return simpleDateFormat.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new RuntimeException("被转化的日期不正确");
+        }
+    }
+    /**
+     * String 转 时间格式
+     * @param str 被转换的时间
      * @return 转换后的时间
      */
     public static Date strToDate(String str)
