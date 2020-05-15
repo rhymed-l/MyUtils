@@ -15,6 +15,19 @@
     <version>1.07-RELEASE</version>
     <packaging>jar</packaging>
 
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- https://mvnrepository.com/artifact/org.springframework/spring-aop -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>5.2.2.RELEASE</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
     <licenses>
         <license>
             <name>The Apache Software License, Version 2.0</name>
