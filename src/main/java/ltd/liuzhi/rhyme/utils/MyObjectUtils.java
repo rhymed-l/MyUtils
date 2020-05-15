@@ -118,10 +118,6 @@ public class MyObjectUtils
         }
         Class target = targetObj.getClass();
         Class source = sourceObj.getClass();
-        if(target != source)
-        {
-            throw new RuntimeException("对象不一致不允许拷贝");
-        }
         Field[] sourceFields = source.getDeclaredFields();
         Field[] targetFields = target.getDeclaredFields();
 
