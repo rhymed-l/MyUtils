@@ -12,9 +12,15 @@
 
     <groupId>ltd.liuzhi.rhyme</groupId>
     <artifactId>my_utils</artifactId>
-    <version>1.07-RELEASE</version>
+    <version>1.08-RELEASE</version>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+        </dependency>
+    </dependencies>
 
     <dependencyManagement>
         <dependencies>
@@ -22,7 +28,8 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-aop</artifactId>
-                <version>5.2.2.RELEASE</version>
+                <version>RELEASE</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
