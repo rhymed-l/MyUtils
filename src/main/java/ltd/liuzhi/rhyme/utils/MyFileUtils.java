@@ -4,6 +4,10 @@ import ltd.liuzhi.rhyme.utils.enums.FileTypeEnum;
 
 import java.io.*;
 
+/**
+ * 文件工具类
+ * @author LiuZhi
+ */
 public class MyFileUtils {
     private MyFileUtils() {
     }

@@ -5,6 +5,7 @@ import java.util.*;
 
 /**
  * 对象转换类
+ * @author LiuZhi
  */
 public class MyConvertUtils
 {

@@ -8,6 +8,9 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * 字符串工具类
+ */
 public class MyStringUtils
 {
 
@@ -196,6 +199,7 @@ public class MyStringUtils
     {
         return subString(str,0,length);
     }
+    
     /**
      * 截取字符串
      * @param beginIndex 从那个位置开始

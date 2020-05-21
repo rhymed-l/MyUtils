@@ -4,6 +4,11 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Properties;
 
+/**
+ * 系统信息工具类
+ *
+ * @author LiuZhi
+ */
 public class MyComputerInfoUtils
 {
     private MyComputerInfoUtils(){}

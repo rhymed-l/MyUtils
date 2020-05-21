@@ -4,6 +4,7 @@ import java.util.Collection;
 
 /**
  * 集合工具类
+ * @author LiuZhi
  */
 public class MyCollectionUtils
 {

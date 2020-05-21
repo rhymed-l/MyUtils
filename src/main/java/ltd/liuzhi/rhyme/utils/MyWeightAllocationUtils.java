@@ -5,6 +5,7 @@ import java.util.Set;
 
 /**
  * 订单权重分配工具类
+ * @author LiuZhi
  */
 public class MyWeightAllocationUtils {
     /**

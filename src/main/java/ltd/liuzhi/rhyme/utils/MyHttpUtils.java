@@ -247,28 +247,6 @@ public class MyHttpUtils {
     {
         return sendPostL(url,paramMapToString(param));
     }
-
-    /**
-     * Map参数转为String参数
-     *
-     * @param param 需要转换的参数
-     * @return 转换之后的参数
-     */
-    public static String paramMapToString(Map<String,String> param)
-    {
-        String paramStr = "";
-        if(param == null)
-        {
-            return paramStr;
-        }
-        StringBuffer sb = new StringBuffer();
-        param.forEach((key,val) -> sb.append("&").append(key).append("=").append(val));
-        if(sb.toString().length()>0)
-        {
-            paramStr = sb.toString().substring(1);
-        }
-        return paramStr;
-    }
     /**
      * 向指定 URL 发送POST方法的请求
      *
@@ -535,5 +513,28 @@ public class MyHttpUtils {
             host = MyStringUtils.getTextLeft(url, "/");
         }
         return host;
+    }
+
+
+    /**
+     * Map参数转为String参数
+     *
+     * @param param 需要转换的参数
+     * @return 转换之后的参数
+     */
+    public static String paramMapToString(Map<String,String> param)
+    {
+        String paramStr = "";
+        if(param == null)
+        {
+            return paramStr;
+        }
+        StringBuffer sb = new StringBuffer();
+        param.forEach((key,val) -> sb.append("&").append(key).append("=").append(val));
+        if(sb.toString().length()>0)
+        {
+            paramStr = sb.toString().substring(1);
+        }
+        return paramStr;
     }
 }

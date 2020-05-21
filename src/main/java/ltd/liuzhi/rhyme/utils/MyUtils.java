@@ -1,5 +1,9 @@
 package ltd.liuzhi.rhyme.utils;
 
+/**
+ * 我的工具包
+ * @author LiuZhi
+ */
 public class MyUtils
 {
     private MyUtils(){}

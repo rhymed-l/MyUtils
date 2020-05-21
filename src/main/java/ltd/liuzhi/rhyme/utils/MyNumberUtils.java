@@ -3,6 +3,10 @@ package ltd.liuzhi.rhyme.utils;
 import java.math.BigDecimal;
 import java.util.Random;
 
+/**
+ * 数字工具类
+ * @author LiuZhi
+ */
 public class MyNumberUtils
 {
     /**

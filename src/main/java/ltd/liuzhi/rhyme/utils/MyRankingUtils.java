@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 /**
  * 简单的排名工具类
+ * @author LiuZhi
  */
 public class MyRankingUtils
 {
@@ -13,14 +14,20 @@ public class MyRankingUtils
     private static List<RanKingDO> list = new ArrayList<>();
 
     /**
-     * 放排名
+     * 放一个排名
+     * @param key 排名key
+     * @return 成功则返回true,反之false
      */
     public static boolean putRanKing(String key)
     {
         return putRanKing(key,null);
     }
+
     /**
-     * 放排名
+     * 放一个排名
+     * @param key 排名key
+     * @param val 排名递增值
+     * @return 成功则返回true,反之false
      */
     public static boolean putRanKing(String key,Integer val) {
         boolean contains = false;

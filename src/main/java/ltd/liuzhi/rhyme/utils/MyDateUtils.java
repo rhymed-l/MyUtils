@@ -7,8 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * @author LiuZhi
  * 时间日期工具类
+ * @author LiuZhi
  */
 public class MyDateUtils
 {

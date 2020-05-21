@@ -12,6 +12,7 @@ import java.util.Base64;
 
 /**
  * DES 加解密工具
+ * @author LiuZhi
  */
 public class MyEncryptionUtils {
 

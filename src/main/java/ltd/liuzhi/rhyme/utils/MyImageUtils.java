@@ -7,6 +7,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
+/**
+ * 图片工具类
+ * @author LiuZhi
+ */
 public class MyImageUtils
 {
     private MyImageUtils(){}
