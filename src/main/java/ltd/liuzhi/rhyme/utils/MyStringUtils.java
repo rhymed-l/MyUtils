@@ -539,7 +539,7 @@ public class MyStringUtils
      */
     public static String getRandom(int length)
     {
-        return getRandom(null,null);
+        return getRandom(length,null);
     }
     /**
      * 生成随机UUID
