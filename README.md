@@ -15,3 +15,8 @@
 
 如果需要查看历史以往记录.请访问下面链接
 https://mvnrepository.com/artifact/ltd.liuzhi.rhyme/my_utils
+
+#Build
+```
+mvn clean deploy -P sonatype-oss-release
+```
