@@ -17,7 +17,7 @@ public class MyThreadPoolUtils
      * 多线程执行某一个任务
      * @param task 需要执行的任务方法
      */
-    public void execute(Runnable task)
+    public static void execute(Runnable task)
     {
         if(executorService == null){
             synchronized (MyThreadPoolUtils.class)
