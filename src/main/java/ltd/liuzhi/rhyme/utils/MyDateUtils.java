@@ -138,10 +138,13 @@ public class MyDateUtils
      * @param second 秒
      * @return 返回指定的时间
      */
-    public static Date addAssignTime(Integer year,Integer month,Integer day,Integer hour,Integer minute,Integer second)
+    public static Date addAssignTime(Date date,Integer year,Integer month,Integer day,Integer hour,Integer minute,Integer second)
     {
         Calendar cal=Calendar.getInstance();
-        cal.setTime(new Date());
+        if(date==null){
+            date = new Date();
+        }
+        cal.setTime(date);
         cal.add(Calendar.YEAR,year==null?0:year);
         cal.add(Calendar.MONTH,month==null?0:month);
         cal.add(Calendar.DATE,day==null?0:day);
@@ -160,7 +163,7 @@ public class MyDateUtils
      */
     public static Date addAssignTime(Integer year,Integer month,Integer day,Integer hour,Integer minute)
     {
-        return addAssignTime(year,month,day,hour,minute,null);
+        return addAssignTime(null,year,month,day,hour,minute,null);
     }
     /**
      * 增加指定的时间(参数都可空)
@@ -170,7 +173,7 @@ public class MyDateUtils
      */
     public static Date addAssignTime(Integer year,Integer month,Integer day,Integer hour)
     {
-        return addAssignTime(year,month,day,hour,null,null);
+        return addAssignTime(null,year,month,day,hour,null,null);
     }
     /**
      * 增加指定的时间(参数都可空)
@@ -179,7 +182,7 @@ public class MyDateUtils
      */
     public static Date addAssignTime(Integer year,Integer month,Integer day)
     {
-        return addAssignTime(year,month,day,null,null,null);
+        return addAssignTime(null,year,month,day,null,null,null);
     }
     /**
      * 增加指定的时间(参数都可空)
@@ -187,7 +190,7 @@ public class MyDateUtils
      */
     public static Date addAssignTime(Integer year,Integer month)
     {
-        return addAssignTime(year,month,null,null,null,null);
+        return addAssignTime(null,year,month,null,null,null,null);
     }
     /**
      * 增加指定的时间(参数都可空)
@@ -195,7 +198,7 @@ public class MyDateUtils
      */
     public static Date addAssignTimeYear(Integer year)
     {
-        return addAssignTime(year,null,null,null,null,null);
+        return addAssignTime(null,year,null,null,null,null,null);
     }
     /**
      * 增加指定的时间(参数都可空)
@@ -203,7 +206,7 @@ public class MyDateUtils
      */
     public static Date addAssignTimeMonth(Integer month)
     {
-        return addAssignTime(null,month,null,null,null,null);
+        return addAssignTime(null,null,month,null,null,null,null);
     }
     /**
      * 增加指定的时间(参数都可空)
@@ -211,7 +214,7 @@ public class MyDateUtils
      */
     public static Date addAssignTimeDay(Integer day)
     {
-        return addAssignTime(null,null,day,null,null,null);
+        return addAssignTime(null,null,null,day,null,null,null);
     }
     /**
      * 增加指定的时间(参数都可空)
@@ -219,7 +222,7 @@ public class MyDateUtils
      */
     public static Date addAssignTimeHour(Integer hour)
     {
-        return addAssignTime(null,null,null,hour,null,null);
+        return addAssignTime(null,null,null,null,hour,null,null);
     }
     /**
      * 增加指定的时间(参数都可空)
@@ -227,7 +230,7 @@ public class MyDateUtils
      */
     public static Date addAssignTimeMinute(Integer minute)
     {
-        return addAssignTime(null,null,null,null,minute,null);
+        return addAssignTime(null,null,null,null,null,minute,null);
     }
     /**
      * 增加指定的时间(参数都可空)
@@ -235,7 +238,93 @@ public class MyDateUtils
      */
     public static Date addAssignTimeSecond(Integer second)
     {
-        return addAssignTime(null,null,null,null,null,second);
+        return addAssignTime(null,null,null,null,null,null,second);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @param day 距离今天相差多少
+     * @param hour 时
+     * @param minute 分
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTime(Date date,Integer year,Integer month,Integer day,Integer hour,Integer minute)
+    {
+        return addAssignTime(date,year,month,day,hour,minute,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @param day 距离今天相差多少
+     * @param hour 时
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTime(Date date,Integer year,Integer month,Integer day,Integer hour)
+    {
+        return addAssignTime(date,year,month,day,hour,null,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @param day 距离今天相差多少
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTime(Date date,Integer year,Integer month,Integer day)
+    {
+        return addAssignTime(date,year,month,day,null,null,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTime(Date date,Integer year,Integer month)
+    {
+        return addAssignTime(date,year,month,null,null,null,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTimeYear(Date date,Integer year)
+    {
+        return addAssignTime(date,year,null,null,null,null,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTimeMonth(Date date,Integer month)
+    {
+        return addAssignTime(date,null,month,null,null,null,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTimeDay(Date date,Integer day)
+    {
+        return addAssignTime(date,null,null,day,null,null,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTimeHour(Date date,Integer hour)
+    {
+        return addAssignTime(date,null,null,null,hour,null,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTimeMinute(Date date,Integer minute)
+    {
+        return addAssignTime(date,null,null,null,null,minute,null);
+    }
+    /**
+     * 增加指定的时间(参数都可空)
+     * @return 返回指定的时间
+     */
+    public static Date addAssignTimeSecond(Date date,Integer second)
+    {
+        return addAssignTime(date,null,null,null,null,null,second);
     }
 
     /**
@@ -246,10 +335,14 @@ public class MyDateUtils
      * @param second 秒
      * @return 返回指定的时间
      */
-    public static Date getAssignTime(Integer day,Integer hour,Integer minute,Integer second)
+    public static Date getAssignTime(Date date,Integer day,Integer hour,Integer minute,Integer second)
     {
         Calendar cal=Calendar.getInstance();
-        cal.setTime(new Date());
+        if(date == null)
+        {
+            date = new Date();
+        }
+        cal.setTime(date);
         cal.add(Calendar.DATE,day==null?0:day);
         cal.set(Calendar.HOUR_OF_DAY,hour==null?cal.get(Calendar.HOUR_OF_DAY):hour);//设置时
         cal.set(Calendar.MINUTE, minute==null?cal.get(Calendar.MINUTE):minute);//设置分
@@ -293,7 +386,7 @@ public class MyDateUtils
      */
     public static Date getAssignTime(Integer day,Integer hour,Integer minute)
     {
-        return getAssignTime(day,hour,minute,null);
+        return getAssignTime(null,day,hour,minute,null);
     }
 
 
@@ -484,41 +577,59 @@ public class MyDateUtils
         {
             throw new RuntimeException("需要转换的字符串不能为null");
         }
-        String format =null;
-        if(str.contains("-") && !str.contains(":") && str.length() == 10)
-        {
-            format = MyDateFormatterEnum.TIME_FORMAT_YMD_G.getFormatter();
-        }else if(str.contains("-") && str.contains(":"))
-        {
-            format = MyDateFormatterEnum.TIME_FORMAT_YMD_G_HMS.getFormatter();
-        }else if(str.contains("/") && !str.contains(":") && str.length()==10)
-        {
-            format = MyDateFormatterEnum.TIME_FORMAT_YMD_G.getFormatter();
-        }else if(str.contains("/") && str.contains(":"))
-        {
-            format = MyDateFormatterEnum.TIME_FORMAT_YMD_H_HMS.getFormatter();
-        }else if(str.contains("/") && str.length()==10)
-        {
-            format = MyDateFormatterEnum.TIME_FORMAT_YMD_H.getFormatter();
-        }else if(str.contains("年") && str.contains("月")&& str.contains("日") && str.contains(":"))
-        {
-            format = MyDateFormatterEnum.TIME_FORMAT_CHINASTMP.getFormatter();
-        }else if(str.contains("年") && str.contains("月")&& str.contains("日") && str.length() == 10)
-        {
-            format = MyDateFormatterEnum.TIME_FORMAT_CHINA.getFormatter();
-        }else if(str.length()==14)
-        {
-            format = MyDateFormatterEnum.TIME_FORMAT_TIMESTMP.getFormatter();
-        }else if(str.length()==8)
-        {
-            format = MyDateFormatterEnum.TIME_FORMAT_YMD.getFormatter();
-        }
-        if(format==null)
-        {
-           throw new RuntimeException("被转化的日期不正确");
-        }
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat(format);
         try {
+            String format =null;
+            //2020-06-09T09:00:00.000+0800
+            if(str.contains("T") && str.contains(".") && str.contains("+") && str.length() == 28)
+            {
+               String localStr = MyStringUtils.getTextLeft(str,".").replaceAll("T"," ");
+                System.out.println(localStr);
+               SimpleDateFormat simpleDateFormat = new SimpleDateFormat(MyDateFormatterEnum.TIME_FORMAT_YMD_G_HMS.getFormatter());
+               Date date = simpleDateFormat.parse(localStr);
+               return MyDateUtils.addAssignTimeHour(date,8);
+            }
+            //'2018-08-06T10:00:00.000Z
+            else if(str.contains("T") && str.contains(".") && str.contains("Z") && str.length() == 24)
+            {
+                String localStr = MyStringUtils.getTextLeft(str,".").replaceAll("T"," ");
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(MyDateFormatterEnum.TIME_FORMAT_YMD_G_HMS.getFormatter());
+                Date date = simpleDateFormat.parse(localStr);
+                return MyDateUtils.addAssignTimeHour(date,-8);
+            }
+
+            else if(str.contains("-") && !str.contains(":") && str.length() == 10)
+            {
+                format = MyDateFormatterEnum.TIME_FORMAT_YMD_G.getFormatter();
+            }else if(str.contains("-") && str.contains(":"))
+            {
+                format = MyDateFormatterEnum.TIME_FORMAT_YMD_G_HMS.getFormatter();
+            }else if(str.contains("/") && !str.contains(":") && str.length()==10)
+            {
+                format = MyDateFormatterEnum.TIME_FORMAT_YMD_G.getFormatter();
+            }else if(str.contains("/") && str.contains(":"))
+            {
+                format = MyDateFormatterEnum.TIME_FORMAT_YMD_H_HMS.getFormatter();
+            }else if(str.contains("/") && str.length()==10)
+            {
+                format = MyDateFormatterEnum.TIME_FORMAT_YMD_H.getFormatter();
+            }else if(str.contains("年") && str.contains("月")&& str.contains("日") && str.contains(":"))
+            {
+                format = MyDateFormatterEnum.TIME_FORMAT_CHINASTMP.getFormatter();
+            }else if(str.contains("年") && str.contains("月")&& str.contains("日") && str.length() == 10)
+            {
+                format = MyDateFormatterEnum.TIME_FORMAT_CHINA.getFormatter();
+            }else if(str.length()==14)
+            {
+                format = MyDateFormatterEnum.TIME_FORMAT_TIMESTMP.getFormatter();
+            }else if(str.length()==8)
+            {
+                format = MyDateFormatterEnum.TIME_FORMAT_YMD.getFormatter();
+            }
+            if(format==null)
+            {
+               throw new RuntimeException("被转化的日期不正确");
+            }
+            SimpleDateFormat simpleDateFormat=new SimpleDateFormat(format);
             return simpleDateFormat.parse(str);
         } catch (ParseException e) {
             e.printStackTrace();
