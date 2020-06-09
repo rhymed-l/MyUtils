@@ -580,7 +580,7 @@ public class MyDateUtils
         try {
             String format =null;
             //2020-06-09T09:00:00.000+0800
-            if(str.contains("T") && str.contains(".") && str.contains("+") && str.length() == 28)
+            if(str.contains("T") && str.contains(".") && str.length() == 28)
             {
                String localStr = MyStringUtils.getTextLeft(str,".").replaceAll("T"," ");
                 System.out.println(localStr);
