@@ -585,15 +585,12 @@ public class MyDateUtils
                String localStr = MyStringUtils.getTextLeft(str,".").replaceAll("T"," ");
                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(MyDateFormatterEnum.TIME_FORMAT_YMD_G_HMS.getFormatter());
                Date date = simpleDateFormat.parse(localStr);
-               return MyDateUtils.addAssignTimeHour(date,8);
+               return MyDateUtils.addAssignTimeHour(date,-8);
             }
             //'2018-08-06T10:00:00.000Z
             else if(str.contains("T") && str.contains(".") && str.contains("Z") && str.length() == 24)
             {
-                String localStr = MyStringUtils.getTextLeft(str,".").replaceAll("T"," ");
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(MyDateFormatterEnum.TIME_FORMAT_YMD_G_HMS.getFormatter());
-                Date date = simpleDateFormat.parse(localStr);
-                return MyDateUtils.addAssignTimeHour(date,-8);
+                str = MyStringUtils.getTextLeft(str,".").replaceAll("T"," ");
             }
 
             else if(str.contains("-") && !str.contains(":") && str.length() == 10)
