@@ -580,10 +580,9 @@ public class MyDateUtils
         try {
             String format =null;
             //2020-06-09T09:00:00.000+0800
-            if(str.contains("T") && str.contains(".") && str.length() == 28)
+            if(str.contains("T") && str.contains(".") && !str.contains("Z") && str.length() > 24)
             {
                String localStr = MyStringUtils.getTextLeft(str,".").replaceAll("T"," ");
-                System.out.println(localStr);
                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(MyDateFormatterEnum.TIME_FORMAT_YMD_G_HMS.getFormatter());
                Date date = simpleDateFormat.parse(localStr);
                return MyDateUtils.addAssignTimeHour(date,8);
