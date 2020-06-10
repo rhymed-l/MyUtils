@@ -11,7 +11,14 @@ public class MyConvertUtils
 {
     private MyConvertUtils(){}
 
-    public static  <T>T mapToObject(Map map,Class<T> tClass)
+    /**
+     * 将map对象中的数据映射为对象
+     * @param map map对象
+     * @param tClass 需要映射的类
+     * @param ignoreUnderscore 是否忽略下划线
+     * @return 返回map映射后的对象
+     */
+    public static  <T>T mapToObject(Map map,Class<T> tClass,boolean ignoreUnderscore)
     {
         T t;
         try {
@@ -40,7 +47,8 @@ public class MyConvertUtils
             Map.Entry<String,Object> entry = iterator.next();
             for(Field field : list)
             {
-                if(field.getName().equalsIgnoreCase(entry.getKey()))
+                if((ignoreUnderscore && entry.getKey() != null) ? field.getName().replaceAll("_","").equalsIgnoreCase(entry.getKey().replaceAll("_",""))
+                : field.getName().equalsIgnoreCase(entry.getKey()))
                 {
                     try {
                         //不完善的
@@ -56,5 +64,16 @@ public class MyConvertUtils
             }
         }
         return t;
+    }
+
+    /**
+     * 将map对象中的数据映射为对象
+     * @param map map对象
+     * @param tClass 需要映射的类
+     * @return 返回map映射后的对象
+     */
+    public static  <T>T mapToObject(Map map,Class<T> tClass)
+    {
+       return mapToObject(map,tClass,false);
     }
 }

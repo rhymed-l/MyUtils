@@ -77,7 +77,19 @@ public class MyObjectUtils
      * @param clazz 类名
      * @return T 返回新的对象
      */
-    public static <T> T copy(Object obj, Class<T> clazz) {
+    public static <T> T copy(Object obj, Class<T> clazz)
+    {
+        return copy(obj,clazz,false);
+    }
+
+    /**
+     * copy 简单的对象属性到另一个对象
+     * @param obj 对象
+     * @param clazz 类名
+     * @param ignoreUnderscore 是否忽略下划线
+     * @return T 返回新的对象
+     */
+    public static <T> T copy(Object obj, Class<T> clazz,boolean ignoreUnderscore){
         T to = newInstance(clazz);
         if(obj == null)
         {
@@ -91,7 +103,9 @@ public class MyObjectUtils
         {
             for(Field targetField : targetFields)
             {
-                if(sourceField.getName().equalsIgnoreCase(targetField.getName()) && sourceField.getType() == targetField.getType())
+                if(ignoreUnderscore ? sourceField.getName().replaceAll("_","").equalsIgnoreCase(targetField.getName().replaceAll("_",""))
+                        : sourceField.getName().equalsIgnoreCase(targetField.getName())
+                        && sourceField.getType() == targetField.getType())
                 {
                     sourceField.setAccessible(true);
                     targetField.setAccessible(true);
