@@ -3,6 +3,7 @@ package ltd.liuzhi.rhyme.utils;
 
 import ltd.liuzhi.rhyme.utils.annotation.MyCSVField;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
@@ -29,7 +30,7 @@ public class MyCsvExportUtils
     /**
      * @param data 集合数据
      */
-    public static void doExport(List data,OutputStream os) throws Exception
+    public static void doExport(List data,OutputStream os)
     {
         Map<String,MyCSVField> fieldMap = new LinkedHashMap<>();
         if(MyCollectionUtils.getSize(data) == 0)
@@ -60,7 +61,7 @@ public class MyCsvExportUtils
             fieldMap.entrySet().forEach(entry->{
                 String filedName = entry.getKey();
                 try {
-                    Field field = cls.getField(filedName);
+                    Field field = cls.getDeclaredField(filedName);
                     field.setAccessible(true);
                     if(entry.getValue().export())
                     {
@@ -73,8 +74,13 @@ public class MyCsvExportUtils
             });
             buf.append(CSV_ROW_SEPARATOR);
         });
+        System.err.println(buf.toString());
         // 写出响应
-        os.write(buf.toString().getBytes("UTF-8"));
-        os.flush();
+        try {
+            os.write(buf.toString().getBytes("UTF-8"));
+            os.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
