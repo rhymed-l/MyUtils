@@ -15,6 +15,7 @@ public class MyCollectionUtils
      * @param collection 判断的集合
      * @return 空则true 否则false
      */
+    @Deprecated
     public static boolean CollectionIsEmpty(Collection collection)
     {
         if(collection == null || collection.size()== 0)
@@ -52,6 +53,7 @@ public class MyCollectionUtils
      * @param collection 获取的集合
      * @return 返回集合的大小
      */
+    @Deprecated
     public static int CollectionSize(Collection collection)
     {
         if(collection == null)
