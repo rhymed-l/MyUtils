@@ -133,20 +133,6 @@ public class MyStringUtils
     }
 
     /**
-     *
-     * 这个方法已废弃,未来版本可能会删除掉,请在@MyCollectionUtils.CollectionIsEmpty()判断集合是否为null
-     *
-     * 判断List组数是否是空(对象为空,或者内容为空)
-     * @param list 需要判断的LIST数组
-     * @return 空则返回真
-     */
-    @Deprecated
-    public static Boolean isEmpty(List list)
-    {
-        return list==null?true:list.size()>0?false:true;
-    }
-
-    /**
      * 将String字符转为Integer类型
      * @param number 需要转换的数字
      * @return 返回转化之后的数字

@@ -16,4 +16,14 @@ public @interface MyCSVField
      * 导出CSV文件的标题
      */
     String title() default "";
+
+    /**
+     * 是否导出
+     */
+    boolean export() default true;
+
+    /**
+     * 如果没有值的情况默认值是多少
+     */
+    String value() default "";
 }

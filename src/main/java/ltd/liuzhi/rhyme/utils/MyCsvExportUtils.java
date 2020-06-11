@@ -31,7 +31,7 @@ public class MyCsvExportUtils
      */
     public static void doExport(List data,OutputStream os) throws Exception
     {
-        Map<String,String> fieldMap = new LinkedHashMap<>();
+        Map<String,MyCSVField> fieldMap = new LinkedHashMap<>();
         if(MyCollectionUtils.getSize(data) == 0)
         {
             return;
@@ -46,13 +46,13 @@ public class MyCsvExportUtils
             MyCSVField csvField = field.getAnnotation(MyCSVField.class);
             if(csvField != null)
             {
-                fieldMap.put(field.getName(),csvField.title());
+                fieldMap.put(field.getName(),csvField);
             }
         }
         StringBuffer buf = new StringBuffer();
         // 组装表头
         fieldMap.entrySet().forEach(e->
-            buf.append(e.getValue()).append(CSV_COLUMN_SEPARATOR));
+            buf.append(e.getValue().title()).append(CSV_COLUMN_SEPARATOR));
         buf.append(CSV_ROW_SEPARATOR);
         // 组装数据
         data.forEach(d->{
@@ -62,7 +62,11 @@ public class MyCsvExportUtils
                 try {
                     Field field = cls.getField(filedName);
                     field.setAccessible(true);
-                    buf.append(field.get(d)).append(CSV_COLUMN_SEPARATOR);
+                    if(entry.getValue().export())
+                    {
+                        buf.append(MyStringUtils.isEmpty(String.valueOf(field.get(d))) ? entry.getValue().value() : field.get(d));
+                    }
+                    buf.append(CSV_COLUMN_SEPARATOR);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
