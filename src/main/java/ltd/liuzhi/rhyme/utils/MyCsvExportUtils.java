@@ -53,7 +53,7 @@ public class MyCsvExportUtils
         StringBuffer buf = new StringBuffer();
         // 组装表头
         fieldMap.entrySet().forEach(e->
-            buf.append(e.getValue().title()).append(CSV_COLUMN_SEPARATOR));
+            buf.append("\"").append(e.getValue().title()).append("\"").append(CSV_COLUMN_SEPARATOR));
         buf.append(CSV_ROW_SEPARATOR);
         // 组装数据
         data.forEach(d->{
@@ -65,7 +65,9 @@ public class MyCsvExportUtils
                     field.setAccessible(true);
                     if(entry.getValue().export())
                     {
-                        buf.append(MyStringUtils.isEmpty(String.valueOf(field.get(d))) ? entry.getValue().value() : field.get(d));
+                        buf.append("\"").append(MyStringUtils.isEmpty(String.valueOf(field.get(d))) ?
+                                entry.getValue().value() :
+                                String.valueOf(field.get(d))).append("\"");
                     }
                     buf.append(CSV_COLUMN_SEPARATOR);
                 } catch (Exception e) {
