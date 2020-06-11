@@ -28,7 +28,7 @@ public class MyScheduleUtils
      */
     public static Integer newTaskByMilliseconds(Runnable runnable,long milliseconds,boolean isPeriodic)
     {
-        return openTask(runnable,milliseconds,isPeriodic);
+        return openTask(runnable,milliseconds,TimeUnit.MILLISECONDS,isPeriodic);
     }
 
     /**
@@ -40,7 +40,20 @@ public class MyScheduleUtils
      */
     public static Integer newTaskBySeconds(Runnable runnable,int seconds,boolean isPeriodic)
     {
-        return newTaskByMilliseconds(runnable,seconds * 1000,isPeriodic);
+        return openTask(runnable,seconds,TimeUnit.SECONDS,isPeriodic);
+    }
+
+    /**
+     * 开启一个定时器
+     * @param runnable 需要执行的方法
+     * @param time 时间
+     * @param timeUnit 时间单位
+     * @param isPeriodic 是否重复执行
+     * @return 返回该任务的标识
+     */
+    public static Integer newTask(Runnable runnable,long time,TimeUnit timeUnit,boolean isPeriodic)
+    {
+        return openTask(runnable,time,timeUnit,isPeriodic);
     }
 
     /**
@@ -52,7 +65,7 @@ public class MyScheduleUtils
      */
     public static Integer newTaskByMinutes(Runnable runnable,int minutes,boolean isPeriodic)
     {
-        return newTaskBySeconds(runnable,minutes * 60,isPeriodic);
+        return openTask(runnable,minutes,TimeUnit.MINUTES,isPeriodic);
     }
 
     /**
@@ -64,7 +77,7 @@ public class MyScheduleUtils
      */
     public static Integer newTaskByHours(Runnable runnable,int hours,boolean isPeriodic)
     {
-        return newTaskByMinutes(runnable,hours * 60,isPeriodic);
+        return openTask(runnable,hours,TimeUnit.HOURS,isPeriodic);
     }
 
     /**
@@ -126,7 +139,7 @@ public class MyScheduleUtils
         return shutdownTask(taskFlag,false);
     }
 
-    private static synchronized Integer openTask(Runnable runnable,long milliseconds,boolean isPeriodic)
+    private static synchronized Integer openTask(Runnable runnable,long time,TimeUnit timeUnit,boolean isPeriodic)
     {
         if(scheduledExecutorService == null)
         {
@@ -135,10 +148,10 @@ public class MyScheduleUtils
         RunnableScheduledFuture future;
         if(isPeriodic)
         {
-            future =  (RunnableScheduledFuture) scheduledExecutorService.scheduleAtFixedRate(runnable,milliseconds,milliseconds,TimeUnit.MILLISECONDS);
+            future =  (RunnableScheduledFuture) scheduledExecutorService.scheduleAtFixedRate(runnable,time,time,timeUnit);
         }else
         {
-            future =  (RunnableScheduledFuture) scheduledExecutorService.schedule(runnable,milliseconds,TimeUnit.MILLISECONDS);
+            future =  (RunnableScheduledFuture) scheduledExecutorService.schedule(runnable,time,timeUnit);
         }
         Integer code = future.hashCode();
         if(map == null)
@@ -148,6 +161,5 @@ public class MyScheduleUtils
         map.put(code,future);
         return code;
     }
-
 
 }
