@@ -17,6 +17,15 @@ public class MyScheduleUtils
 
     private static ScheduledThreadPoolExecutor scheduledExecutorService;
 
+    /**
+     * 自动检查定时任务标识
+     */
+    private static boolean autoCheckTag = false;
+    /**
+     * 自动检查定时任务标识
+     */
+    private static Integer autoCheckTaskFlag;
+
     private MyScheduleUtils() {}
 
     /**
@@ -95,12 +104,13 @@ public class MyScheduleUtils
         RunnableScheduledFuture future = map.get(taskFlag);
         if(future == null)
         {
-            throw new RuntimeException("找不到相关的任务标识");
+            throw new RuntimeException("找不到相关的任务");
         }
+
         boolean result = future.cancel(isCloseNow);
-        if(result)
+        if(result || future.isDone() || future.isCancelled())
         {
-            map.remove(future);
+            map.remove(taskFlag);
             if(map.size() == 0)
             {
                 map = null;
@@ -141,25 +151,67 @@ public class MyScheduleUtils
 
     private static synchronized Integer openTask(Runnable runnable,long time,TimeUnit timeUnit,boolean isPeriodic)
     {
-        if(scheduledExecutorService == null)
+        Integer code = null;
+        try {
+            if(scheduledExecutorService == null)
+            {
+                scheduledExecutorService = new ScheduledThreadPoolExecutor(5);
+            }
+            RunnableScheduledFuture future;
+            if(isPeriodic)
+            {
+                future =  (RunnableScheduledFuture) scheduledExecutorService.scheduleAtFixedRate(runnable,time,time,timeUnit);
+            }else
+            {
+                future =  (RunnableScheduledFuture) scheduledExecutorService.schedule(runnable,time,timeUnit);
+            }
+            code = future.hashCode();
+            if(map == null)
+            {
+                map = new ConcurrentHashMap<>(200);
+            }
+            map.put(code,future);
+            //开启自动检查
+            autoCheck();
+            return code;
+        }catch (Exception e)
         {
-            scheduledExecutorService = new ScheduledThreadPoolExecutor(5);
+            if(code != null)
+            {
+               shutdownTask(code);
+            }
+            throw new RuntimeException("开启定时任务失败");
         }
-        RunnableScheduledFuture future;
-        if(isPeriodic)
-        {
-            future =  (RunnableScheduledFuture) scheduledExecutorService.scheduleAtFixedRate(runnable,time,time,timeUnit);
-        }else
-        {
-            future =  (RunnableScheduledFuture) scheduledExecutorService.schedule(runnable,time,timeUnit);
-        }
-        Integer code = future.hashCode();
-        if(map == null)
-        {
-            map = new ConcurrentHashMap<>();
-        }
-        map.put(code,future);
-        return code;
     }
 
+    /**
+     * 自动检查是否存在一次性定时任务或者已经执行完毕的定时任务进行删除
+     */
+    private static synchronized void autoCheck()
+    {
+        try {
+            if(!autoCheckTag)
+            {
+                //置初始值
+                autoCheckTag = true;
+                autoCheckTaskFlag = openTask(()->{
+                    map.entrySet().forEach(e->{
+                        if(e == null || e.getValue().isDone() || e.getValue().isCancelled())
+                        {
+                            shutdownTask(e.getKey(),true);
+                        }
+                        if(map.size() == 1)
+                        {
+                            shutdownTask(autoCheckTaskFlag);
+                            autoCheckTag = false;
+                        }
+                    });
+                },3,TimeUnit.SECONDS,true);
+            }
+        }catch (Exception e)
+        {
+            shutdownTask(autoCheckTaskFlag);
+            autoCheckTag = false;
+        }
+    }
 }
