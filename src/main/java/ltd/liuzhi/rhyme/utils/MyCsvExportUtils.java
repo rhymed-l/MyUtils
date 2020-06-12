@@ -28,14 +28,35 @@ public class MyCsvExportUtils
     private static final String CSV_ROW_SEPARATOR = "\r\n";
 
     /**
+     * 导出数据为输出流
      * @param data 集合数据
      */
     public static void doExport(List data,OutputStream os)
     {
+        String str = doExportString(data);
+        if(str == null){
+            return;
+        }
+        // 写出响应
+        try {
+            os.write(str.getBytes("UTF-8"));
+            os.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 导出数据为CSV格式的字符串
+     * @param data 数据源
+     * @return 返回CSV格式的字符串
+     */
+    public static String doExportString(List data)
+    {
         Map<String,MyCSVField> fieldMap = new LinkedHashMap<>();
         if(MyCollectionUtils.getSize(data) == 0)
         {
-            return;
+            return null;
         }
         //先获取第一个对象进行匹配标题
         Object object = data.get(0);
@@ -53,7 +74,7 @@ public class MyCsvExportUtils
         StringBuffer buf = new StringBuffer();
         // 组装表头
         fieldMap.entrySet().forEach(e->
-            buf.append("\"").append(e.getValue().title()).append("\"").append(CSV_COLUMN_SEPARATOR));
+                buf.append("\"").append(e.getValue().title()).append("\"").append(CSV_COLUMN_SEPARATOR));
         buf.append(CSV_ROW_SEPARATOR);
         // 组装数据
         data.forEach(d->{
@@ -76,13 +97,6 @@ public class MyCsvExportUtils
             });
             buf.append(CSV_ROW_SEPARATOR);
         });
-        System.err.println(buf.toString());
-        // 写出响应
-        try {
-            os.write(buf.toString().getBytes("UTF-8"));
-            os.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        return buf.toString();
     }
 }

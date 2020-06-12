@@ -16,7 +16,7 @@ public class MyCacheUtils
     /**
      * 该容器为了防止内存超出,只缓存1000条数据,超出则会被算法移除
      */
-   private static Map<String, Object> data = new LinkedHashMap<>();
+   private static Map<String, Object> data;
 
     /**
      * 缓存大小容量
@@ -30,8 +30,11 @@ public class MyCacheUtils
      * @param <T> 返回的对象
      * @return 返回缓存中的对象
      */
-   public static <T> T get(String key,Class<T> tClass)
+   public static synchronized  <T> T get(String key,Class<T> tClass)
    {
+       if(data == null){
+           return null;
+       }
        return (T) data.get(key);
    }
 
@@ -52,7 +55,7 @@ public class MyCacheUtils
      */
    public static boolean exist(String key)
    {
-       return data.get(key) != null;
+       return get(key) != null;
    }
 
     /**
@@ -74,6 +77,16 @@ public class MyCacheUtils
      */
     public static void put(String key, Object value, long time, TimeUnit timeUnit)
     {
+        if(data == null)
+        {
+            synchronized (MyCacheUtils.class)
+            {
+                if(data == null)
+                {
+                    data = new LinkedHashMap<>();
+                }
+            }
+        }
         if(MyStringUtils.isEmpty(key)){
             throw new RuntimeException("缓存的key值不允许为空");
         }
@@ -90,6 +103,7 @@ public class MyCacheUtils
         }
 
     }
+
     /**
      * 存储值到缓存中
      * @param key 缓存中的key值
@@ -99,6 +113,27 @@ public class MyCacheUtils
     public static void put(String key, Object value, long seconds)
     {
        put(key,value,seconds,TimeUnit.SECONDS);
+    }
+
+    /**
+     * 清除全部缓存数据
+     */
+    public static void clearCache()
+    {
+        data.clear();
+        data = null;
+    }
+    /**
+     * 删除一个缓存
+     *  @param key 缓存中的key值
+     */
+    public static synchronized void remove(String key)
+    {
+        if(data == null)
+        {
+            return;
+        }
+        data.remove(key);
     }
 
     private static void verifyTime(long time, TimeUnit timeUnit)
