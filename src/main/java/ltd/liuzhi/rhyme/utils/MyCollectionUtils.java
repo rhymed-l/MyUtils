@@ -1,6 +1,8 @@
 package ltd.liuzhi.rhyme.utils;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 集合工具类
@@ -45,5 +47,20 @@ public class MyCollectionUtils
             return 0;
         }
         return collection.size();
+    }
+
+    /**
+     * 将数组转为List集合
+     * @param objects 需要转换的数组
+     * @return 返回转换后的集合
+     */
+    public static <T> List<T> arrayToList(T[] objects)
+    {
+        List<T> list = new ArrayList<>();
+        for(T t : objects)
+        {
+            list.add(t);
+        }
+        return list;
     }
 }

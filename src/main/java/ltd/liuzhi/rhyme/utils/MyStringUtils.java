@@ -1,5 +1,7 @@
 package ltd.liuzhi.rhyme.utils;
 
+import com.sun.istack.internal.NotNull;
+
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.StringReader;
@@ -728,7 +730,6 @@ public class MyStringUtils
 
     /**
      * 获取指定字符串出现的次数(正则表达式)
-     *
      * @param srcText 源字符串
      * @param findText 要查找的字符串
      * @return 出现的次数
@@ -745,7 +746,6 @@ public class MyStringUtils
 
     /**
      * 获取指定字符串出现的次数
-     *
      * @param srcText 源字符串
      * @param findText 要查找的字符串
      * @return 出现的次数
@@ -758,5 +758,15 @@ public class MyStringUtils
             count++;
         }
         return count;
+    }
+
+    /**
+     * 将字符串分隔为List集合
+     * @param str 原始字符串
+     * @param regex 正则表达式
+     * @return 返回分割后的字符串集合
+     */
+    public static List<String> splitToList(@NotNull String str,@NotNull String regex){
+        return Arrays.asList(str.split(regex));
     }
 }

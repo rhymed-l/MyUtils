@@ -2,6 +2,7 @@ package ltd.liuzhi.rhyme.utils;
 
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.*;
 
 
@@ -11,8 +12,9 @@ import java.util.*;
  */
 public class MyObjectUtils
 {
-    private MyObjectUtils(){}
+//    private MyObjectUtils(){}
 
+    private String str;
     /**
      * 实例化对象
      * @param clazz 类
@@ -260,5 +262,110 @@ public class MyObjectUtils
 //        String[] str1 = new String[]{"1","2"};
 //        String[] str2 = new String[]{"1","2"};
 //        System.err.println(objIsEquals(str1,str2));
-//    }
+//    }P
+
+    /**
+     * 获取对象的全部字段(包括父类跟隐私字段)
+     * @param cls 类
+     * @return
+     */
+    public static List<Field> getObjectAllField(Class cls)
+    {
+        List<Field> fields = new ArrayList<>();
+        List<Class> classes = getAllClass(cls);
+        classes.forEach(c->{
+            fields.addAll(getObjectField(c));
+        });
+        return fields;
+    }
+    /**
+     * 获取对象的全部方法(包括父类跟隐私方法)
+     * @param cls 类
+     * @return
+     */
+    public static List<Method> getObjectAllMethod(Class cls)
+    {
+        List<Method> methods = new ArrayList<>();
+        List<Class> classes = getAllClass(cls);
+        classes.forEach(c->{
+            methods.addAll(getObjectMethod(c));
+        });
+        return methods;
+    }
+    /**
+     * 获取对象的全部方法(不包括父类方法)
+     * @param cls 类
+     * @return
+     */
+    public static List<Method> getObjectMethod(Class cls)
+    {
+        List<Method> methods = MyCollectionUtils.arrayToList(cls.getDeclaredMethods());
+        methods.addAll(MyCollectionUtils.arrayToList(cls.getMethods())) ;
+        return methods;
+    }
+
+    /**
+     * 获取一个对象的全部类
+     * @param cls 获取全部类
+     * @return 返回全部类
+     */
+    public static List<Class> getAllClass(Class cls)
+    {
+        List<Class> classes = new ArrayList<>();
+        while (cls.getSuperclass() != null)
+        {
+            classes.add(cls);
+            cls = cls.getSuperclass();
+        }
+        classes.add(cls);
+        return classes;
+    }
+
+    /**
+     * 获取对象的全部字段(不包括父类)
+     * @param cls 类
+     * @return
+     */
+    public static List<Field> getObjectField(Class cls)
+    {
+        List<Field> fields = MyCollectionUtils.arrayToList(cls.getDeclaredFields());
+        fields.addAll(MyCollectionUtils.arrayToList(cls.getFields()));
+        return fields;
+    }
+
+    /**
+     * 根据字段名设置对象的属性
+     * @param obj 对象
+     * @param filedName 字段名
+     * @param val 值
+     * @return 设置成功则true,否则false
+     */
+    public static boolean setObjectProperty(Object obj,String filedName,Object val)
+    {
+        List<Field> fields = getObjectAllField(obj.getClass());
+        fields.forEach(f->{
+            if(f.getName().equalsIgnoreCase(filedName))
+            {
+                f.setAccessible(true);
+                try {
+                    f.set(obj,val);
+                    fields.clear();
+                } catch (IllegalAccessException e) {
+                    return;
+                }
+            }
+        });
+        return (MyCollectionUtils.isEmpty(fields));
+    }
+
+    public static void main(String[] args) {
+        MyObjectUtils myObjectUtils = new MyObjectUtils();
+        System.err.println(setObjectProperty(myObjectUtils,"str","你好"));
+        System.out.println(myObjectUtils.getStr());
+
+    }
+
+    public String getStr() {
+        return str;
+    }
 }
