@@ -1,6 +1,5 @@
 package ltd.liuzhi.rhyme.utils;
 
-import com.sun.istack.internal.NotNull;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
@@ -766,7 +765,7 @@ public class MyStringUtils
      * @param regex 正则表达式
      * @return 返回分割后的字符串集合
      */
-    public static List<String> splitToList(@NotNull String str,@NotNull String regex){
+    public static List<String> splitToList(String str,String regex){
         return Arrays.asList(str.split(regex));
     }
 }

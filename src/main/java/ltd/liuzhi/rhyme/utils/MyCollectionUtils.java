@@ -2,7 +2,9 @@ package ltd.liuzhi.rhyme.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 集合工具类
@@ -62,5 +64,34 @@ public class MyCollectionUtils
             list.add(t);
         }
         return list;
+    }
+
+    /**
+     * 拷贝list
+     * @param list 拷贝的原list
+     * @return 返回拷贝后的集合
+     */
+    public static <T> List<T> copyList(List<T> list)
+    {
+        return list.stream().collect(Collectors.toList());
+    }
+
+    /**
+     * 将list中的对象拷贝成一个新的对象(值复制)
+     * @param list 需要被转换的数据
+     * @param clazz 需要转换的对象
+     * @return 返回对应对象的List
+     */
+    public static <T> List replaceListObj(List list, Class<T> clazz)
+    {
+        Iterator iterator = list.iterator();
+        List newList = new ArrayList();
+        while (iterator.hasNext())
+        {
+            Object obj = iterator.next();
+            Object newObj = MyObjectUtils.copy(obj,clazz);
+            newList.add(newObj);
+        }
+        return newList;
     }
 }

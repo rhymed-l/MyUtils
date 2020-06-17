@@ -60,8 +60,7 @@ public class MyCsvExportUtils
         }
         //先获取第一个对象进行匹配标题
         Object object = data.get(0);
-        //下个版本再考虑父类
-        Field[] fields = object.getClass().getDeclaredFields();
+        List<Field> fields = MyObjectUtils.getObjectAllField(object.getClass());
         for(Field field : fields)
         {
             field.setAccessible(true);
@@ -82,7 +81,7 @@ public class MyCsvExportUtils
             fieldMap.entrySet().forEach(entry->{
                 String filedName = entry.getKey();
                 try {
-                    Field field = cls.getDeclaredField(filedName);
+                    Field field = MyObjectUtils.getFieldByName(cls,filedName);
                     field.setAccessible(true);
                     if(entry.getValue().export())
                     {

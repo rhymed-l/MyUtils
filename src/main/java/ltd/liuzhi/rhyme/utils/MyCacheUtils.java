@@ -7,6 +7,11 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 缓存工具
+ *
+ * 已知的缺陷...如果是引用对象存进去,外部的修改将会导致内部的修改,
+ * 即传缓存一个list进去,如果外部这个list添加了对象,缓存中的list也会添加
+ * 这个缺陷将在未来修复
+ *
  * @author LiuZhi
  * @Date 2020-06-11 17:50
  * @Version V1.0

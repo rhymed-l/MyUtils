@@ -12,9 +12,13 @@ import java.util.*;
  */
 public class MyObjectUtils
 {
-//    private MyObjectUtils(){}
+    private static final String FIELD_KEY = "field_all:%s";
+    private static final String FIELD_ALL_KEY = "field:%s";
+    private static final String METHOD_KEY = "method_all:%s";
+    private static final String METHOD_ALL_KEY = "method:%s";
 
-    private String str;
+    private MyObjectUtils(){}
+
     /**
      * 实例化对象
      * @param clazz 类
@@ -54,24 +58,7 @@ public class MyObjectUtils
     }
 
 
-    /**
-     * List根据class重新生成List对象
-     * @param list 需要被转换的数据
-     * @param clazz 需要转换的对象
-     * @return 返回对应对象的List
-     */
-    public static <T> List replaceListObj(List list, Class<T> clazz)
-    {
-        Iterator iterator = list.iterator();
-        List newList = new ArrayList();
-        while (iterator.hasNext())
-        {
-            Object obj = iterator.next();
-            Object newObj = MyObjectUtils.copy(obj,clazz);
-            newList.add(newObj);
-        }
-        return newList;
-    }
+
 
     /**
      * copy 简单的对象属性到另一个对象
@@ -271,11 +258,18 @@ public class MyObjectUtils
      */
     public static List<Field> getObjectAllField(Class cls)
     {
+        String key = String.format(FIELD_ALL_KEY,cls.getName());
+        if(MyCacheUtils.exist(key))
+        {
+            System.err.println("缓存");
+            return MyCacheUtils.get(key,List.class);
+        }
         List<Field> fields = new ArrayList<>();
         List<Class> classes = getAllClass(cls);
         classes.forEach(c->{
             fields.addAll(getObjectField(c));
         });
+        MyCacheUtils.put(key,fields,300L);
         return fields;
     }
     /**
@@ -285,11 +279,17 @@ public class MyObjectUtils
      */
     public static List<Method> getObjectAllMethod(Class cls)
     {
+        String key = String.format(METHOD_ALL_KEY,cls.getName());
+        if(MyCacheUtils.exist(key))
+        {
+            return MyCacheUtils.get(key,List.class);
+        }
         List<Method> methods = new ArrayList<>();
         List<Class> classes = getAllClass(cls);
         classes.forEach(c->{
             methods.addAll(getObjectMethod(c));
         });
+        MyCacheUtils.put(key,methods,300L);
         return methods;
     }
     /**
@@ -299,8 +299,14 @@ public class MyObjectUtils
      */
     public static List<Method> getObjectMethod(Class cls)
     {
+        String key = String.format(METHOD_KEY,cls.getName());
+        if(MyCacheUtils.exist(key))
+        {
+            return MyCacheUtils.get(key,List.class);
+        }
         List<Method> methods = MyCollectionUtils.arrayToList(cls.getDeclaredMethods());
         methods.addAll(MyCollectionUtils.arrayToList(cls.getMethods())) ;
+        MyCacheUtils.put(key,methods,300L);
         return methods;
     }
 
@@ -328,8 +334,14 @@ public class MyObjectUtils
      */
     public static List<Field> getObjectField(Class cls)
     {
+        String key = String.format(FIELD_KEY,cls.getName());
+        if(MyCacheUtils.exist(key))
+        {
+            return MyCacheUtils.get(key,List.class);
+        }
         List<Field> fields = MyCollectionUtils.arrayToList(cls.getDeclaredFields());
         fields.addAll(MyCollectionUtils.arrayToList(cls.getFields()));
+        MyCacheUtils.put(key,fields,300L);
         return fields;
     }
 
@@ -342,6 +354,7 @@ public class MyObjectUtils
      */
     public static boolean setObjectProperty(Object obj,String filedName,Object val)
     {
+        List<Integer> list = new ArrayList<>();
         List<Field> fields = getObjectAllField(obj.getClass());
         fields.forEach(f->{
             if(f.getName().equalsIgnoreCase(filedName))
@@ -349,23 +362,45 @@ public class MyObjectUtils
                 f.setAccessible(true);
                 try {
                     f.set(obj,val);
-                    fields.clear();
+                    list.add(1);
                 } catch (IllegalAccessException e) {
                     return;
                 }
             }
         });
-        return (MyCollectionUtils.isEmpty(fields));
+        return MyCollectionUtils.isNotEmpty(list);
     }
 
-    public static void main(String[] args) {
-        MyObjectUtils myObjectUtils = new MyObjectUtils();
-        System.err.println(setObjectProperty(myObjectUtils,"str","你好"));
-        System.out.println(myObjectUtils.getStr());
-
+    /**
+     * @param cls 类
+     * @param name 需要查找的字段名
+     * @param ignoreCase 是否忽略大小写
+     * @return 如果有则返回字段,没有则空
+     */
+    public static Field getFieldByName(Class cls,String name,boolean ignoreCase)
+    {
+        MyUtils.notNull(name,"被查找的字段名不能为null");
+        List<Field> fields = getObjectAllField(cls);
+        if(MyCollectionUtils.isEmpty(fields))
+        {
+            return null;
+        }
+        return fields.stream().filter(f->{
+            if(ignoreCase)
+            {
+                return f.getName().equalsIgnoreCase(name);
+            }else{
+                return f.getName().equals(name);
+            }
+        }).findAny().orElseGet(null);
     }
-
-    public String getStr() {
-        return str;
+    /**
+     * @param cls 类
+     * @param name 需要查找的字段名
+     * @return 如果有则返回字段,没有则空
+     */
+    public static Field getFieldByName(Class cls,String name)
+    {
+        return getFieldByName(cls,name,true);
     }
 }

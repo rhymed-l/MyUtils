@@ -5,12 +5,13 @@
 
 直接通过maven中央仓库拉取项目代码,即可使用,当前最新版本maven坐标.
 
-	<!-- https://mvnrepository.com/artifact/ltd.liuzhi.rhyme/my_utils -->
-		<dependency>
-			<groupId>ltd.liuzhi.rhyme</groupId>
-			<artifactId>my_utils</artifactId>
-			<version>1.01-RELEASE</version>
-		</dependency>
+	<!-- https://mvnrepository.com/artifact/cn.rhymed.common/my-utils -->
+    <dependency>
+        <groupId>cn.rhymed.common</groupId>
+        <artifactId>my-utils</artifactId>
+        <version>2.0.0-RELEASE</version>
+    </dependency>
+
 
 
 如果需要查看历史以往记录.请访问下面链接
