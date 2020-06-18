@@ -4,6 +4,7 @@ package ltd.liuzhi.rhyme.utils;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.function.BiConsumer;
 
 /**
  * 缓存工具
@@ -152,4 +153,38 @@ public class MyCacheUtils
             throw new RuntimeException("缓存的时间单位不能为null");
         }
     }
+
+    /**
+     * 遍历集合并拥有下标
+     * @param startIndex 开始遍历的索引
+     * @param iterable 需要遍历的集合
+     * @param action 需要遍历时执行的方法
+     * @param <T>
+     */
+    public static <T> void forEach(int startIndex, Iterable<? extends T> iterable, BiConsumer<Integer,? super T> action)
+    {
+        if(startIndex < 0) {
+            startIndex = 0;
+        }
+        int index = 0;
+        for (T element : iterable) {
+            index++;
+            if(index <= startIndex) {
+                continue;
+            }
+            action.accept(index-1, element);
+        }
+    }
+
+    /**
+     * 遍历集合并拥有下标
+     * @param iterable 需要遍历的集合
+     * @param action 需要遍历时执行的方法
+     * @param <T>
+     */
+    public static <T> void forEach(Iterable<? extends T> iterable, BiConsumer<Integer,? super T> action)
+    {
+        forEach(0,iterable,action);
+    }
+
 }
