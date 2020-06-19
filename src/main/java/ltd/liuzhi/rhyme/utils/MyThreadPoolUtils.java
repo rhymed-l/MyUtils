@@ -23,7 +23,7 @@ public class MyThreadPoolUtils
             synchronized (MyThreadPoolUtils.class)
             {
                 if(executorService == null){
-                    executorService = newFixedThreadPool(5,50);
+                    executorService = newFixedThreadPool(5,10);
                 }
             }
         }
