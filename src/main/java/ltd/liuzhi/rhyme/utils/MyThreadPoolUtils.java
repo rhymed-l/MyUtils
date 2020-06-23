@@ -19,11 +19,30 @@ public class MyThreadPoolUtils
      */
     public static void execute(Runnable task)
     {
+        execute(task,5,15);
+    }
+
+    /**
+     * 多线程执行某一个任务
+     * @param task 需要执行的任务方法
+     * @param corePoolSize 需要多少个核心线程处理
+     * @param maximumPoolSize 如果超出核心线程数处理的则需要多少额外的线程处理
+     */
+    public static void execute(Runnable task,int corePoolSize,int maximumPoolSize)
+    {
+        if(corePoolSize <=0)
+        {
+            corePoolSize = 5;
+        }
+        if(maximumPoolSize<=0)
+        {
+            maximumPoolSize = 15;
+        }
         if(executorService == null){
             synchronized (MyThreadPoolUtils.class)
             {
                 if(executorService == null){
-                    executorService = newFixedThreadPool(5,10);
+                    executorService = newFixedThreadPool(corePoolSize,maximumPoolSize);
                 }
             }
         }
