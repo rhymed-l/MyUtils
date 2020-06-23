@@ -2,6 +2,8 @@ package ltd.liuzhi.rhyme.utils;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * 对象转换类
@@ -30,17 +32,7 @@ public class MyConvertUtils
             e.printStackTrace();
             return null;
         }
-        List<Field> list = new ArrayList<>();
-
-        for(Field f : tClass.getFields())
-        {
-            list.add(f);
-        }
-        for(Field f : tClass.getDeclaredFields())
-        {
-            list.add(f);
-        }
-
+        List<Field> list = MyObjectUtils.getObjectAllField(tClass);
         Iterator<Map.Entry<String,Object>> iterator = map.entrySet().iterator();
         while (iterator.hasNext())
         {
@@ -75,5 +67,36 @@ public class MyConvertUtils
     public static  <T>T mapToObject(Map map,Class<T> tClass)
     {
        return mapToObject(map,tClass,false);
+    }
+
+    /**
+     * 将Object对象映射为Map对象
+     * @param object object对象
+     * @return 返回map映射后的对象
+     */
+    public static  Map<String,Object> objectToMap(Object object)
+    {
+        Map<String,Object> map = new HashMap<>();
+        List<Field> list = MyObjectUtils.getObjectAllField(object.getClass());
+        list.forEach(f->{
+            f.setAccessible(true);
+            try {
+                map.put(f.getName(),f.get(object));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
+        return map;
+    }
+
+    /**
+     * 将Object对象映射为Map对象
+     * @param object object对象
+     * @return 返回map映射后的对象
+     */
+    public static  Map<String,String> objectToMapString(Object object)
+    {
+        Map<String,String> map = objectToMap(object).entrySet().stream().collect(Collectors.toMap(m->m.getKey(),m->m.getValue().toString()));
+        return map;
     }
 }
