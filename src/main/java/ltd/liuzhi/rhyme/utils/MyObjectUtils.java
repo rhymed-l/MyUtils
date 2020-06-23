@@ -346,7 +346,7 @@ public class MyObjectUtils
     }
 
     /**
-     * 根据字段名设置对象的属性
+     * 根据字段名设置对象的属性(如果存在的话)
      * @param obj 对象
      * @param filedName 字段名
      * @param val 值
@@ -377,7 +377,7 @@ public class MyObjectUtils
      * @param ignoreCase 是否忽略大小写
      * @return 如果有则返回字段,没有则空
      */
-    public static Field getFieldByName(Class cls,String name,boolean ignoreCase)
+    public static Field getFieldByName(Class cls,String name,boolean ignoreCase,boolean ignoreUnderscore)
     {
         MyUtils.notNull(name,"被查找的字段名不能为null");
         List<Field> fields = getObjectAllField(cls);
@@ -388,8 +388,16 @@ public class MyObjectUtils
         return fields.stream().filter(f->{
             if(ignoreCase)
             {
+                if(ignoreUnderscore)
+                {
+                    return f.getName().replaceAll("_","").equalsIgnoreCase(name.replaceAll("_",""));
+                }
                 return f.getName().equalsIgnoreCase(name);
             }else{
+                if(ignoreUnderscore)
+                {
+                    return f.getName().replaceAll("_","").equals(name.replaceAll("_",""));
+                }
                 return f.getName().equals(name);
             }
         }).findAny().orElseGet(null);
@@ -401,6 +409,6 @@ public class MyObjectUtils
      */
     public static Field getFieldByName(Class cls,String name)
     {
-        return getFieldByName(cls,name,true);
+        return getFieldByName(cls,name,true,false);
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.aop.support.AopUtils;
 import java.lang.reflect.Field;
 
 /**
- * Spring的工具包
+ * Spring的工具包(需要引入spring才能使用)
  * @author LiuZhi
  * @Date 2020-05-15 11:21
  * @Version V1.0
