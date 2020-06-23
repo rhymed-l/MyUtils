@@ -261,7 +261,6 @@ public class MyObjectUtils
         String key = String.format(FIELD_ALL_KEY,cls.getName());
         if(MyCacheUtils.exist(key))
         {
-            System.err.println("缓存");
             return MyCacheUtils.get(key,List.class);
         }
         List<Field> fields = new ArrayList<>();
