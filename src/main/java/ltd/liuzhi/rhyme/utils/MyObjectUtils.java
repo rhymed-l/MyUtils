@@ -12,6 +12,7 @@ import java.util.*;
  */
 public class MyObjectUtils
 {
+    private static final Long CACHE_TIME = 300L;
     private static final String FIELD_KEY = "field_all:%s";
     private static final String FIELD_ALL_KEY = "field:%s";
     private static final String METHOD_KEY = "method_all:%s";
@@ -268,9 +269,28 @@ public class MyObjectUtils
         classes.forEach(c->{
             fields.addAll(getObjectField(c));
         });
-        MyCacheUtils.put(key,fields,300L);
+        MyCacheUtils.put(key,fields,CACHE_TIME);
         return fields;
     }
+
+    /**
+     * 获取对象的全部字段(不包括父类)
+     * @param cls 类
+     * @return
+     */
+    public static List<Field> getObjectField(Class cls)
+    {
+        String key = String.format(FIELD_KEY,cls.getName());
+        if(MyCacheUtils.exist(key))
+        {
+            return MyCacheUtils.get(key,List.class);
+        }
+        List<Field> fields = MyCollectionUtils.arrayToList(cls.getDeclaredFields());
+        fields.addAll(MyCollectionUtils.arrayToList(cls.getFields()));
+        MyCacheUtils.put(key,fields,CACHE_TIME);
+        return fields;
+    }
+
     /**
      * 获取对象的全部方法(包括父类跟隐私方法)
      * @param cls 类
@@ -288,7 +308,7 @@ public class MyObjectUtils
         classes.forEach(c->{
             methods.addAll(getObjectMethod(c));
         });
-        MyCacheUtils.put(key,methods,300L);
+        MyCacheUtils.put(key,methods,CACHE_TIME);
         return methods;
     }
     /**
@@ -305,7 +325,7 @@ public class MyObjectUtils
         }
         List<Method> methods = MyCollectionUtils.arrayToList(cls.getDeclaredMethods());
         methods.addAll(MyCollectionUtils.arrayToList(cls.getMethods())) ;
-        MyCacheUtils.put(key,methods,300L);
+        MyCacheUtils.put(key,methods,CACHE_TIME);
         return methods;
     }
 
@@ -324,24 +344,6 @@ public class MyObjectUtils
         }
         classes.add(cls);
         return classes;
-    }
-
-    /**
-     * 获取对象的全部字段(不包括父类)
-     * @param cls 类
-     * @return
-     */
-    public static List<Field> getObjectField(Class cls)
-    {
-        String key = String.format(FIELD_KEY,cls.getName());
-        if(MyCacheUtils.exist(key))
-        {
-            return MyCacheUtils.get(key,List.class);
-        }
-        List<Field> fields = MyCollectionUtils.arrayToList(cls.getDeclaredFields());
-        fields.addAll(MyCollectionUtils.arrayToList(cls.getFields()));
-        MyCacheUtils.put(key,fields,300L);
-        return fields;
     }
 
     /**

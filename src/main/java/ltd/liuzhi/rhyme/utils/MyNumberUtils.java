@@ -25,7 +25,7 @@ public class MyNumberUtils
      */
     public static BigDecimal getBigDecimalForSkipBlanks(BigDecimal bigDecimal)
     {
-        return bigDecimal==null?new BigDecimal("0.00"):bigDecimal;
+        return bigDecimal == null ? new BigDecimal("0.00") : bigDecimal;
     }
 
     /**
@@ -35,7 +35,7 @@ public class MyNumberUtils
      */
     public static Integer getIntegerIncrement(Integer number)
     {
-        return number==null?1:++number;
+        return number == null ? 1 : ++number;
     }
     /**
      * 获取这个值自减后的值
@@ -44,7 +44,7 @@ public class MyNumberUtils
      */
     public static Integer getIntegerDecrement(Integer number)
     {
-        return number==null?-1:--number;
+        return number == null ? -1 : --number;
     }
     /**
      * 获取这个值自增后的值
@@ -95,6 +95,6 @@ public class MyNumberUtils
     public static Integer getRandomNumber(Integer minVal,Integer maxVal)
     {
         Random random = new Random();
-        return random.nextInt(maxVal+1-minVal)+minVal;
+        return random.nextInt(maxVal + 1 - minVal) + minVal;
     }
 }

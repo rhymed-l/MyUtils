@@ -62,7 +62,7 @@ public class MyHttpUtils {
             charset = "UTF-8";
         }
         try {
-            String urlNameString = url + param == null ? "" : param;
+            String urlNameString = url + param == null ? "" : url + "?" + param;
             URL realUrl = new URL(urlNameString);
             // 打开和URL之间的连接
             URLConnection connection = realUrl.openConnection();
