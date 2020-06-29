@@ -12,6 +12,15 @@ import java.util.function.BiConsumer;
  */
 public class MyHttpUtils {
 
+    public static final String POST_REQUEST_METHOD = "POST";
+    public static final String GET_REQUEST_METHOD = "GET";
+    public static final String DELETE_REQUEST_METHOD = "DELETE";
+    public static final String PUT_REQUEST_METHOD = "PUT";
+    public static final String HEAD_REQUEST_METHOD = "HEAD";
+    public static final String OPTIONS_REQUEST_METHOD = "OPTIONS";
+    public static final String CONNECT_REQUEST_METHOD = "CONNECT";
+    public static final String TRACE_REQUEST_METHOD = "TRACE";
+
     private MyHttpUtils() {
     }
 
@@ -386,7 +395,11 @@ public class MyHttpUtils {
      * @param files         文件参数map。
      * @return 所代表远程资源的响应结果
      */
-    public static String sendPostByForm(String requestUrl, Map<String, String> requestHeader, Map<String, String> params, Map<String, File> files) {
+    public static String sendRequestByForm(String requestUrl, Map<String, String> requestHeader, Map<String, String> params, Map<String, File> files,String requestMode) {
+        if(MyStringUtils.isEmpty(requestMode))
+        {
+            throw new IllegalArgumentException("请求参数不能为空");
+        }
         OutputStream out = null;
         BufferedReader reader = null;
         String result = "";
@@ -400,7 +413,7 @@ public class MyHttpUtils {
             connection.setRequestProperty("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0");
             connection.setDoOutput(true);
             connection.setDoInput(true);
-            connection.setRequestMethod("POST");
+            connection.setRequestMethod(requestMode);
             if (requestHeader != null && requestHeader.size() > 0) {
                 for (Map.Entry<String, String> entry : requestHeader.entrySet()) {
                     connection.setRequestProperty(entry.getKey(), entry.getValue());
@@ -477,6 +490,20 @@ public class MyHttpUtils {
             }
         }
         return result;
+    }
+
+
+    /**
+     * 向指定 URL 发送POST方法的请求(模拟from表单提交)
+     *
+     * @param requestUrl    发送请求的 URL
+     * @param requestHeader 请求头参数map。
+     * @param params        请求参数map。
+     * @param files         文件参数map。
+     * @return 所代表远程资源的响应结果
+     */
+    public static String sendPostByForm(String requestUrl, Map<String, String> requestHeader, Map<String, String> params, Map<String, File> files) {
+        return sendRequestByForm(requestUrl,requestHeader,params,files,POST_REQUEST_METHOD);
     }
 
     /**
@@ -629,5 +656,6 @@ public class MyHttpUtils {
         }
         return resUrl[1];
     }
+
 
 }
