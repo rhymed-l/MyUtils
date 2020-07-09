@@ -656,4 +656,37 @@ public class MyStringUtils
     public static List<String> splitToList(String str,String regex){
         return Arrays.asList(str.split(regex));
     }
+
+    /**
+     * 下划线转换驼峰命名法
+     * @param str 需要转换的字符串
+     * @return 返回转换的字符串
+     */
+    public static String lineToHump(String str){
+        Pattern linePattern = Pattern.compile("_(\\w)");
+        str = str.toLowerCase();
+        Matcher matcher = linePattern.matcher(str);
+        StringBuffer sb = new StringBuffer();
+        while(matcher.find()){
+            matcher.appendReplacement(sb, matcher.group(1).toUpperCase());
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
+    }
+
+    /**
+     * 驼峰命名转下划线
+     * @param str 需要转换的字符串
+     * @return 返回转换的字符串
+     */
+    public static String humpToLine(String str){
+        Pattern humpPattern = Pattern.compile("[A-Z]");
+        Matcher matcher = humpPattern.matcher(str);
+        StringBuffer sb = new StringBuffer();
+        while(matcher.find()){
+            matcher.appendReplacement(sb, "_"+matcher.group(0).toLowerCase());
+        }
+        matcher.appendTail(sb);
+        return sb.toString();
+    }
 }

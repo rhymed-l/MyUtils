@@ -386,8 +386,66 @@ public class MyHttpUtils {
         return sendPostByForm(requestUrl,requestHeader,params,null);
     }
 
+    public static String sendRequest(String requestUrl, Map<String, String> requestHeader, Map<String, String> params, File file,String requestMode) {
+        if (MyStringUtils.isEmpty(requestMode)) {
+            throw new IllegalArgumentException("请求参数不能为空");
+        }
+            OutputStream out = null;
+            BufferedReader reader = null;
+            String result = "";
+            try {
+                if (requestUrl == null || requestUrl.isEmpty()) {
+                    return result;
+                }
+                URL realUrl = new URL(requestUrl);
+                HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
+                connection.setRequestProperty("accept", "*/*");
+                connection.setRequestProperty("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0");
+                connection.setDoOutput(true);
+                connection.setDoInput(true);
+                connection.setRequestMethod(requestMode);
+                if (requestHeader != null && requestHeader.size() > 0) {
+                    for (Map.Entry<String, String> entry : requestHeader.entrySet()) {
+                        connection.setRequestProperty(entry.getKey(), entry.getValue());
+                    }
+                }
+                connection.setRequestProperty("content-type", "application/octet-stream");
+                out = new DataOutputStream(connection.getOutputStream());
+                out.write((" \r\n").getBytes());
+                DataInputStream in = new DataInputStream(new FileInputStream(file));
+                int bytes = 0;
+                byte[] bufferOut = new byte[1024];
+                while ((bytes = in.read(bufferOut)) != -1) {
+                    out.write(bufferOut, 0, bytes);
+                }
+                in.close();
+                out.flush();
+                out.close();
+                out = null;
+                reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result += line;
+                }
+            } catch (Exception e) {
+                System.out.println("发送" + requestMode + "请求出现异常！");
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                    if (reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            return result;
+    }
     /**
-     * 向指定 URL 发送POST方法的请求(模拟from表单提交)
+     * 向指定 URL 发送请求(模拟from表单提交)
      *
      * @param requestUrl    发送请求的 URL
      * @param requestHeader 请求头参数map。
@@ -475,7 +533,7 @@ public class MyHttpUtils {
                 result += line;
             }
         } catch (Exception e) {
-            System.out.println("发送POST请求出现异常！");
+            System.out.println("发送" + requestMode + "请求出现异常！");
             e.printStackTrace();
         } finally {
             try {
@@ -656,6 +714,4 @@ public class MyHttpUtils {
         }
         return resUrl[1];
     }
-
-
 }
