@@ -161,4 +161,40 @@ public class MyFileUtils {
         }
             return fileFolder.mkdirs();
     }
+
+    /**
+     * 将输入流转为字节数组
+     * @param inStream 输入流
+     * @return 返回转换后的字节数组
+     */
+    public static byte[] inputToByte(InputStream inStream)
+    {
+        ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
+        byte[] buff = new byte[100];
+        int rc = 0;
+        while (true) {
+            try {
+                if (!((rc = inStream.read(buff, 0, 100)) > 0)) {
+                    break;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            swapStream.write(buff, 0, rc);
+        }
+        byte[] in2b = swapStream.toByteArray();
+        return in2b;
+    }
+
+    /**
+     * 将字节数组转为输入流
+     * @param bytes 字节数组
+     * @return 返回转换后的输入流
+     */
+    public static InputStream ByteToInputStream(byte[] bytes)
+    {
+        return new ByteArrayInputStream(bytes);
+    }
+
+
 }
