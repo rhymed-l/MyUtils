@@ -58,9 +58,6 @@ public class MyObjectUtils
         }
     }
 
-
-
-
     /**
      * copy 简单的对象属性到另一个对象
      * @param obj 对象
@@ -150,6 +147,7 @@ public class MyObjectUtils
             }
         }
     }
+
     /**
      * 判断对象是否为空
      * @param obj 需要判断的对象
@@ -250,7 +248,7 @@ public class MyObjectUtils
 //        String[] str1 = new String[]{"1","2"};
 //        String[] str2 = new String[]{"1","2"};
 //        System.err.println(objIsEquals(str1,str2));
-//    }P
+//    }
 
     /**
      * 获取对象的全部字段(包括父类跟隐私字段)
@@ -311,6 +309,7 @@ public class MyObjectUtils
         MyCacheUtils.put(key,methods,CACHE_TIME);
         return methods;
     }
+
     /**
      * 获取对象的全部方法(不包括父类方法)
      * @param cls 类
@@ -403,6 +402,7 @@ public class MyObjectUtils
             }
         }).findAny().orElseGet(null);
     }
+
     /**
      * @param cls 类
      * @param name 需要查找的字段名

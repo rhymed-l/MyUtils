@@ -1,5 +1,11 @@
 package ltd.liuzhi.rhyme.utils.pojo.domain;
 
+/**
+ * 图片打码对象
+ * @author LiuZhi
+ * @Date 2020-08-05 11:11
+ * @Version V1.0
+ */
 public class ImgCodeDO
 {
     private String id;

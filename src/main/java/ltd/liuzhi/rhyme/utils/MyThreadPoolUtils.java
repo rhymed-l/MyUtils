@@ -1,7 +1,11 @@
 package ltd.liuzhi.rhyme.utils;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 /**
  * 多线程工具包
@@ -19,7 +23,7 @@ public class MyThreadPoolUtils
      */
     public static void execute(Runnable task)
     {
-        execute(task,5,15);
+        execute(task,5,5);
     }
 
     /**
