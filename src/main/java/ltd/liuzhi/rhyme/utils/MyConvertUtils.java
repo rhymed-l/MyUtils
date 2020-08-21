@@ -96,7 +96,7 @@ public class MyConvertUtils
      */
     public static  Map<String,String> objectToMapString(Object object)
     {
-        Map<String,String> map = objectToMap(object).entrySet().stream().collect(Collectors.toMap(m->m.getKey(),m->m.getValue().toString()));
+        Map<String,String> map = objectToMap(object).entrySet().stream().collect(Collectors.toMap(m -> m.getKey(), m -> m.getValue() == null ? "" : m.getValue().toString()));
         return map;
     }
 }
