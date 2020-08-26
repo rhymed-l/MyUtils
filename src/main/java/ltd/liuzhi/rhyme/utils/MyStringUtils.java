@@ -219,6 +219,10 @@ public class MyStringUtils
      */
     public static String deleteAllInvisibleCharacters(String str)
     {
+        if(str == null)
+        {
+            return null;
+        }
         return str.replaceAll("\\s","");
     }
 

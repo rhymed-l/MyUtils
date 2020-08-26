@@ -1,10 +1,10 @@
 package ltd.liuzhi.rhyme.utils;
 
 
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.util.function.BiConsumer;
 
 /**
  * 网络请求工具类
@@ -23,6 +23,140 @@ public class MyHttpUtils {
 
     private MyHttpUtils() {
     }
+
+
+//    /**
+//     * 向指定 URL 发送请求(模拟from表单提交)
+//     * @param requestUrl    发送请求的 URL
+//     * @param requestHeader 请求头参数map。
+//     * @param params        请求参数map。
+//     * @param files         文件参数map。
+//     * @param files         文件参数map。
+//     * @return 所代表远程资源的响应结果
+//     */
+//    public static String sendRequest(String requestUrl, Map<String, String> requestHeader, Map<String, String> params, Map<String, File> files, HttpRequestMethodEnum requestMode, HttpRequestTypeEnum requestType) {
+//        if(requestMode == null)
+//        {
+//            throw new IllegalArgumentException("请求参数不能为空");
+//        }
+//        if(requestType == null)
+//        {
+//            throw new IllegalArgumentException("请求类型不能为空");
+//        }
+//        BufferedReader reader = null;
+//        String result = "";
+//
+//        if(HttpRequestMethodEnum.GET == requestMode){
+//
+//        }else {
+//            OutputStream out = null;
+//        }
+//
+//        try {
+//            if (requestUrl == null || requestUrl.isEmpty()) {
+//                return result;
+//            }
+//            if(requestType.equals(HttpRequestTypeEnum.PARAMS))
+//            {
+//                requestUrl = requestUrl + paramMapToString(params);
+//            }
+//            URL realUrl = new URL(requestUrl);
+//            HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
+//            connection.setRequestProperty("Accept", "*/*");
+//            connection.setRequestProperty("Connection", "keep-alive");
+//            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0");
+//            connection.setDoOutput(true);
+//            connection.setDoInput(true);
+//            //请求方式设置
+//            connection.setRequestMethod(requestMode.toString());
+//
+//            //请求头设置
+//            if (requestHeader != null && requestHeader.size() > 0) {
+//                for (Map.Entry<String, String> entry : requestHeader.entrySet()) {
+//                    connection.setRequestProperty(entry.getKey(), entry.getValue());
+//                }
+//            }
+//
+//            if(MyStringUtils.isNotEmpty(requestType.getType()))
+//            {
+//                connection.setRequestProperty("content-type", requestType.getType());
+//            }
+//
+//            out  = new DataOutputStream(connection.getOutputStream());
+//
+//
+//            if(requestType.equals(HttpRequestTypeEnum.X_WWW_FORM_URLENCODED)){
+//                if (params != null && params.size() > 0) {
+//                    String formData = "";
+//                    for (Map.Entry<String, String> entry : params.entrySet()) {
+//                        formData += entry.getKey() + "=" + entry.getValue() + "&";
+//                    }
+//                    formData = formData.substring(0, formData.length() - 1);
+//                    out.write(formData.getBytes());
+//                }
+//            }else if (requestType.equals(HttpRequestTypeEnum.FORM_DATA)){
+//                String boundary = "-----------------------------" + System.currentTimeMillis();
+//                connection.setRequestProperty("content-type", requestType.getType() + " boundary=" + boundary);
+//                if (params != null && params.size() > 0) {
+//                    StringBuilder sbFormData = new StringBuilder();
+//                    for (Map.Entry<String, String> entry : params.entrySet()) {
+//                        sbFormData.append("--" + boundary + "\r\n");
+//                        sbFormData.append("Content-Disposition: form-data; name=\"" + entry.getKey() + "\"\r\n\r\n");
+//                        sbFormData.append(entry.getValue() + "\r\n");
+//                    }
+//                    out.write(sbFormData.toString().getBytes());
+//                }
+//                for (Map.Entry<String, File> entry : files.entrySet()) {
+//                    String fileName = entry.getKey();
+//                    File file = entry.getValue();
+//                    if (file == null || file.getPath() == null || file.getName().isEmpty()) {
+//                        continue;
+//                    }
+//                    if (!file.exists()) {
+//                        continue;
+//                    }
+//                    out.write(("--" + boundary + "\r\n").getBytes());
+//                    out.write(("Content-Disposition: form-data; name=\"" + fileName + "\"; filename=\"" + file.getName() + "\"\r\n").getBytes());
+//                    out.write(("Content-Type: application/x-msdownload\r\n\r\n").getBytes());
+//                    DataInputStream in = new DataInputStream(new FileInputStream(file));
+//                    int bytes = 0;
+//                    byte[] bufferOut = new byte[1024];
+//                    while ((bytes = in.read(bufferOut)) != -1) {
+//                        out.write(bufferOut, 0, bytes);
+//                    }
+//                    in.close();
+//                    out.write(("\r\n").getBytes());
+//                }
+//                out.write(("--" + boundary + "--").getBytes());
+//            }else if(requestType.equals(HttpRequestTypeEnum.RAW_JSON)){
+//                out.write(paramMapToJSON(params).getBytes());
+//            }
+//            out.flush();
+//            out.close();
+//            out = null;
+//            reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                result += line;
+//            }
+//        } catch (Exception e) {
+//            System.out.println("发送" + requestMode + "请求出现异常！");
+//            e.printStackTrace();
+//        } finally {
+//            try {
+//                if (out != null) {
+//                    out.close();
+//                }
+//                if (reader != null) {
+//                    reader.close();
+//                }
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
+//        return result;
+//    }
+
 
     /**
      * 向指定URL发送GET方法的请求
@@ -387,64 +521,6 @@ public class MyHttpUtils {
         return sendPostByForm(requestUrl,requestHeader,params,null);
     }
 
-    public static String sendRequest(String requestUrl, Map<String, String> requestHeader, Map<String, String> params, File file,String requestMode) {
-        if (MyStringUtils.isEmpty(requestMode)) {
-            throw new IllegalArgumentException("请求参数不能为空");
-        }
-            OutputStream out = null;
-            BufferedReader reader = null;
-            String result = "";
-            try {
-                if (requestUrl == null || requestUrl.isEmpty()) {
-                    return result;
-                }
-                URL realUrl = new URL(requestUrl);
-                HttpURLConnection connection = (HttpURLConnection) realUrl.openConnection();
-                connection.setRequestProperty("accept", "*/*");
-                connection.setRequestProperty("user-agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0");
-                connection.setDoOutput(true);
-                connection.setDoInput(true);
-                connection.setRequestMethod(requestMode);
-                if (requestHeader != null && requestHeader.size() > 0) {
-                    for (Map.Entry<String, String> entry : requestHeader.entrySet()) {
-                        connection.setRequestProperty(entry.getKey(), entry.getValue());
-                    }
-                }
-                connection.setRequestProperty("content-type", "application/octet-stream");
-                out = new DataOutputStream(connection.getOutputStream());
-                out.write((" \r\n").getBytes());
-                DataInputStream in = new DataInputStream(new FileInputStream(file));
-                int bytes = 0;
-                byte[] bufferOut = new byte[1024];
-                while ((bytes = in.read(bufferOut)) != -1) {
-                    out.write(bufferOut, 0, bytes);
-                }
-                in.close();
-                out.flush();
-                out.close();
-                out = null;
-                reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    result += line;
-                }
-            } catch (Exception e) {
-                System.out.println("发送" + requestMode + "请求出现异常！");
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (out != null) {
-                        out.close();
-                    }
-                    if (reader != null) {
-                        reader.close();
-                    }
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
-            return result;
-    }
     /**
      * 向指定 URL 发送请求(模拟from表单提交)
      *
@@ -672,6 +748,36 @@ public class MyHttpUtils {
         return paramStr;
     }
 
+
+    /**
+     * Map参数转为JSON参数
+     * @param param 需要转换的参数
+     * @return 转换之后的参数
+     */
+    public static String paramMapToJSON(Map<String,String> param)
+    {
+        if(param == null)
+        {
+            return "{}";
+        }
+        StringBuffer sb = new StringBuffer();
+        MyCollectionUtils.forEach(param.entrySet(),(i,m)->{
+            if(i == 0){
+                sb.append("{");
+            }
+            if(i > 0){
+                sb.append(",");
+            }
+            sb.append("\"").append(m.getKey()).append("\"");
+            sb.append(":");
+            sb.append("\"").append(m.getValue()).append("\"");
+            if(i >= param.size() -1 ){
+                sb.append("}");
+            }
+        });
+        return sb.toString();
+    }
+
     /**
      * 获取短连接
      * @param longUrl 需要缩短的长链接
@@ -715,4 +821,5 @@ public class MyHttpUtils {
         }
         return resUrl[1];
     }
+
 }
