@@ -88,4 +88,10 @@
     </plugins>
 </build>
 
+<!--    指定编译器版本-->
+<properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+</properties>
+
 </project>
