@@ -29,6 +29,32 @@ public class MyFileUtils {
 
     /**
      * 根据文件获取文件真实类型后缀
+     * @param inputStream 文件输入流
+     * @return 文件头信息
+     */
+    public static String getRealFilePostfix(InputStream inputStream) {
+        if(inputStream == null){
+            throw new RuntimeException("文件输入流不存在资源");
+        }
+        String value = "";
+        try {
+            byte[] b = new byte[20];
+            inputStream.read(b, 0, b.length);
+            value = bytesToHexString(b);
+        } catch (Exception e) {
+        } finally {
+            if (null != inputStream) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+        return FileTypeEnum.getPostfixByHex(value);
+    }
+
+    /**
+     * 根据文件获取文件真实类型后缀
      *
      * @param file 文件
      * @return 文件头信息

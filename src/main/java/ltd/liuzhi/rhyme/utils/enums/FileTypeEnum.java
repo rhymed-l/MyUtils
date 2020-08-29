@@ -60,6 +60,7 @@ public enum FileTypeEnum
         }
         return "";
     }
+
     public static String getPostfixByHex(String hex) {
         FileTypeEnum[] values = FileTypeEnum.values();
         for (FileTypeEnum e : values) {

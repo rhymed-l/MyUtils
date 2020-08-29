@@ -4,7 +4,6 @@ package ltd.liuzhi.rhyme.utils;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.function.BiConsumer;
 
 /**
  * 缓存工具
