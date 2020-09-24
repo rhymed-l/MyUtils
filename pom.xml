@@ -85,6 +85,17 @@
                 </execution>
             </executions>
         </plugin>
+        <!--指定JDK-->
+<!--        <plugin>-->
+<!--            <groupId>org.apache.maven.plugins</groupId>-->
+<!--            <artifactId>maven-compiler-plugin</artifactId>-->
+<!--            <version>3.1</version>-->
+<!--            <configuration>-->
+<!--                <fork>true</fork>-->
+<!--                <verbose>true</verbose>-->
+<!--                <executable>/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/bin/javac</executable>-->
+<!--            </configuration>-->
+<!--        </plugin>-->
     </plugins>
 </build>
 

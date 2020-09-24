@@ -94,6 +94,7 @@ public class MyCsvExportUtils
                     e.printStackTrace();
                 }
             });
+            buf.deleteCharAt(buf.length());
             buf.append(CSV_ROW_SEPARATOR);
         });
         return buf.toString();
