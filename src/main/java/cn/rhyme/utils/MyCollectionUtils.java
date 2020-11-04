@@ -1,10 +1,10 @@
 package cn.rhyme.utils;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -127,6 +127,17 @@ public class MyCollectionUtils
     public static <T> void forEach(Iterable<? extends T> iterable, BiConsumer<Integer,? super T> action)
     {
         forEach(0,iterable,action);
+    }
+
+    /**
+     * 根据key键去重
+     * @param keyExtractor
+     * @param <T> 对象
+     * @return
+     */
+    public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
+        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
+        return object -> seen.putIfAbsent(keyExtractor.apply(object), Boolean.TRUE) == null;
     }
 
 }
