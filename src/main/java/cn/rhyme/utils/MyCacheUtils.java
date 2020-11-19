@@ -82,6 +82,14 @@ public class MyCacheUtils
      */
     public static void put(String key, Object value, long time, TimeUnit timeUnit)
     {
+        Object newObj = value;
+//        if(MyObjectUtils.isBaseType(value)){
+//            newObj = value;
+//        }else if(value instanceof String){
+//            newObj = String.valueOf(value);
+//        }else {
+//            newObj = MyObjectUtils.copy(value,value.getClass());
+//        }
         if(data == null)
         {
             synchronized (MyCacheUtils.class)
@@ -101,7 +109,7 @@ public class MyCacheUtils
         {
             data.entrySet().forEach(e->data.remove(e.getKey()));
         }
-        data.put(key,value);
+        data.put(key,newObj);
         if(time > 0 )
         {
             MyScheduleUtils.newTask(()-> data.remove(key),time,timeUnit,false);

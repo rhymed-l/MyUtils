@@ -92,7 +92,7 @@ public class MyObjectUtils
             {
                 if(ignoreUnderscore ? sourceField.getName().replaceAll("_","").equalsIgnoreCase(targetField.getName().replaceAll("_",""))
                         : sourceField.getName().equalsIgnoreCase(targetField.getName())
-                        && sourceField.getType() == targetField.getType())
+                        && fieldCompare(sourceField.getType(),targetField.getType()))
                 {
                     sourceField.setAccessible(true);
                     targetField.setAccessible(true);
@@ -223,11 +223,19 @@ public class MyObjectUtils
 
     /**
      * 判断object是否为基本类型
-     * @param object
-     * @return
+     * @param object 需要判断的对象
+     * @return 返回是否包装类型
      */
     public static boolean isBaseType(Object object) {
-        Class className = object.getClass();
+        return isBaseType(object.getClass());
+    }
+
+    /**
+     * 判断object是否为基本类型
+     * @param className 类
+     * @return 返回是否包装类型
+     */
+    public static boolean isBaseType(Class className) {
         if (className.equals(java.lang.Integer.class) ||
                 className.equals(java.lang.Byte.class) ||
                 className.equals(java.lang.Long.class) ||
@@ -240,6 +248,51 @@ public class MyObjectUtils
         }
         return false;
     }
+
+    /**
+     * 判断两个字段属性是否相等
+     */
+    public static boolean fieldCompare(Object obj1,Object obj2) {
+        return getWrapType(obj1).equals(getWrapType(obj2));
+    }
+
+    /**
+     * 获取对象包装类型
+     * @param obj 需要获取的对象
+     * @return 如果是基本类型则返回包装类型,否则返回本身
+     */
+    public static Class getWrapType(Object obj){
+       return getWrapType(obj.getClass());
+    }
+
+    /**
+     * 获取类的包装类型
+     * @param cls 需要获取的对象
+     * @return 如果是基本类型则返回包装类型,否则返回本身
+     */
+    public static Class getWrapType(Class cls){
+        if(isBaseType(cls)){
+            if (cls.equals(java.lang.Integer.class))
+                return Integer.class;
+            if (cls.equals(java.lang.Byte.class))
+                return Byte.class;
+            if (cls.equals(java.lang.Long.class))
+                return Long.class;
+            if (cls.equals(java.lang.Double.class))
+                return Double.class;
+            if (cls.equals(java.lang.Float.class))
+                return Float.class;
+            if (cls.equals(java.lang.Character.class))
+                return Character.class;
+            if (cls.equals(java.lang.Short.class))
+                return Short.class;
+            if (cls.equals(java.lang.Boolean.class))
+                return Boolean.class;
+        }
+        return cls;
+    }
+
+
 
 //    public static void main(String[] args) {
 ////        BigDecimal bigDecimal1 = new BigDecimal(1);

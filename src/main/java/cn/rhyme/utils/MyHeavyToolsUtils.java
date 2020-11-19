@@ -15,8 +15,8 @@ public class MyHeavyToolsUtils
 {
     private final static Logger logger = Logger.getGlobal();
 
-    private static StringBuffer sbUV    = new StringBuffer()            ;//聚道IP UV(H5页面打开的UV)
-    private static String       pathUV  = new String()                  ;//打开的路径
+    private static StringBuffer sbUV    = new StringBuffer()            ;
+    private static String       pathUV  = new String()                  ;
     //加载数据
     static
     {
@@ -26,7 +26,7 @@ public class MyHeavyToolsUtils
             pathUV          = dirPath + "\\uv_"         ;
 
             File dir        = new File(dirPath)         ;
-            Date date       = new Date()                ;//日期
+            Date date       = new Date()                ;
             if(!dir.isDirectory())
             {
                 logger.info("记录UV文件夹不存在,创建文件夹");
@@ -73,7 +73,7 @@ public class MyHeavyToolsUtils
             {
                 return true;
             }
-            sbUV.append(key);//拼成闭合
+            sbUV.append(key);
         }
         byte bt[] = sbUV.toString().getBytes();
         try {

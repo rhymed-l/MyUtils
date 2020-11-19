@@ -319,14 +319,14 @@ public class MyStringUtils
         }
         int len = name.length();
         StringBuffer sb = new StringBuffer();
-        sb.append(name.substring(0,1));//先拼第一位
+        sb.append(name.substring(0,1));
         if(len>2)
         {
             for(int i=1;i<len-1;i++)
             {
                 sb.append("*");
             }
-            sb.append(name.substring(len-1));//拼最后一位
+            sb.append(name.substring(len-1));
         }else
         {
             sb.append("*");

@@ -1,5 +1,6 @@
 package cn.rhyme.utils;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
@@ -83,7 +84,7 @@ public class MyCollectionUtils
      * @param clazz 需要转换的对象
      * @return 返回对应对象的List
      */
-    public static <T> List replaceListObj(List list, Class<T> clazz)
+    public static <T> List<T> replaceListObj(List list, Class<T> clazz)
     {
         Iterator iterator = list.iterator();
         List newList = new ArrayList();
@@ -140,4 +141,20 @@ public class MyCollectionUtils
         return object -> seen.putIfAbsent(keyExtractor.apply(object), Boolean.TRUE) == null;
     }
 
+
+    /**
+     * 两个list集合相加
+     * @param <T> 对象
+     * @return
+     */
+    public static <T> List<T> listAddAll(List<T> list1,List<T> list2) {
+        if(MyCollectionUtils.isEmpty(list1) && MyCollectionUtils.isEmpty(list2)){
+            return new ArrayList<T>(0);
+        }
+        if(MyCollectionUtils.isEmpty(list1)){
+            return list2;
+        }else {
+            return list1;
+        }
+    }
 }
