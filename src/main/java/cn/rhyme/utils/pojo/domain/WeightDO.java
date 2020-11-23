@@ -1,5 +1,7 @@
 package cn.rhyme.utils.pojo.domain;
 
+import cn.rhyme.utils.annotation.MyCSVField;
+
 /**
  * 权重数据
  * @author LiuZhi
@@ -17,6 +19,14 @@ public class WeightDO
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     @Override

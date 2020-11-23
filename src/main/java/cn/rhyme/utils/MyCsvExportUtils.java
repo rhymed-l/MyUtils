@@ -2,10 +2,12 @@ package cn.rhyme.utils;
 
 
 import cn.rhyme.utils.annotation.MyCSVField;
+import cn.rhyme.utils.pojo.domain.WeightDO;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,8 +75,9 @@ public class MyCsvExportUtils
         StringBuffer buf = new StringBuffer();
         // 组装表头
         fieldMap.entrySet().forEach(e->
-                buf.append("\"").append(e.getValue().title()).append("\"").append(CSV_COLUMN_SEPARATOR));
+                buf.append("\"").append(MyStringUtils.isEmpty(e.getValue().title())?e.getKey():e.getValue().title()).append("\"").append(CSV_COLUMN_SEPARATOR));
         buf.append(CSV_ROW_SEPARATOR);
+        buf.deleteCharAt(buf.length() - 3);
         // 组装数据
         data.forEach(d->{
             Class cls = d.getClass();
@@ -94,7 +97,7 @@ public class MyCsvExportUtils
                     e.printStackTrace();
                 }
             });
-            buf.deleteCharAt(buf.length());
+            buf.deleteCharAt(buf.length() - 1);
             buf.append(CSV_ROW_SEPARATOR);
         });
         return buf.toString();
