@@ -133,7 +133,9 @@ public class MyCacheUtils
      */
     public static void clearCache()
     {
-        data.clear();
+        if(data != null){
+            data.clear();
+        }
         data = null;
     }
     /**
