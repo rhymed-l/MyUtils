@@ -97,8 +97,10 @@ public class MyObjectUtils
                     sourceField.setAccessible(true);
                     targetField.setAccessible(true);
                     try {
-                        targetField.set(to,sourceField.get(obj));
-                    } catch (IllegalAccessException e) {
+                        if(sourceField.get(obj) != null){
+                            targetField.set(to,sourceField.get(obj));
+                        }
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
