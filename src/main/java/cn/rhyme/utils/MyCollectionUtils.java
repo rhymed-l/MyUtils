@@ -141,7 +141,6 @@ public class MyCollectionUtils
         return object -> seen.putIfAbsent(keyExtractor.apply(object), Boolean.TRUE) == null;
     }
 
-
     /**
      * 两个list集合相加
      * @param <T> 对象
@@ -157,4 +156,58 @@ public class MyCollectionUtils
             return list1;
         }
     }
+
+    /**
+     * 比较 listOne  和 listTwo 的差集
+     * listOne [1,2,3,4]
+     * listTwo [1,2,3,4,5]
+     * return []
+     * <p>
+     * listOne [1,2,6]
+     * listTwo [1,2,3,4,5]
+     * return [6]
+     */
+    private List<String> differenceSet(List<String> listOne, List<String> listTwo) {
+        if (MyCollectionUtils.isEmpty(listOne)) {
+            return new ArrayList<>();
+        }
+
+        if (MyCollectionUtils.isEmpty(listTwo)) {
+            return listOne;
+        }
+
+        List<String> result = new ArrayList<>();
+        for (String obj : listOne) {
+            if (!listTwo.contains(obj)) {
+                result.add(obj);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 比较 listOne  和 listTwo 的并集
+     * listOne [1,2,3,4]
+     * listTwo [1,2,3,4,5]
+     * return [1,2,3,4]
+     * <p>
+     * listOne [1,2,6]
+     * listTwo [1,2,3,4,5]
+     * return [1,2]
+     */
+    private List<String> unionSet(List<String> listOne, List<String> listTwo) {
+        if (MyCollectionUtils.isEmpty(listOne) || MyCollectionUtils.isEmpty(listTwo)) {
+            return new ArrayList<>();
+        }
+
+        List<String> result = new ArrayList<>();
+        for (String obj : listOne) {
+            if (listTwo.contains(obj)) {
+                result.add(obj);
+            }
+        }
+        return result;
+    }
+
+
 }
