@@ -167,7 +167,7 @@ public class MyCollectionUtils
      * listTwo [1,2,3,4,5]
      * return [6]
      */
-    private List<String> differenceSet(List<String> listOne, List<String> listTwo) {
+    public static List<String> differenceSet(List<String> listOne, List<String> listTwo) {
         if (MyCollectionUtils.isEmpty(listOne)) {
             return new ArrayList<>();
         }
@@ -195,7 +195,7 @@ public class MyCollectionUtils
      * listTwo [1,2,3,4,5]
      * return [1,2]
      */
-    private List<String> unionSet(List<String> listOne, List<String> listTwo) {
+    public static List<String> unionSet(List<String> listOne, List<String> listTwo) {
         if (MyCollectionUtils.isEmpty(listOne) || MyCollectionUtils.isEmpty(listTwo)) {
             return new ArrayList<>();
         }
