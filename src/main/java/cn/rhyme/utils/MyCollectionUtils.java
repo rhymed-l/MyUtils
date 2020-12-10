@@ -186,7 +186,7 @@ public class MyCollectionUtils
     }
 
     /**
-     * 比较 listOne  和 listTwo 的并集
+     * 比较 listOne  和 listTwo 的交集
      * listOne [1,2,3,4]
      * listTwo [1,2,3,4,5]
      * return [1,2,3,4]
@@ -195,7 +195,7 @@ public class MyCollectionUtils
      * listTwo [1,2,3,4,5]
      * return [1,2]
      */
-    public static List<String> unionSet(List<String> listOne, List<String> listTwo) {
+    public static List<String> intersection(List<String> listOne, List<String> listTwo) {
         if (MyCollectionUtils.isEmpty(listOne) || MyCollectionUtils.isEmpty(listTwo)) {
             return new ArrayList<>();
         }
