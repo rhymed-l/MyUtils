@@ -270,16 +270,19 @@ public class MyStringUtils
      */
     public static String phoneMosaic(String phone)
     {
-        return phoneMosaic(phone,null,null);
+        return stringMosaic(phone,null,null);
     }
+
     /**
-     * 给手机号中间打上*号,指定保留前后位数
-     * @param phone 需要脱敏的手机号
+     * 给字符串中间打上*号,指定保留前后位数
+     * @param str 需要脱敏的字符串
+     * @param front 保留前面多少位
+     * @param back 保留后面多少位
      * @return 返回脱敏后的手机号码
      */
-    public static String phoneMosaic(String phone,Integer front,Integer back)
+    public static String stringMosaic(String str,Integer front,Integer back)
     {
-        if(isEmpty(phone))
+        if(isEmpty(str))
         {
             return null;
         }
@@ -291,19 +294,15 @@ public class MyStringUtils
         {
             back = 4;
         }
-        if(isInteger(phone))
+        int len = str.length();
+        String left = str.substring(0,front);
+        StringBuffer sb = new StringBuffer(left);
+        for(int i = 0; i < len- (front+back) ;i++)
         {
-            int len = phone.length();
-            String left = phone.substring(0,front);
-            StringBuffer sb = new StringBuffer(left);
-            for(int i=0;i<len-(front+back);i++)
-            {
-                sb.append("*");
-            }
-            sb.append(phone.substring(len-back));
-            return sb.toString();
+            sb.append("*");
         }
-        return phone;
+        sb.append(str.substring(len - back));
+        return sb.toString();
     }
 
     /**
@@ -693,4 +692,28 @@ public class MyStringUtils
         matcher.appendTail(sb);
         return sb.toString();
     }
+
+    /**
+     * 给身份证脱敏
+     * @param idCard 身份证号
+     * @return 返回脱敏后的身份证号
+     */
+    public static String idCardMosaic(String idCard) {
+        return stringMosaic(idCard,6,4);
+    }
+
+    /**
+     * 给邮箱脱敏
+     * @param email 邮箱号
+     * @return 返回脱敏后的邮箱号
+     */
+    public static String emailMosaic(String email) {
+        int index = email.indexOf("@");
+        if(index == -1){
+            return email;
+        }
+        int back = email.length()-index;
+        return stringMosaic(email,index/2,back);
+    }
+
 }

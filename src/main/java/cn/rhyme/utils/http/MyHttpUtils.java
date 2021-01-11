@@ -111,4 +111,8 @@ public class MyHttpUtils {
         return null;
 
     }
+
+    public static void main(String[] args) {
+        getUrlParam("0:0:0:0:0:0:0:1 - - [06/Jan/2021:15:58:54 +0800] \"GET /test?name=xxx&phone=18573901123&idcard=430523199507282530 HTTP/1.1\" 200 3").entrySet().forEach(k-> System.err.println(k.getValue()));
+    }
 }

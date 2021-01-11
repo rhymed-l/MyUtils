@@ -2,15 +2,15 @@ package cn.rhyme.utils;
 
 
 import cn.rhyme.utils.annotation.MyCSVField;
-import cn.rhyme.utils.pojo.domain.WeightDO;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 导出CSV工具
@@ -28,6 +28,8 @@ public class MyCsvExportUtils
      * CSV文件行分隔符
      */
     private static final String CSV_ROW_SEPARATOR = "\r\n";
+
+    private static final int LIMIT = 10000;
 
     /**
      * 导出数据为输出流
@@ -55,13 +57,53 @@ public class MyCsvExportUtils
      */
     public static String doExportString(List data)
     {
-        Map<String, MyCSVField> fieldMap = new LinkedHashMap<>();
-        if(MyCollectionUtils.getSize(data) == 0)
-        {
+        if(MyCollectionUtils.isEmpty(data)){
             return null;
         }
+        //字段信息
+        Map<String, MyCSVField> fieldMap = new LinkedHashMap<>();
+        //数据流
+        StringBuffer buf = new StringBuffer();
+
         //先获取第一个对象进行匹配标题
         Object object = data.get(0);
+
+        //组装表头
+        handleHead(buf,fieldMap,object);
+
+        // 组装数据
+        //分批处理
+        if(data.size() > LIMIT){
+            //循环次数
+            int count = data.size() / LIMIT;
+            //循环后余数
+            int remainder = data.size() % LIMIT;
+            CountDownLatch countDownLatch = new CountDownLatch(count);;
+            for(int i = 0;i < count; i++){
+                final int num = i;
+                MyThreadPoolUtils.execute(()->{
+                    handleData(buf,fieldMap,data.subList(num * LIMIT, (num + 1) * LIMIT));
+                    countDownLatch.countDown();
+                });
+            }
+            try {
+                countDownLatch.await(10, TimeUnit.MINUTES);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if(remainder > 0){
+                 handleData(buf,fieldMap,data.subList(data.size() - remainder,data.size()));
+            }
+        }else {
+            handleData(buf,fieldMap,data);
+        }
+
+
+        return buf.toString();
+    }
+
+
+    private static void handleHead(StringBuffer buf,Map<String, MyCSVField> fieldMap,Object object){
         List<Field> fields = MyObjectUtils.getObjectAllField(object.getClass());
         for(Field field : fields)
         {
@@ -72,13 +114,14 @@ public class MyCsvExportUtils
                 fieldMap.put(field.getName(),csvField);
             }
         }
-        StringBuffer buf = new StringBuffer();
         // 组装表头
         fieldMap.entrySet().forEach(e->
                 buf.append("\"").append(MyStringUtils.isEmpty(e.getValue().title())?e.getKey():e.getValue().title()).append("\"").append(CSV_COLUMN_SEPARATOR));
         buf.append(CSV_ROW_SEPARATOR);
         buf.deleteCharAt(buf.length() - 3);
-        // 组装数据
+    }
+
+    private static void handleData(StringBuffer buf,Map<String, MyCSVField> fieldMap,List<Object> data){
         data.forEach(d->{
             Class cls = d.getClass();
             fieldMap.entrySet().forEach(entry->{
@@ -100,6 +143,7 @@ public class MyCsvExportUtils
             buf.deleteCharAt(buf.length() - 1);
             buf.append(CSV_ROW_SEPARATOR);
         });
-        return buf.toString();
     }
+
+
 }
