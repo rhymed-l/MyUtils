@@ -78,7 +78,7 @@ public class MyCsvExportUtils
             int count = data.size() / LIMIT;
             //循环后余数
             int remainder = data.size() % LIMIT;
-            CountDownLatch countDownLatch = new CountDownLatch(count);;
+            CountDownLatch countDownLatch = new CountDownLatch(count);
             for(int i = 0;i < count; i++){
                 final int num = i;
                 MyThreadPoolUtils.execute(()->{
@@ -97,8 +97,6 @@ public class MyCsvExportUtils
         }else {
             handleData(buf,fieldMap,data);
         }
-
-
         return buf.toString();
     }
 
@@ -122,6 +120,7 @@ public class MyCsvExportUtils
     }
 
     private static void handleData(StringBuffer buf,Map<String, MyCSVField> fieldMap,List<Object> data){
+        StringBuffer sb = new StringBuffer();
         data.forEach(d->{
             Class cls = d.getClass();
             fieldMap.entrySet().forEach(entry->{
@@ -131,19 +130,18 @@ public class MyCsvExportUtils
                     field.setAccessible(true);
                     if(entry.getValue().export())
                     {
-                        buf.append("\"").append(MyStringUtils.isEmpty(String.valueOf(field.get(d))) ?
+                        sb.append("\"").append(MyStringUtils.isEmpty(String.valueOf(field.get(d))) ?
                                 entry.getValue().value() :
                                 String.valueOf(field.get(d))).append("\"");
                     }
-                    buf.append(CSV_COLUMN_SEPARATOR);
+                    sb.append(CSV_COLUMN_SEPARATOR);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
-            buf.deleteCharAt(buf.length() - 1);
-            buf.append(CSV_ROW_SEPARATOR);
+            sb.deleteCharAt(sb.length() - 1);
+            sb.append(CSV_ROW_SEPARATOR);
         });
+        buf.append(sb.toString());
     }
-
-
 }
