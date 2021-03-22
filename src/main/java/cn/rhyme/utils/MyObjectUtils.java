@@ -83,8 +83,8 @@ public class MyObjectUtils
             return to;
         }
         Class source = obj.getClass();
-        Field[] sourceFields = source.getDeclaredFields();
-        Field[] targetFields = clazz.getDeclaredFields();
+        List<Field> sourceFields = MyObjectUtils.getObjectAllField(source.getClass());
+        List<Field> targetFields = MyObjectUtils.getObjectAllField(clazz);
 
         for(Field sourceField : sourceFields)
         {
@@ -297,12 +297,13 @@ public class MyObjectUtils
 
 
 //    public static void main(String[] args) {
-////        BigDecimal bigDecimal1 = new BigDecimal(1);
-////        BigDecimal bigDecimal2 = new BigDecimal(2);
-////        System.err.println(objIsEquals(bigDecimal1,bigDecimal2));
+//        BigDecimal bigDecimal1 = new BigDecimal(1);
+//        BigDecimal bigDecimal2 = new BigDecimal(2);
+//        System.err.println(objIsEquals(bigDecimal1,bigDecimal2));
 //        String[] str1 = new String[]{"1","2"};
 //        String[] str2 = new String[]{"1","2"};
 //        System.err.println(objIsEquals(str1,str2));
+//        System.err.println(getObjectAllField(MyObjectUtils.class));
 //    }
 
     /**
@@ -319,9 +320,7 @@ public class MyObjectUtils
         }
         List<Field> fields = new ArrayList<>();
         List<Class> classes = getAllClass(cls);
-        classes.forEach(c->{
-            fields.addAll(getObjectField(c));
-        });
+        classes.forEach(c->fields.addAll(getObjectField(c)));
         MyCacheUtils.put(key,fields,CACHE_TIME);
         return fields;
     }
