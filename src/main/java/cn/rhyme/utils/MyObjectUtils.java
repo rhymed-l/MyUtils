@@ -83,7 +83,7 @@ public class MyObjectUtils
             return to;
         }
         Class source = obj.getClass();
-        List<Field> sourceFields = MyObjectUtils.getObjectAllField(source.getClass());
+        List<Field> sourceFields = MyObjectUtils.getObjectAllField(source);
         List<Field> targetFields = MyObjectUtils.getObjectAllField(clazz);
 
         for(Field sourceField : sourceFields)
