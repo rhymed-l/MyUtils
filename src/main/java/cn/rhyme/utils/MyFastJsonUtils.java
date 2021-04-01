@@ -2,7 +2,6 @@ package cn.rhyme.utils;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.sun.istack.internal.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ public class MyFastJsonUtils
      * @param cls 需要转换的类型
      * @return 返回对象类
      */
-    public static <T> T getTargetObj(@NotNull String expression,@NotNull JSONObject json, Class<T> cls){
+    public static <T> T getTargetObj(String expression, JSONObject json, Class<T> cls){
         if(expression == null){
             return null;
         }
@@ -40,7 +39,7 @@ public class MyFastJsonUtils
      * @param cls 需要转换的类型
      * @return 返回对象类
      */
-    public static <T> List<T> listTargetObj(@NotNull String expression,@NotNull JSONObject json, Class<T> cls){
+    public static <T> List<T> listTargetObj(String expression,JSONObject json, Class<T> cls){
         if(expression == null){
             return null;
         }
