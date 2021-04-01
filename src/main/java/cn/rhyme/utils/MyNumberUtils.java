@@ -95,7 +95,7 @@ public class MyNumberUtils
      * @param number 需要判断的数字
      * @return 返回这个值自减后的值
      */
-    public static Integer getIntegerSubNumer(Integer integer,Integer number)
+    public static Integer getIntegerSubNumber(Integer integer,Integer number)
     {
         integer = (integer == null ? 0 : integer);
         number = (number == null ? 0 : number);
@@ -113,4 +113,22 @@ public class MyNumberUtils
         Random random = new Random();
         return random.nextInt(maxVal + 1 - minVal) + minVal;
     }
+
+    /**
+     * 将double转为Integer类型
+     * @param d 需要转换的数值
+     * @return 转换后的数值
+     */
+    public static Integer doubleToInt(Double d){
+        return d == null ? null : d.intValue();
+    }
+    /**
+     * 将double转为Integer类型,如果为空返回0
+     * @param d 需要转换的数值
+     * @return 转换后的数值
+     */
+    public static Integer doubleToIntForSkipBlanks(Double d){
+        return d == null ? 0 : d.intValue();
+    }
+
 }
