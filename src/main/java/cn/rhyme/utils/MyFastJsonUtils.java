@@ -68,6 +68,9 @@ public class MyFastJsonUtils
             }
             name = MyStringUtils.getTextLeft(expression,".");
         }
+        if(jsonObject == null){
+            return null;
+        }
         Optional.ofNullable(jsonObject.getObject(name,cls)).ifPresent(t->list.add(t));
         return list;
     }

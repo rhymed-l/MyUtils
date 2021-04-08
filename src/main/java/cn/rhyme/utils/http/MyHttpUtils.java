@@ -6,6 +6,9 @@ import cn.rhyme.utils.MyCollectionUtils;
 import cn.rhyme.utils.MyEncryptionUtils;
 import cn.rhyme.utils.MyStringUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -109,10 +112,75 @@ public class MyHttpUtils {
             }
         }
         return null;
-
     }
 
-    public static void main(String[] args) {
-        getUrlParam("0:0:0:0:0:0:0:1 - - [06/Jan/2021:15:58:54 +0800] \"GET /test?name=xxx&phone=18573901123&idcard=430523199507282530 HTTP/1.1\" 200 3").entrySet().forEach(k-> System.err.println(k.getValue()));
+    /**
+     * 获取post请求中的内容
+     * @param request 请求
+     * @return 返回请求中的body内容
+     */
+    public static String getRequestJsonString(HttpServletRequest request){
+        String submitMethod = request.getMethod();
+        // GET
+        if (submitMethod.equals("GET")) {
+            try {
+                return new String(request.getQueryString().getBytes("iso-8859-1"),"utf-8").replaceAll("%22", "\"");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                return null;
+            }
+            // POST
+        } else {
+            return getRequestPostStr(request);
+        }
     }
+
+
+    /**
+     * 获取post请求中的body内容
+     * @param request 请求
+     * @return 返回post请求中的body内容
+     */
+    public static byte[] getRequestPostBytes(HttpServletRequest request) {
+        int contentLength = request.getContentLength();
+        if(contentLength<0){
+            return null;
+        }
+        byte buffer[] = new byte[contentLength];
+        for (int i = 0; i < contentLength;) {
+
+            int readLen = 0;
+            try {
+                readLen = request.getInputStream().read(buffer, i,
+                        contentLength - i);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (readLen == -1) {
+                break;
+            }
+            i += readLen;
+        }
+        return buffer;
+    }
+
+    /**
+     * 获取post请求中的body内容
+     * @param request 请求
+     * @return 返回post请求中的body内容
+     */
+    public static String getRequestPostStr(HttpServletRequest request){
+        byte buffer[] = getRequestPostBytes(request);
+        String charEncoding = request.getCharacterEncoding();
+        if (charEncoding == null) {
+            charEncoding = "UTF-8";
+        }
+        try {
+            return new String(buffer, charEncoding);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
