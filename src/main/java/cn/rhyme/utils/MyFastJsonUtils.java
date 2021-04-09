@@ -62,14 +62,25 @@ public class MyFastJsonUtils
                 temporaryJsons.forEach(t->{
                     if(t instanceof JSONObject){
                         Optional.ofNullable(((JSONObject) t).
-                                getObject(key,cls)).ifPresent(result::add);
+                                get(key)).ifPresent(pendingJsons::add);
                     }
                     else if(t instanceof JSONArray){
                         for(int y = 0;y < ((JSONArray) t).size();y++){
                             Optional.ofNullable(((JSONArray) t).getJSONObject(y).
-                                    getObject(key,cls)).ifPresent(result::add);
+                                    get(key)).ifPresent(pendingJsons::add);
                         }
                     }
+                    pendingJsons.forEach(p->{
+                        if(p instanceof JSONObject){
+                            Optional.ofNullable(((JSONObject) p).toJavaObject(cls)).ifPresent(result::add);
+                        }
+                        else if(p instanceof JSONArray){
+                            for(int y = 0;y < ((JSONArray) p).size();y++){
+                                Optional.ofNullable(((JSONArray) p).getJSONObject(y)
+                                        .toJavaObject(cls)).ifPresent(result::add);
+                            }
+                        }
+                    });
                 });
             }else {
                     temporaryJsons.forEach(t->{
