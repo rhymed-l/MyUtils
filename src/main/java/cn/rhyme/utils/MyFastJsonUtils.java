@@ -1,5 +1,6 @@
 package cn.rhyme.utils;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -25,7 +26,7 @@ public class MyFastJsonUtils
         if(expression == null){
             return null;
         }
-        List<T> objs = handle(expression,json,cls);
+        List<T> objs = listTargetObj(expression,json,cls);
         if(MyCollectionUtils.isNotEmpty(objs)){
             return objs.get(0);
         }
@@ -39,39 +40,66 @@ public class MyFastJsonUtils
      * @param cls 需要转换的类型
      * @return 返回对象类
      */
-    public static <T> List<T> listTargetObj(String expression,JSONObject json, Class<T> cls){
-        if(expression == null){
+    public static <T> List<T> listTargetObj(String expression,JSON json, Class<T> cls){
+        if(expression == null || json == null){
             return null;
         }
-        List<T> objs = handle(expression,json,cls);
-        return objs;
-    }
+        // 拷贝一个json出来
+        List<String> expressions = MyStringUtils.splitToList(expression,"\\.");
+        List<Object> pendingJsons = new ArrayList<>();
+        List<Object> temporaryJsons = new ArrayList<>();
+        List<T> result = new ArrayList<>();
+        pendingJsons.add(json);
 
-    /**
-     * 迭代处理多层数据字段如果跟外层相同会出问题
-     */
-    public static <T> List<T>  handle(String expression,JSONObject jsonObject,Class<T> cls){
-        List<T> list = new ArrayList<>();
-        String name = MyStringUtils.getTextLeft(expression,".");
-        while(!name.equals(expression) && jsonObject != null){
-            expression = MyStringUtils.getTextRight(expression,".");
-            if(name.startsWith("[]")){
-                name = name.substring(2);
-                try {
-                    JSONArray jsonArray = jsonObject.getJSONArray(name);
-                    for(int i=0;i<jsonArray.size();i++){
-                        list.addAll(handle(expression,jsonArray.getJSONObject(i),cls));
+        MyCollectionUtils.forEach(expressions,(i,key)->{
+            //数据交换
+            temporaryJsons.clear();
+            temporaryJsons.addAll(pendingJsons);
+            pendingJsons.clear();
+
+            //全部取出返回
+            if(i >= expressions.size() - 1){
+                temporaryJsons.forEach(t->{
+                    if(t instanceof JSONObject){
+                        Optional.ofNullable(((JSONObject) t).
+                                getObject(key,cls)).ifPresent(result::add);
                     }
-                }catch (Exception e){}
+                    else if(t instanceof JSONArray){
+                        for(int y = 0;y < ((JSONArray) t).size();y++){
+                            Optional.ofNullable(((JSONArray) t).getJSONObject(y).
+                                    getObject(key,cls)).ifPresent(result::add);
+                        }
+                    }
+                });
             }else {
-                jsonObject = jsonObject.getJSONObject(name);
+//                if(key.startsWith("[]")){
+//                    temporaryJsons.forEach(t->{
+//                        if(t instanceof JSONObject){
+//                            Optional.ofNullable(((JSONObject) t).
+//                                    getJSONArray(key.substring(2))).ifPresent(pendingJsons::add);
+//                        }else if(t instanceof JSONArray){
+//                            for(int y = 0;y < ((JSONArray) t).size();y++){
+//                                Optional.ofNullable(((JSONArray) t).getJSONObject(y).
+//                                        getJSONArray(key.substring(2))).ifPresent(pendingJsons::add);
+//                            }
+//                        }
+//                    });
+//                }else
+                    {
+                    temporaryJsons.forEach(t->{
+                        if(t instanceof JSONObject){
+                            Optional.ofNullable(((JSONObject) t).
+                                    get(key)).ifPresent(pendingJsons::add);
+
+                        }else if(t instanceof JSONArray){
+                            for(int y = 0;y < ((JSONArray) t).size();y++){
+                                Optional.ofNullable(((JSONArray) t).getJSONObject(y).get(key)).ifPresent(pendingJsons::add);
+                            }
+                        }
+                    });
+                }
             }
-            name = MyStringUtils.getTextLeft(expression,".");
-        }
-        if(jsonObject == null){
-            return null;
-        }
-        Optional.ofNullable(jsonObject.getObject(name,cls)).ifPresent(t->list.add(t));
-        return list;
+        });
+        return result;
     }
 }
