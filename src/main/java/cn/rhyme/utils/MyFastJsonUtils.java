@@ -72,20 +72,6 @@ public class MyFastJsonUtils
                     }
                 });
             }else {
-//                if(key.startsWith("[]")){
-//                    temporaryJsons.forEach(t->{
-//                        if(t instanceof JSONObject){
-//                            Optional.ofNullable(((JSONObject) t).
-//                                    getJSONArray(key.substring(2))).ifPresent(pendingJsons::add);
-//                        }else if(t instanceof JSONArray){
-//                            for(int y = 0;y < ((JSONArray) t).size();y++){
-//                                Optional.ofNullable(((JSONArray) t).getJSONObject(y).
-//                                        getJSONArray(key.substring(2))).ifPresent(pendingJsons::add);
-//                            }
-//                        }
-//                    });
-//                }else
-                    {
                     temporaryJsons.forEach(t->{
                         if(t instanceof JSONObject){
                             Optional.ofNullable(((JSONObject) t).
@@ -97,7 +83,6 @@ public class MyFastJsonUtils
                             }
                         }
                     });
-                }
             }
         });
         return result;
