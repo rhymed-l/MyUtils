@@ -17,7 +17,7 @@ public class MyFastJsonUtils
 
     /**
      * 根据表达式获取单个对象
-     * @param expression 表达式
+     * @param expression 表达式用点(.)连接,如:data.success
      * @param json 原json
      * @param cls 需要转换的类型
      * @return 返回对象类
@@ -35,7 +35,7 @@ public class MyFastJsonUtils
 
     /**
      * 根据表达式获取多个对象(数组中使用)
-     * @param expression 表达式
+     * @param expression 表达式用点(.)连接,如:data.success
      * @param json 原json
      * @param cls 需要转换的类型
      * @return 返回对象类
