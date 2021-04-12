@@ -426,6 +426,32 @@ public class MyObjectUtils
     }
 
     /**
+     * 强制获取对象的字段(包括父类对象)
+     * @param obj 需要获取的对象
+     * @param filedName 需要获取对象的字段名
+     * @param cls 回去对象的返回类
+     * @return 返回对象的字段数据
+     */
+    public static <T> T getObjectProperty(Object obj,String filedName,Class<T> cls)
+    {
+        List<T> list = new ArrayList<>();
+        List<Field> fields = getObjectAllField(obj.getClass());
+        fields.stream().filter(field -> field.getName().equalsIgnoreCase(filedName)).
+                findAny().ifPresent(field -> {
+            field.setAccessible(true);
+            try {
+                list.add((T) field.get(obj));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
+        if(MyCollectionUtils.isNotEmpty(list)){
+            return list.get(0);
+        }
+        return null;
+    }
+
+    /**
      * @param cls 类
      * @param name 需要查找的字段名
      * @param ignoreCase 是否忽略大小写
