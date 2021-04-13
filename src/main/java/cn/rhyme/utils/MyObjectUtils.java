@@ -238,14 +238,14 @@ public class MyObjectUtils
      * @return 返回是否包装类型
      */
     public static boolean isBaseType(Class className) {
-        if (className.equals(java.lang.Integer.class) ||
-                className.equals(java.lang.Byte.class) ||
-                className.equals(java.lang.Long.class) ||
-                className.equals(java.lang.Double.class) ||
-                className.equals(java.lang.Float.class) ||
-                className.equals(java.lang.Character.class) ||
-                className.equals(java.lang.Short.class) ||
-                className.equals(java.lang.Boolean.class)) {
+        if (className.equals(java.lang.Integer.class) || className.getTypeName().equals("int") ||
+                className.equals(java.lang.Byte.class) || className.getTypeName().equals("byte") ||
+                className.equals(java.lang.Long.class) || className.getTypeName().equals("long") ||
+                className.equals(java.lang.Double.class) || className.getTypeName().equals("double") ||
+                className.equals(java.lang.Float.class) || className.getTypeName().equals("float") ||
+                className.equals(java.lang.Character.class) || className.getTypeName().equals("char") ||
+                className.equals(java.lang.Short.class) || className.getTypeName().equals("long") ||
+                className.equals(java.lang.Boolean.class) || className.getTypeName().equals("boolean")) {
             return true;
         }
         return false;
@@ -274,21 +274,21 @@ public class MyObjectUtils
      */
     public static Class getWrapType(Class cls){
         if(isBaseType(cls)){
-            if (cls.equals(java.lang.Integer.class))
+            if (cls.equals(java.lang.Integer.class) || cls.getTypeName().equals("int"))
                 return Integer.class;
-            if (cls.equals(java.lang.Byte.class))
+            if (cls.equals(java.lang.Byte.class) || cls.getTypeName().equals("byte"))
                 return Byte.class;
-            if (cls.equals(java.lang.Long.class))
+            if (cls.equals(java.lang.Long.class) || cls.getTypeName().equals("long"))
                 return Long.class;
-            if (cls.equals(java.lang.Double.class))
+            if (cls.equals(java.lang.Double.class) || cls.getTypeName().equals("double"))
                 return Double.class;
-            if (cls.equals(java.lang.Float.class))
+            if (cls.equals(java.lang.Float.class) || cls.getTypeName().equals("float"))
                 return Float.class;
-            if (cls.equals(java.lang.Character.class))
+            if (cls.equals(java.lang.Character.class) || cls.getTypeName().equals("char"))
                 return Character.class;
-            if (cls.equals(java.lang.Short.class))
+            if (cls.equals(java.lang.Short.class) || cls.getTypeName().equals("short"))
                 return Short.class;
-            if (cls.equals(java.lang.Boolean.class))
+            if (cls.equals(java.lang.Boolean.class) || cls.getTypeName().equals("boolean"))
                 return Boolean.class;
         }
         return cls;
