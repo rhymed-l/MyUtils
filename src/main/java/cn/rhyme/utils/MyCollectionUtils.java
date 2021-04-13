@@ -209,5 +209,16 @@ public class MyCollectionUtils
         return result;
     }
 
-
+    /**
+     * 获取集合中的第一个,如果为空则返回null
+     * @param collection 判断的集合
+     * @return 返回集合中第一个值
+     */
+    public static <T> T getOne(Collection<T> collection)
+    {
+        if(isEmpty(collection)){
+            return null;
+        }
+        return collection.stream().findFirst().orElse(null);
+    }
 }
