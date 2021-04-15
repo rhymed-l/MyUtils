@@ -110,7 +110,7 @@ public class MyObjectUtils
     }
 
     /**
-     * copyNotNull 将源对象里面不为Nu'll的对象拷贝到目标对象里面
+     * copyNotNull 将源对象里面不为Null的对象拷贝到目标对象里面
      * @param sourceObj 源对象
      * @param targetObj 目标对象
      */
@@ -234,18 +234,18 @@ public class MyObjectUtils
 
     /**
      * 判断object是否为基本类型
-     * @param className 类
+     * @param cls 类
      * @return 返回是否包装类型
      */
-    public static boolean isBaseType(Class className) {
-        if (className.equals(java.lang.Integer.class) || className.getTypeName().equals("int") ||
-                className.equals(java.lang.Byte.class) || className.getTypeName().equals("byte") ||
-                className.equals(java.lang.Long.class) || className.getTypeName().equals("long") ||
-                className.equals(java.lang.Double.class) || className.getTypeName().equals("double") ||
-                className.equals(java.lang.Float.class) || className.getTypeName().equals("float") ||
-                className.equals(java.lang.Character.class) || className.getTypeName().equals("char") ||
-                className.equals(java.lang.Short.class) || className.getTypeName().equals("long") ||
-                className.equals(java.lang.Boolean.class) || className.getTypeName().equals("boolean")) {
+    public static boolean isBaseType(Class cls) {
+        if (cls.equals(java.lang.Integer.class) || cls.getTypeName().equals("int") ||
+                cls.equals(java.lang.Byte.class) || cls.getTypeName().equals("byte") ||
+                cls.equals(java.lang.Long.class) || cls.getTypeName().equals("long") ||
+                cls.equals(java.lang.Double.class) || cls.getTypeName().equals("double") ||
+                cls.equals(java.lang.Float.class) || cls.getTypeName().equals("float") ||
+                cls.equals(java.lang.Character.class) || cls.getTypeName().equals("char") ||
+                cls.equals(java.lang.Short.class) || cls.getTypeName().equals("long") ||
+                cls.equals(java.lang.Boolean.class) || cls.getTypeName().equals("boolean")) {
             return true;
         }
         return false;
@@ -273,6 +273,9 @@ public class MyObjectUtils
      * @return 如果是基本类型则返回包装类型,否则返回本身
      */
     public static Class getWrapType(Class cls){
+        if(cls == null){
+            return null;
+        }
         if(isBaseType(cls)){
             if (cls.equals(java.lang.Integer.class) || cls.getTypeName().equals("int"))
                 return Integer.class;
@@ -296,15 +299,6 @@ public class MyObjectUtils
 
 
 
-//    public static void main(String[] args) {
-//        BigDecimal bigDecimal1 = new BigDecimal(1);
-//        BigDecimal bigDecimal2 = new BigDecimal(2);
-//        System.err.println(objIsEquals(bigDecimal1,bigDecimal2));
-//        String[] str1 = new String[]{"1","2"};
-//        String[] str2 = new String[]{"1","2"};
-//        System.err.println(objIsEquals(str1,str2));
-//        System.err.println(getObjectAllField(MyObjectUtils.class));
-//    }
 
     /**
      * 获取对象的全部字段(包括父类跟隐私字段)
@@ -452,6 +446,7 @@ public class MyObjectUtils
     }
 
     /**
+     * 查找指定类的字段名
      * @param cls 类
      * @param name 需要查找的字段名
      * @param ignoreCase 是否忽略大小写
@@ -484,6 +479,7 @@ public class MyObjectUtils
     }
 
     /**
+     * 查找指定类的字段名
      * @param cls 类
      * @param name 需要查找的字段名
      * @return 如果有则返回字段,没有则空
@@ -491,5 +487,15 @@ public class MyObjectUtils
     public static Field getFieldByName(Class cls,String name)
     {
         return getFieldByName(cls,name,true,false);
+    }
+
+    /**
+     * 如果是空则返回指定值
+     * @param obj 需要判断的对象
+     * @param t 可能需要返回的对象
+     * @return 根据判断返回值
+     */
+    public static <T> T objIfNullThen(T obj,T t){
+        return (obj == null) ? t : obj;
     }
 }

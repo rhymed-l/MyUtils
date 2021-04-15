@@ -238,6 +238,23 @@ public class MyStringUtils
     }
 
     /**
+     * 判断两个字符串是否相等
+     * @param s1 字符串1
+     * @param s2 字符串2
+     * @return 如果字符串相等返回true,否则false
+     */
+    public static boolean compare(String s1,String s2)
+    {
+        if(s1 == s2){
+            return true;
+        }
+        if(s1 == null || s2 == null){
+            return false;
+        }
+        return s1.equalsIgnoreCase(s2);
+    }
+
+    /**
      * String数组去重
      * @param strArray 传入的String数组
      * @return 返回去重后的String数组
