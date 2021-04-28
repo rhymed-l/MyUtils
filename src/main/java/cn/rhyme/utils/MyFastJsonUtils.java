@@ -79,6 +79,8 @@ public class MyFastJsonUtils
                                 Optional.ofNullable(((JSONArray) p).getJSONObject(y)
                                         .toJavaObject(cls)).ifPresent(result::add);
                             }
+                        }else if(p!= null && p.getClass().equals(cls)){
+                            result.add((T) p);
                         }
                     });
                 });
