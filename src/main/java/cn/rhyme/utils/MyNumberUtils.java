@@ -131,4 +131,21 @@ public class MyNumberUtils
         return d == null ? 0 : d.intValue();
     }
 
+    /**
+     * 比较两个数字是否相等
+     * @param obj1 对象1
+     * @param obj2 对象2
+     * @return 相等返回真,否则返回假
+     */
+    public static boolean compareTo(Object obj1,Object obj2){
+        if(obj1 == null ||
+                obj2 ==null ||
+                !MyStringUtils.isDouble(obj1.toString()) ||
+                !MyStringUtils.isDouble(obj2.toString())){
+            return false;
+        }
+        BigDecimal bigDecimal1 = new BigDecimal(obj1.toString());
+        BigDecimal bigDecimal2 = new BigDecimal(obj2.toString());
+        return bigDecimal1.compareTo(bigDecimal2) == 0;
+    }
 }
