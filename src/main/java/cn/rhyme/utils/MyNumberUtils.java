@@ -148,4 +148,15 @@ public class MyNumberUtils
         BigDecimal bigDecimal2 = new BigDecimal(obj2.toString());
         return bigDecimal1.compareTo(bigDecimal2) == 0;
     }
+
+    /**
+     * 比较一个数字是否为零(null也返回真)
+     * @return 如果是零则返回真,否则返回假
+     */
+    public static boolean isZero(Object obj){
+        if(obj == null){
+            return true;
+        }
+        return compareTo(obj,0);
+    }
 }
