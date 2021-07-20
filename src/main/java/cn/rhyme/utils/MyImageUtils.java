@@ -1,6 +1,8 @@
 package cn.rhyme.utils;
 
 
+import sun.misc.BASE64Encoder;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -47,7 +49,7 @@ public class MyImageUtils
      * @return
      */
     public static String bytesToImgBase64(byte[] bytes) {
-        sun.misc.BASE64Encoder encoder = new sun.misc.BASE64Encoder();
+        BASE64Encoder encoder = new BASE64Encoder();
         return encoder.encode(bytes);
     }
 
@@ -133,7 +135,7 @@ public class MyImageUtils
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         try {
             BufferedImage bi = ImageIO.read(is);
-            java.awt.Image image = (java.awt.Image) bi;
+            Image image = (java.awt.Image) bi;
             ImageIcon imageIcon = new ImageIcon(image);
             BufferedImage bufferedImage = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
                     BufferedImage.TYPE_4BYTE_ABGR);
