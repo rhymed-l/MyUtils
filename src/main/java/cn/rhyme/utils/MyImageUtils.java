@@ -1,6 +1,7 @@
 package cn.rhyme.utils;
 
 
+import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 import javax.imageio.ImageIO;
@@ -25,7 +26,7 @@ public class MyImageUtils
      * @throws IOException
      */
     public static byte[] imgBase64ToBytes(String base64) {
-        sun.misc.BASE64Decoder decoder = new sun.misc.BASE64Decoder();
+        BASE64Decoder decoder = new BASE64Decoder();
         //因为参数base64来源不一样，需要将附件数据替换清空掉。如果此入参来自canvas.toDataURL("image/png");
         base64 = base64.replaceAll("data:image/png;base64,", "");
         //base64解码并转为二进制数组
