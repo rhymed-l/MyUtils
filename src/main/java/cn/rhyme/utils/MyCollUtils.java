@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
  * 集合工具类
  * @author LiuZhi
  */
-public class MyCollectionUtils
+public class MyCollUtils
 {
-    private MyCollectionUtils(){}
+    private MyCollUtils(){}
 
     /**
      * 集合是否为空 包括null
@@ -146,10 +146,10 @@ public class MyCollectionUtils
      * @return
      */
     public static <T> List<T> listAddAll(List<T> list1,List<T> list2) {
-        if(MyCollectionUtils.isEmpty(list1) && MyCollectionUtils.isEmpty(list2)){
+        if(MyCollUtils.isEmpty(list1) && MyCollUtils.isEmpty(list2)){
             return new ArrayList<T>(0);
         }
-        if(MyCollectionUtils.isEmpty(list1)){
+        if(MyCollUtils.isEmpty(list1)){
             return list2;
         }else {
             return list1;
@@ -167,11 +167,11 @@ public class MyCollectionUtils
      * return [6]
      */
     public static List<String> differenceSet(List<String> listOne, List<String> listTwo) {
-        if (MyCollectionUtils.isEmpty(listOne)) {
+        if (MyCollUtils.isEmpty(listOne)) {
             return new ArrayList<>();
         }
 
-        if (MyCollectionUtils.isEmpty(listTwo)) {
+        if (MyCollUtils.isEmpty(listTwo)) {
             return listOne;
         }
 
@@ -195,7 +195,7 @@ public class MyCollectionUtils
      * return [1,2]
      */
     public static List<String> intersection(List<String> listOne, List<String> listTwo) {
-        if (MyCollectionUtils.isEmpty(listOne) || MyCollectionUtils.isEmpty(listTwo)) {
+        if (MyCollUtils.isEmpty(listOne) || MyCollUtils.isEmpty(listTwo)) {
             return new ArrayList<>();
         }
 
@@ -213,11 +213,43 @@ public class MyCollectionUtils
      * @param collection 判断的集合
      * @return 返回集合中第一个值
      */
-    public static <T> T getOne(Collection<T> collection)
+    public static <T> T getFirst(Collection<T> collection)
     {
         if(isEmpty(collection)){
             return null;
         }
         return collection.stream().findFirst().orElse(null);
+    }
+
+    /**
+     * 获取集合中的任意一个,如果为空则返回null
+     * @param collection 判断的集合
+     * @return 返回集合中第一个值
+     */
+    public static <T> T getOne(Collection<T> collection)
+    {
+        if(isEmpty(collection)){
+            return null;
+        }
+        return collection.stream().findAny().orElse(null);
+    }
+
+    /**
+     * 获取集合中的第一个且在集合中删除它
+     * @param collection 判断的集合
+     * @return 返回集合中第一个值
+     */
+    public static <T> T getFirstAndRemove(Collection<T> collection)
+    {
+        if(isEmpty(collection)){
+            return null;
+        }
+        Iterator<T> iterator = collection.iterator();
+        if(iterator.hasNext()){
+            T t = iterator.next();
+            iterator.remove();
+            return t;
+        }
+        return null;
     }
 }

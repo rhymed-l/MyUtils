@@ -63,7 +63,7 @@ public class MyFastJsonUtils
             return null;
         }
         List<T> objs = listTargetObj(expression,json,cls);
-        if(MyCollectionUtils.isNotEmpty(objs)){
+        if(MyCollUtils.isNotEmpty(objs)){
             return objs.get(0);
         }
         return null;
@@ -101,7 +101,7 @@ public class MyFastJsonUtils
         List<T> result = new ArrayList<>();
         pendingJsons.add(json);
 
-        MyCollectionUtils.forEach(expressions,(i,key)->{
+        MyCollUtils.forEach(expressions,(i,key)->{
             //数据交换
             temporaryJsons.clear();
             temporaryJsons.addAll(pendingJsons);

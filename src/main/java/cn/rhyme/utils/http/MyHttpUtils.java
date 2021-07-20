@@ -2,7 +2,7 @@ package cn.rhyme.utils.http;
 
 
 
-import cn.rhyme.utils.MyCollectionUtils;
+import cn.rhyme.utils.MyCollUtils;
 import cn.rhyme.utils.MyEncryptionUtils;
 import cn.rhyme.utils.MyStringUtils;
 
@@ -100,7 +100,7 @@ public class MyHttpUtils {
         if (url.contains("?")) {
             host = MyStringUtils.getTextRight(url, "?");
             List<String> param = MyStringUtils.splitToList(host,"&");
-            if(MyCollectionUtils.isNotEmpty(param)){
+            if(MyCollUtils.isNotEmpty(param)){
                 return param.stream().collect(Collectors.toMap(s->MyStringUtils.splitToList(s,"=").get(0),s->{
                     String str;
                     try {

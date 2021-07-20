@@ -25,7 +25,7 @@ public class MyJsonUtils {
             return "{}";
         }
         StringBuffer sb = new StringBuffer();
-        MyCollectionUtils.forEach(param.entrySet(),(i,m)->{
+        MyCollUtils.forEach(param.entrySet(),(i,m)->{
             if(i == 0){
                 sb.append("{");
             }

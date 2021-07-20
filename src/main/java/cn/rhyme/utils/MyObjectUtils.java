@@ -331,8 +331,8 @@ public class MyObjectUtils
         {
             return MyCacheUtils.get(key,List.class);
         }
-        List<Field> fields = MyCollectionUtils.arrayToList(cls.getDeclaredFields());
-        fields.addAll(MyCollectionUtils.arrayToList(cls.getFields()));
+        List<Field> fields = MyCollUtils.arrayToList(cls.getDeclaredFields());
+        fields.addAll(MyCollUtils.arrayToList(cls.getFields()));
         MyCacheUtils.put(key,fields,CACHE_TIME);
         return fields;
     }
@@ -370,8 +370,8 @@ public class MyObjectUtils
         {
             return MyCacheUtils.get(key,List.class);
         }
-        List<Method> methods = MyCollectionUtils.arrayToList(cls.getDeclaredMethods());
-        methods.addAll(MyCollectionUtils.arrayToList(cls.getMethods())) ;
+        List<Method> methods = MyCollUtils.arrayToList(cls.getDeclaredMethods());
+        methods.addAll(MyCollUtils.arrayToList(cls.getMethods())) ;
         MyCacheUtils.put(key,methods,CACHE_TIME);
         return methods;
     }
@@ -416,7 +416,7 @@ public class MyObjectUtils
                 }
             }
         });
-        return MyCollectionUtils.isNotEmpty(list);
+        return MyCollUtils.isNotEmpty(list);
     }
 
     /**
@@ -439,7 +439,7 @@ public class MyObjectUtils
                 e.printStackTrace();
             }
         });
-        if(MyCollectionUtils.isNotEmpty(list)){
+        if(MyCollUtils.isNotEmpty(list)){
             return list.get(0);
         }
         return null;
@@ -456,7 +456,7 @@ public class MyObjectUtils
     {
         MyUtils.notNull(name,"被查找的字段名不能为null");
         List<Field> fields = getObjectAllField(cls);
-        if(MyCollectionUtils.isEmpty(fields))
+        if(MyCollUtils.isEmpty(fields))
         {
             return null;
         }

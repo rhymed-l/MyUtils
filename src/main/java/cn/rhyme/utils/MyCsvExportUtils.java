@@ -57,7 +57,7 @@ public class MyCsvExportUtils
      */
     public static String doExportString(List data)
     {
-        if(MyCollectionUtils.isEmpty(data)){
+        if(MyCollUtils.isEmpty(data)){
             return null;
         }
         //字段信息
