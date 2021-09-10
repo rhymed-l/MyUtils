@@ -83,7 +83,7 @@ public class MyNumberUtils
      * @param number 需要判断的数字
      * @return 返回这个值自减后的值
      */
-    public static Integer getIntegerAddNumer(Integer integer,Integer number)
+    public static Integer getIntegerAddNumber(Integer integer,Integer number)
     {
         integer = (integer == null ? 0 : integer);
         number = (number == null ? 0 : number);
@@ -137,7 +137,7 @@ public class MyNumberUtils
      * @param obj2 对象2
      * @return 相等返回真,否则返回假
      */
-    public static boolean compareTo(Object obj1,Object obj2){
+    public static boolean equals(Object obj1,Object obj2){
         if(obj1 == null ||
                 obj2 ==null ||
                 !MyStringUtils.isDouble(obj1.toString()) ||
@@ -150,6 +150,24 @@ public class MyNumberUtils
     }
 
     /**
+     * 比较两个数字是否相等
+     * @param obj1 对象1
+     * @param obj2 对象2
+     * @return 相等返回真,否则返回假
+     */
+    public static Integer compareTo(Object obj1,Object obj2){
+        if(obj1 == null ||
+                obj2 ==null ||
+                !MyStringUtils.isDouble(obj1.toString()) ||
+                !MyStringUtils.isDouble(obj2.toString())){
+            throw new RuntimeException("比较的必须需要是数字类型");
+        }
+        BigDecimal bigDecimal1 = new BigDecimal(obj1.toString());
+        BigDecimal bigDecimal2 = new BigDecimal(obj2.toString());
+        return bigDecimal1.compareTo(bigDecimal2);
+    }
+
+    /**
      * 比较一个数字是否为零(null也返回真)
      * @return 如果是零则返回真,否则返回假
      */
@@ -157,6 +175,6 @@ public class MyNumberUtils
         if(obj == null){
             return true;
         }
-        return compareTo(obj,0);
+        return equals(obj,0);
     }
 }
