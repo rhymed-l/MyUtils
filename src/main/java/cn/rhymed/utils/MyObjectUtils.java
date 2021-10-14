@@ -101,7 +101,7 @@ public class MyObjectUtils
                             targetField.set(to,sourceField.get(obj));
                         }
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        //不需要做任何处理
                     }
                 }
             }
@@ -145,7 +145,7 @@ public class MyObjectUtils
                     }
                 }
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                //不需要做任何处理
             }
         }
     }
@@ -436,7 +436,7 @@ public class MyObjectUtils
             try {
                 list.add((T) field.get(obj));
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                //不需要做任何处理
             }
         });
         if(MyCollUtils.isNotEmpty(list)){

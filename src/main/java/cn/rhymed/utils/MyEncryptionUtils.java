@@ -78,7 +78,7 @@ public class MyEncryptionUtils {
      */
     private static byte[] getAESResult(String key, byte[] textBytes, final int encryptMode)
             throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException,
-            IllegalBlockSizeException, InvalidAlgorithmParameterException, UnsupportedEncodingException {
+            IllegalBlockSizeException, UnsupportedEncodingException {
         Key newKey = new SecretKeySpec(buildCLenKey(key, AES_KEY_SIZE), ENCRYPT);
         Cipher cipher = Cipher.getInstance(ENCRYPT);
         cipher.init(encryptMode, newKey, new SecureRandom());
@@ -144,7 +144,7 @@ public class MyEncryptionUtils {
      */
     private static byte[] getTripleDESResult(String key, byte[] textBytes, final int encryptMode)
             throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException,
-            IllegalBlockSizeException, InvalidAlgorithmParameterException, UnsupportedEncodingException {
+            IllegalBlockSizeException, UnsupportedEncodingException {
         Key newKey = new SecretKeySpec(buildCLenKey(key, 24), ALGORITHM);
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM_ECB);
         cipher.init(encryptMode, newKey, new SecureRandom());
@@ -218,7 +218,7 @@ public class MyEncryptionUtils {
 
     private static byte[] getDESResult(String key, byte[] textBytes, final int encryptMode)
             throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException,
-            IllegalBlockSizeException, InvalidAlgorithmParameterException, UnsupportedEncodingException {
+            IllegalBlockSizeException, UnsupportedEncodingException {
         Key newKey = new SecretKeySpec(buildCLenKey(key, 8), DES_ALGORITHM);
         Cipher cipher = Cipher.getInstance(DES_CIPHER_ALGORITHM);
         cipher.init(encryptMode, newKey, new SecureRandom());

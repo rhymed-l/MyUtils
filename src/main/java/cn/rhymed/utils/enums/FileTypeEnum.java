@@ -41,9 +41,9 @@ public enum FileTypeEnum
     SQL("494e5345525420494e54","SQL","sql"),
     MIDI("4D546864","MIDI","mid");
 
-    private String hex;
-    private String type;
-    private String postfix;
+    private final String hex;
+    private final String type;
+    private final String postfix;
 
     FileTypeEnum(String hex, String type,String postfix) {
         this.hex = hex;

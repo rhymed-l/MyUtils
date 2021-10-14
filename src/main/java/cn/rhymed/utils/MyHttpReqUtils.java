@@ -10,7 +10,7 @@ import java.util.*;
  * 网络请求工具类
  * @author LiuZhi
  */
-public class MyHttpUtils {
+public class MyHttpReqUtils {
 
     public static final String POST_REQUEST_METHOD = "POST";
     public static final String GET_REQUEST_METHOD = "GET";
@@ -21,7 +21,7 @@ public class MyHttpUtils {
     public static final String CONNECT_REQUEST_METHOD = "CONNECT";
     public static final String TRACE_REQUEST_METHOD = "TRACE";
 
-    private MyHttpUtils() {
+    private MyHttpReqUtils() {
     }
 
 
