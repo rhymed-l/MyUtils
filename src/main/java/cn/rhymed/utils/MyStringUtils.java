@@ -226,16 +226,6 @@ public class MyStringUtils
         return str.replaceAll("\\s","");
     }
 
-    /**
-     * 对List数组去重(HashSet剔除)
-     * @param list 传入的List
-     */
-    public static void listDistinct(List list)
-    {
-        HashSet set = new HashSet(list) ;
-        list.clear()                    ;
-        list.addAll(set)                ;
-    }
 
     /**
      * 判断两个字符串是否相等
@@ -254,18 +244,7 @@ public class MyStringUtils
         return s1.equalsIgnoreCase(s2);
     }
 
-    /**
-     * String数组去重
-     * @param strArray 传入的String数组
-     * @return 返回去重后的String数组
-     */
-    public static String[] strArrayDistinct(String[] strArray)
-    {
-        List<String>    list        = Arrays.asList(strArray)   ;
-        List<String>    arrayList   = new ArrayList(list)       ;
-        listDistinct(arrayList)                                 ;
-        return  arrayList.toArray(new String[arrayList.size()]) ;
-    }
+
 
     /**
      * 邮箱地址验证
@@ -408,27 +387,6 @@ public class MyStringUtils
         return false;
     }
 
-
-    /**
-     * 将String类型的Url参数转为Map类型的参数
-     * @param url 需要转换的链接地址
-     * @return 将参数用Map形式返回
-     */
-    public static Map<String,String> getUrlParam(String url)
-    {
-        Map<String,String> map = new HashMap<>();
-        String[] strings = url.split("&");
-        for (String s : strings)
-        {
-            String[] params = s.split("=");
-
-            for ( int i = 0;i<params.length;i++)
-            {
-                map.put(params[i],params[++i]);
-            }
-        }
-        return map;
-    }
 
     /**
      * 生成随机UUID
@@ -668,16 +626,6 @@ public class MyStringUtils
     }
 
     /**
-     * 将字符串分隔为List集合
-     * @param str 原始字符串
-     * @param regex 正则表达式
-     * @return 返回分割后的字符串集合
-     */
-    public static List<String> splitToList(String str,String regex){
-        return Arrays.asList(str.split(regex));
-    }
-
-    /**
      * 下划线转换驼峰命名法
      * @param str 需要转换的字符串
      * @return 返回转换的字符串
@@ -733,4 +681,90 @@ public class MyStringUtils
         return stringMosaic(email,index/2,back);
     }
 
+    /**
+     * 判断字符串是否是英文
+     * @param str 需要被判断的字符串
+     * @return 返回真或假
+     */
+    public static boolean isEnglish(String str)
+    {
+        if (str == null)
+        {
+            return false;
+        }
+        char[] cTemp = str.toCharArray();
+        for (int i = 0; i < str.length(); i++) {
+            if (!isEnglish(cTemp[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 判定输入的是否是英文
+     * @param c 被校验的字符
+     * @return true代表是英文
+     */
+    public static boolean isEnglish(char c) {
+        //A-Z 65-90
+        //a-z 97-122
+        if(isLowerCase(c) || isUpperCase(c)){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 判定输入的是否是小写
+     * @param c 被校验的字符
+     * @return true代表是英文
+     */
+    public static boolean isLowerCase(char c) {
+        if(c >= 97 && c <= 122){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 判定输入的是否是大写
+     * @param c 被校验的字符
+     * @return true代表是英文
+     */
+    public static boolean isUpperCase(char c) {
+        if(c >= 65 && c <= 90){
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * 首字母小写
+     * @param str 字符串
+     * @return 如果是英文则将首字母小写
+     */
+    public static String firstLowerCase(String str){
+        char[] chars = str.toCharArray();
+        //首字母小写方法，大写会变成小写，如果小写首字母会消失
+        if(isUpperCase(chars[0])){
+            chars[0] +=32;
+        }
+        return String.valueOf(chars);
+    }
+
+    /**
+     * 首字母大写
+     * @param str 字符串
+     * @return 如果是英文则将首字母小写
+     */
+    public static String firstUpperCase(String str){
+        char[] chars = str.toCharArray();
+        //首字母小写方法，大写会变成小写，如果小写首字母会消失
+        if(isLowerCase(chars[0])){
+            chars[0] -=32;
+        }
+        return String.valueOf(chars);
+    }
 }

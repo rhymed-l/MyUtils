@@ -252,4 +252,39 @@ public class MyCollUtils
         }
         return null;
     }
+
+    /**
+     * 将字符串分隔为List集合
+     * @param str 原始字符串
+     * @param regex 正则表达式
+     * @return 返回分割后的字符串集合
+     */
+    public static List<String> splitToList(String str,String regex){
+        return Arrays.asList(str.split(regex));
+    }
+
+    /**
+     * String数组去重
+     * @param strArray 传入的String数组
+     * @return 返回去重后的String数组
+     */
+    public static String[] strArrayDistinct(String[] strArray)
+    {
+        List<String>    list        = Arrays.asList(strArray)   ;
+        List<String>    arrayList   = new ArrayList(list)       ;
+        listDistinct(arrayList)                                 ;
+        return  arrayList.toArray(new String[arrayList.size()]) ;
+    }
+
+
+    /**
+     * 对List数组去重(HashSet剔除)
+     * @param list 传入的List
+     */
+    public static void listDistinct(List list)
+    {
+        HashSet set = new HashSet(list) ;
+        list.clear()                    ;
+        list.addAll(set)                ;
+    }
 }

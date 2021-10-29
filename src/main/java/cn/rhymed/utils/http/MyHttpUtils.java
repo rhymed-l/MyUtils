@@ -99,12 +99,12 @@ public class MyHttpUtils {
         String host;
         if (url.contains("?")) {
             host = MyStringUtils.getTextRight(url, "?");
-            List<String> param = MyStringUtils.splitToList(host,"&");
+            List<String> param = MyCollUtils.splitToList(host,"&");
             if(MyCollUtils.isNotEmpty(param)){
-                return param.stream().collect(Collectors.toMap(s->MyStringUtils.splitToList(s,"=").get(0),s->{
+                return param.stream().collect(Collectors.toMap(s->MyCollUtils.splitToList(s,"=").get(0),s->{
                     String str;
                     try {
-                        return MyStringUtils.splitToList(s,"=").get(1);
+                        return MyCollUtils.splitToList(s,"=").get(1);
                     }catch (Exception e){
                         return "";
                     }
@@ -182,5 +182,6 @@ public class MyHttpUtils {
         }
         return null;
     }
+
 
 }

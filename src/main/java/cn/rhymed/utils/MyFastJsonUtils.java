@@ -95,7 +95,7 @@ public class MyFastJsonUtils
             return new ArrayList<>();
         }
         // 拷贝一个json出来
-        List<String> expressions = MyStringUtils.splitToList(expression,"\\.");
+        List<String> expressions = MyCollUtils.splitToList(expression,"\\.");
         List<Object> pendingJsons = new ArrayList<>();
         List<Object> temporaryJsons = new ArrayList<>();
         List<T> result = new ArrayList<>();

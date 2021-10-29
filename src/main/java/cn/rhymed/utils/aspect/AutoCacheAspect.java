@@ -1,4 +1,4 @@
-//package cn.rhyme.utils.aspect;
+//package cn.rhymed.utils.aspect;
 //
 //import org.aspectj.lang.ProceedingJoinPoint;
 //import org.aspectj.lang.annotation.Around;
