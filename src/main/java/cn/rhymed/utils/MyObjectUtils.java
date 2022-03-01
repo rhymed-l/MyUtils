@@ -13,10 +13,10 @@ import java.util.*;
 public class MyObjectUtils
 {
     private static final Long CACHE_TIME = 300L;
-    private static final String FIELD_KEY = "field_all:%s";
-    private static final String FIELD_ALL_KEY = "field:%s";
-    private static final String METHOD_KEY = "method_all:%s";
-    private static final String METHOD_ALL_KEY = "method:%s";
+    private static final String FIELD_KEY = "field:%s";
+    private static final String FIELD_ALL_KEY = "field_all:%s";
+    private static final String METHOD_KEY = "method:%s";
+    private static final String METHOD_ALL_KEY = "method_all:%s";
 
     private MyObjectUtils(){}
 
@@ -148,6 +148,15 @@ public class MyObjectUtils
                 //不需要做任何处理
             }
         }
+    }
+
+    /**
+     * 判断对象是否不为空
+     * @param obj 需要判断的对象
+     * @return 如果是空则返回真,否则取反
+     */
+    public static boolean objIsNotEmpty(Object obj){
+        return !objIsEmpty(obj);
     }
 
     /**
