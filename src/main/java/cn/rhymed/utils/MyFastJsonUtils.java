@@ -41,9 +41,9 @@ public class MyFastJsonUtils
         }
         JSON json = null;
         try {
-            if(jsonStr.startsWith("{")){
+            if(jsonStr.startsWith("{") || jsonStr.startsWith("\"{")){
                 json = JSON.parseObject(jsonStr);
-            }else if(jsonStr.startsWith("[")){
+            }else if(jsonStr.startsWith("[") || jsonStr.startsWith("\"[")){
                 json = JSON.parseArray(jsonStr);
             }
         }catch (Exception e){
@@ -120,6 +120,16 @@ public class MyFastJsonUtils
                         }
                     }
                     pendingJsons.forEach(p->{
+                        if(p == null){
+                            return;
+                        }
+                        if(p.getClass().equals(cls)){
+                            result.add((T) p);
+                            return;
+                        }
+                        if(p instanceof String){
+                           p = getJsonByJsonStr(p.toString());
+                        }
                         if(p instanceof JSONObject){
                             Optional.ofNullable(((JSONObject) p).toJavaObject(cls)).ifPresent(result::add);
                         }
@@ -128,8 +138,6 @@ public class MyFastJsonUtils
                                 Optional.ofNullable(((JSONArray) p).getJSONObject(y)
                                         .toJavaObject(cls)).ifPresent(result::add);
                             }
-                        }else if(cls.equals(String.class) && p != null){
-                            result.add((T) p.toString());
                         }else if(p!= null && p.getClass().equals(cls)){
                             result.add((T) p);
                         }
@@ -151,4 +159,5 @@ public class MyFastJsonUtils
         });
         return result;
     }
+
 }
