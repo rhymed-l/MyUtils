@@ -35,7 +35,7 @@ public class MyFastJsonUtils
      * @param jsonStr JSON字符串
      * @return 如果是数组则返回json数组,如果是json对象则返回json对象
      */
-    public static JSON getJsonByJsonStr(String jsonStr){
+    public final static JSON getJsonByJsonStr(String jsonStr){
         if(jsonStr == null){
             return null;
         }
