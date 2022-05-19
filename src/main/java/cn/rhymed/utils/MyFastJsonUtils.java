@@ -110,6 +110,12 @@ public class MyFastJsonUtils
             //全部取出返回
             if(i >= expressions.size() - 1){
                 temporaryJsons.forEach(t->{
+                    if(t == null){
+                        return;
+                    }
+                    if (t instanceof String) {
+                        t = getJsonByJsonStr(t.toString());
+                    }
                     if(t instanceof JSONObject){
                         Optional.ofNullable(((JSONObject) t).
                                 get(key)).ifPresent(pendingJsons::add);
@@ -119,6 +125,7 @@ public class MyFastJsonUtils
                                     get(key)).ifPresent(pendingJsons::add);
                         }
                     }
+
                     pendingJsons.forEach(p->{
                         if(p == null){
                             return;
