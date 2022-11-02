@@ -115,6 +115,17 @@ public class MyObjectUtils
      * @param targetObj 目标对象
      */
     public static <T> void copyNotEmpty(T sourceObj, T targetObj) {
+        copyNotEmpty(sourceObj,targetObj,true);
+        return;
+    }
+
+    /**
+     * copyNotNull 将源对象里面不为Null的对象拷贝到目标对象里面
+     * @param sourceObj 源对象
+     * @param targetObj 目标对象
+     * @param allCopy 替换拷贝
+     */
+    public static <T> void copyNotEmpty(T sourceObj, T targetObj,boolean allCopy) {
         if(sourceObj == null)
         {
             return;
@@ -136,9 +147,11 @@ public class MyObjectUtils
                 for(Field targetField : targetFields)
                 {
                     if(sourceField.getName().equalsIgnoreCase(targetField.getName()) && sourceField.getType() == targetField.getType())
-                    {//如果目标对象没有数据则替换数据
+                    {
                         targetField.setAccessible(true);
-                        if(MyObjectUtils.objIsEmpty(targetField.get(targetObj)))
+                        //如果是全量拷贝则源数据没有值则拷贝,否则目标数据为空则拷贝
+                        if((allCopy && MyObjectUtils.objIsNotEmpty(sourceField.get(targetObj))) ||
+                                MyObjectUtils.objIsEmpty(targetField.get(targetObj)))
                         {
                             targetField.set(targetObj,obj);
                         }
