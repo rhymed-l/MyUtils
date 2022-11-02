@@ -518,6 +518,6 @@ public class MyObjectUtils
      * @return 根据判断返回值
      */
     public static <T> T objIfNullThen(T obj,T t){
-        return (obj == null) ? t : obj;
+        return (objIsEmpty(obj)) ? t : obj;
     }
 }
