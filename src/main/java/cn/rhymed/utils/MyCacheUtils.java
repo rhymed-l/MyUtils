@@ -1,6 +1,7 @@
 package cn.rhymed.utils;
 
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -26,7 +27,25 @@ public class MyCacheUtils
     /**
      * 缓存大小容量
      */
-   private static int cacheSize = 1000;
+   private static int cacheSize = 10000;
+
+   private static class MyCacheDo<T>{
+
+       /**
+        * 目标对象
+        */
+       private T target;
+
+       /**
+        * 存储时间
+        */
+       private long storeTime;
+
+       /**
+        * 过期时间
+        */
+       private long expirationTime;
+   }
 
     /**
      * 获取缓存中的值
@@ -40,8 +59,13 @@ public class MyCacheUtils
        if(data == null){
            return null;
        }
-       return (T) data.get(key);
+       if(exist(key)){
+           MyCacheDo<T> cacheDo =  (MyCacheDo<T>) data.get(key);
+           return cacheDo.target;
+       }
+       return null;
    }
+
 
     /**
      * 获取缓存中的值
@@ -60,9 +84,39 @@ public class MyCacheUtils
      */
    public static boolean exist(String key)
    {
-       return get(key) != null;
+       if(data.get(key) == null){
+           return false;
+       }
+       MyCacheDo cacheDo =  (MyCacheDo) data.get(key);
+       if(cacheDo.expirationTime > 0){
+           //如果当前系统时间大于存储时间则代表过期
+           if(System.currentTimeMillis() > cacheDo.expirationTime){
+               remove(key);
+               return false;
+           }
+       }
+       return true;
    }
 
+    /**
+     * @param key 获取key的过期时间
+     * @return 如果为-1则不存在,为0则无过期时间,否则就是当前时间戳
+     */
+    public static long expirationTime(String key)
+    {
+        if(data.get(key) == null){
+            return -1;
+        }
+        MyCacheDo cacheDo =  (MyCacheDo) data.get(key);
+        if(cacheDo.expirationTime > 0){
+            //如果当前系统时间大于存储时间则代表过期
+            if(System.currentTimeMillis() > cacheDo.expirationTime){
+                remove(key);
+                return -1;
+            }
+        }
+        return cacheDo.expirationTime;
+    }
     /**
      * 存储值到缓存中
      * @param key 缓存中的key值
@@ -96,7 +150,7 @@ public class MyCacheUtils
             {
                 if(data == null)
                 {
-                    data = new LinkedHashMap<>();
+                    data = new HashMap<>();
                 }
             }
         }
@@ -104,17 +158,14 @@ public class MyCacheUtils
             throw new RuntimeException("缓存的key值不允许为空");
         }
         verifyTime(time,timeUnit);
-        //超出大小移除首位
-        if(data.size() > cacheSize)
-        {
-            data.entrySet().forEach(e->data.remove(e.getKey()));
+        MyCacheDo cacheDo = new MyCacheDo();
+        cacheDo.target = newObj;
+        cacheDo.storeTime = System.currentTimeMillis();
+        if(time > 0){
+            long addTime = TimeUnit.MILLISECONDS.convert(time,timeUnit);
+            cacheDo.expirationTime = cacheDo.storeTime + addTime;
         }
-        data.put(key,newObj);
-        if(time > 0 )
-        {
-            MyScheduleUtils.newTask(()-> data.remove(key),time,timeUnit,false);
-        }
-
+        data.put(key,cacheDo);
     }
 
     /**

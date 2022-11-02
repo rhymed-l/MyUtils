@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 时间日期工具类
@@ -736,6 +737,17 @@ public class MyDateUtils
             e.printStackTrace();
         }
         throw new RuntimeException("时间转换失败!");
+    }
+
+    public static void addTime(long time, TimeUnit timeUnit) {
+        addTime(null,time,timeUnit);
+    }
+
+    public static void addTime(Date date,long time, TimeUnit timeUnit) {
+        if(date == null){
+            date = new Date();
+        }
+
     }
 
     /**
